@@ -1,0 +1,77 @@
+{
+  "_설명": "마크토(Markto) 설정 — 발행된 글을 핀터레스트 핀으로 자동 변환해 사이트 유입을 만드는 배포 엔진. 글을 쓰지 않고, 상품을 팔지 않는다.",
+  "lang": "ko",
+
+  "sites": [
+    {
+      "key": "pickdam",
+      "enabled": true,
+      "name": "픽담",
+      "url": "https://pickdam.com",
+      "api": "https://pickdam.com/wp-json/wp/v2",
+      "utm": "utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+      "board": "픽담 살까 말까",
+      "_board_설명": "핀터레스트 보드 이름. API 승인 전에는 텔레그램 캡션에 안내용으로만 쓴다.",
+      "brand": {
+        "bg": [18, 80, 58],
+        "accent": [46, 158, 107],
+        "cream": [247, 245, 239],
+        "muted": [168, 199, 185]
+      },
+      "_brand_설명": "픽담 브랜드 그린 — Picto/brand/make_brand_images.py(로고·OG)와 같은 값. 사이트 리디자인 팔레트와 동일해야 핀→사이트 이동 시 이질감이 없다. 바꿀 때 양쪽을 함께 바꾼다.",
+      "wordmark": "픽담",
+      "tagline": "사기 전에 확인하는 곳"
+    },
+    {
+      "key": "wontheland",
+      "enabled": false,
+      "_enabled_설명": "2026-09-08 사용자 결정: 1단계는 픽담 하나로 시작한다. 원더랜드는 핀터레스트 비즈 계정·소유권 확인이 끝난 뒤 enabled=true로 바꾸면 코드 수정 없이 합류한다.",
+      "name": "원더랜드",
+      "url": "https://wontheland.com",
+      "api": "https://wontheland.com/wp-json/wp/v2",
+      "utm": "utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+      "board": "원더랜드 생활정보",
+      "brand": {
+        "bg": [26, 54, 93],
+        "accent": [72, 128, 200],
+        "cream": [246, 247, 250],
+        "muted": [166, 187, 214]
+      },
+      "wordmark": "원더랜드",
+      "tagline": "오늘 필요한 생활정보"
+    }
+  ],
+
+  "pin": {
+    "width": 1000,
+    "height": 1500,
+    "_비율_설명": "2:3 고정. 핀터레스트 권장 비율이며 다른 비율은 피드에서 잘린다.",
+    "title_max": 40,
+    "desc_max": 200,
+    "hashtags_max": 4,
+    "font_bold": "NotoSansCJK-Bold.ttc",
+    "font_regular": "NotoSansCJK-Regular.ttc",
+    "_font_설명": "러너에 컬러 이모지 폰트가 없어 이미지 안 이모지는 두부(⃞)로 렌더된다(캐스토 실측). 이미지에는 이모지를 절대 넣지 않고 도형·한글로만 처리한다."
+  },
+
+  "quota": {
+    "per_run": 2,
+    "per_day": 3,
+    "min_hours_between_same_post": 720,
+    "_설명": "per_run=1회 실행당 생성 수, per_day=하루 상한. 같은 글 재게시는 최소 30일(720시간) 뒤에만 허용한다. 핀터레스트 스팸 판정 1순위가 '같은 글 반복 게시'이므로 상한을 코드가 강제한다."
+  },
+
+  "collect": {
+    "per_page": 50,
+    "max_pages": 4,
+    "min_days_old": 0,
+    "skip_categories": [],
+    "_설명": "WP REST에서 가져올 글 범위. min_days_old=발행 후 N일 지난 글만 대상(0=제한 없음)."
+  },
+
+  "publish": {
+    "mode": "telegram",
+    "_mode_설명": "telegram=이미지+문구를 텔레그램으로 보내 사람이 수동 게시(현재). pinterest=Pinterest API v5 자동 게시(앱 승인 후 전환). 전환은 이 값 한 글자만 바꾸면 된다.",
+    "pinterest_api": "https://api.pinterest.com/v5"
+  }
+}
