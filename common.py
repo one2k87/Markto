@@ -209,6 +209,12 @@ def _tg_hint(resp):
               "\"chat\":{\"id\":…} 값을 그대로 넣으세요"
               "(그 봇과의 채팅에서 /start 또는 아무 메시지를 먼저 보내야 나타납니다. "
               "그룹이면 -100… 으로 시작하고, 봇이 그 그룹에 초대돼 있어야 합니다).")
+    elif "can't send messages to the bot" in t:
+        print("[tg] ↳ CHAT_ID가 봇 자신의 ID입니다. "
+              "토큰이 123456789:AA... 꼴이라 콜론 앞 숫자를 CHAT_ID로 넣기 쉬운데, "
+              "그건 봇 ID고 봇은 자기 자신에게 보낼 수 없습니다. "
+              "봇과의 채팅에서 아무 메시지나 보낸 뒤 getUpdates의 "
+              "chat.id 값을 쓰세요 — 보통 토큰 앞 숫자와 다릅니다.")
     elif "Unauthorized" in t or "bot token" in t:
         print("[tg] ↳ TELEGRAM_TOKEN이 잘못됐습니다. @BotFather → /mybots → API Token 으로 다시 확인하세요.")
     print("[tg]", t)
