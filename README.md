@@ -48,7 +48,8 @@ python -m unittest discover -s tests
 | `LLM_API_KEY` | 예 | Gemini. 캐스토와 같은 값 (`공유_경계.md`) |
 | `LLM_MODEL` | 선택 | 기본 `gemini-2.5-flash` |
 | `TELEGRAM_TOKEN` / `TELEGRAM_CHAT_ID` | 예 | 수동 게시용 전송 |
-| `PINTEREST_TOKEN` | 승인 후 | 스코프 `boards:read`, `pins:write`. **standard 승인 후에만 의미가 있다** |
+| `PINTEREST_APP_ID` / `PINTEREST_APP_SECRET` | 승인 후 | 앱 자격증명 |
+| `PINTEREST_REFRESH_TOKEN` | 승인 후 | `python oauth_setup.py` 가 발급한다. **액세스 토큰은 30일이면 죽어서** 시크릿에 박지 않고 매 실행마다 새로 받는다 |
 | `PINTEREST_BOARD_ID_PICKDAM` | 승인 후 | 없으면 보드 이름으로 조회 |
 
 키가 하나도 없어도 파이프라인은 죽지 않는다 — 폴백 문구로 이미지를 만들고 전송만 건너뛴다.

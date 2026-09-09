@@ -18,6 +18,18 @@ import make_pin        # noqa: E402
 import pin_image       # noqa: E402
 
 
+class _Resp:
+    """requests 응답 대역 — 네트워크 없이 상태코드·본문만 흉내낸다."""
+
+    def __init__(self, status, payload):
+        self.status_code = status
+        self._payload = payload
+        self.text = str(payload)
+
+    def json(self):
+        return self._payload
+
+
 class Base(unittest.TestCase):
     """data/를 임시 폴더로 갈아끼워 실제 상태 파일을 건드리지 않는다."""
 
@@ -261,3 +273,124 @@ class TestImage(Base):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPinterestToken(Base):
+    """액세스 토큰 30일 만료 사고를 막는 층. 네트워크는 부르지 않는다."""
+
+    def setUp(self):
+        super().setUp()
+        import publish
+        self.publish = publish
+        publish._cached.update(token=None, at=0)
+        self.saved = {k: os.environ.pop(k, None) for k in
+                      ("PINTEREST_TOKEN", "PINTEREST_REFRESH_TOKEN",
+                       "PINTEREST_APP_ID", "PINTEREST_APP_SECRET")}
+
+    def tearDown(self):
+        self.publish._cached.update(token=None, at=0)
+        for k, v in self.saved.items():
+            os.environ.pop(k, None)
+            if v is not None:
+                os.environ[k] = v
+        super().tearDown()
+
+    def test_PINTEREST_TOKEN이_있으면_그대로_쓴다(self):
+        """수동 1회 시험용 우회로 — 네트워크를 타지 않아야 한다."""
+        os.environ["PINTEREST_TOKEN"] = "직접넣은토큰"
+        self.assertEqual(self.publish.access_token(), "직접넣은토큰")
+
+    def test_리프레시_토큰이_없으면_바로_멈춘다(self):
+        os.environ["PINTEREST_APP_ID"] = "app"
+        os.environ["PINTEREST_APP_SECRET"] = "sec"
+        with self.assertRaises(SystemExit):
+            self.publish.access_token()
+
+    def test_앱_자격증명이_없으면_바로_멈춘다(self):
+        os.environ["PINTEREST_REFRESH_TOKEN"] = "rt"
+        with self.assertRaises(SystemExit):
+            self.publish.access_token()
+
+    def test_리프레시로_액세스_토큰을_받아_캐시한다(self):
+        """같은 실행 안에서 여러 핀을 올려도 토큰 발급은 한 번뿐이어야 한다."""
+        os.environ.update(PINTEREST_APP_ID="app", PINTEREST_APP_SECRET="sec",
+                          PINTEREST_REFRESH_TOKEN="rt")
+        calls = []
+
+        def fake_post(url, headers=None, data=None, timeout=None):
+            calls.append((url, data))
+            return _Resp(200, {"access_token": "새토큰", "expires_in": 2592000})
+
+        real = self.publish.requests.post
+        self.publish.requests.post = fake_post
+        try:
+            self.assertEqual(self.publish.access_token(), "새토큰")
+            self.assertEqual(self.publish.access_token(), "새토큰")
+        finally:
+            self.publish.requests.post = real
+        self.assertEqual(len(calls), 1, "액세스 토큰을 매번 새로 받고 있다")
+        self.assertTrue(calls[0][0].endswith("/oauth/token"))
+        self.assertEqual(calls[0][1]["grant_type"], "refresh_token")
+
+    def test_갱신_실패는_조용히_지나가지_않는다(self):
+        """실패를 삼키면 그날부터 핀이 0건인데 워크플로는 초록으로 끝난다."""
+        os.environ.update(PINTEREST_APP_ID="app", PINTEREST_APP_SECRET="sec",
+                          PINTEREST_REFRESH_TOKEN="rt")
+        sent = []
+        real_post, real_tg = self.publish.requests.post, self.publish.common.telegram_msg
+        self.publish.requests.post = lambda *a, **k: _Resp(401, {"message": "expired"})
+        self.publish.common.telegram_msg = lambda m: sent.append(m)
+        try:
+            with self.assertRaises(SystemExit):
+                self.publish.access_token()
+        finally:
+            self.publish.requests.post = real_post
+            self.publish.common.telegram_msg = real_tg
+        self.assertTrue(sent, "갱신 실패를 알리지 않았다")
+        self.assertIn("oauth_setup.py", sent[0])
+
+    def test_리프레시_토큰이_회전되면_사람에게_알린다(self):
+        """새 리프레시 토큰은 시크릿에 자동 반영할 수 없다 — 알리지 않으면 언젠가 죽는다."""
+        os.environ.update(PINTEREST_APP_ID="app", PINTEREST_APP_SECRET="sec",
+                          PINTEREST_REFRESH_TOKEN="옛토큰")
+        sent = []
+        real_post, real_tg = self.publish.requests.post, self.publish.common.telegram_msg
+        self.publish.requests.post = lambda *a, **k: _Resp(
+            200, {"access_token": "a", "refresh_token": "새리프레시"})
+        self.publish.common.telegram_msg = lambda m: sent.append(m)
+        try:
+            self.publish.access_token()
+        finally:
+            self.publish.requests.post = real_post
+            self.publish.common.telegram_msg = real_tg
+        self.assertTrue(sent, "리프레시 토큰 회전을 알리지 않았다")
+        self.assertIn("PINTEREST_REFRESH_TOKEN", sent[0])
+
+    def test_같은_리프레시_토큰이_돌아오면_알리지_않는다(self):
+        os.environ.update(PINTEREST_APP_ID="app", PINTEREST_APP_SECRET="sec",
+                          PINTEREST_REFRESH_TOKEN="rt")
+        sent = []
+        real_post, real_tg = self.publish.requests.post, self.publish.common.telegram_msg
+        self.publish.requests.post = lambda *a, **k: _Resp(
+            200, {"access_token": "a", "refresh_token": "rt"})
+        self.publish.common.telegram_msg = lambda m: sent.append(m)
+        try:
+            self.publish.access_token()
+        finally:
+            self.publish.requests.post = real_post
+            self.publish.common.telegram_msg = real_tg
+        self.assertFalse(sent, "회전이 없었는데 알림을 보냈다")
+
+
+class TestOauthSetup(Base):
+    """제출 영상용 스크립트 — 잘못된 값으로 심사에 나가지 않도록 상수를 고정한다."""
+
+    def test_리다이렉트는_공식_quickstart와_같은_값(self):
+        import oauth_setup
+        self.assertEqual(oauth_setup.REDIRECT_URI, "http://localhost:8085/")
+
+    def test_최소_스코프만_요청한다(self):
+        import oauth_setup
+        got = set(oauth_setup.SCOPES.split(","))
+        self.assertEqual(got, {"boards:read", "pins:read", "pins:write"})
+        self.assertFalse([s for s in got if "secret" in s], "비공개 스코프를 요청하고 있다")

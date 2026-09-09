@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 out/*.png
 .DS_Store
+
+# oauth_setup.py 가 남기는 자격증명 — 절대 커밋하지 않는다
+pinterest_token.json
