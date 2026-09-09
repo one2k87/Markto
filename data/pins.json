@@ -1,4 +1,37 @@
 {
  "_설명": "핀 대장 — 어떤 글로 언제 핀을 만들었는지. 같은 글 반복 게시(핀터레스트 스팸 판정 1순위)를 막는 근거 파일이므로 손으로 지우지 말 것.",
- "pins": []
+ "pins": [
+  {
+   "site": "pickdam",
+   "post_id": 21,
+   "post_title": "비데 자가 설치 비용을 절약하는 데 필요한 공구와 주의사항을 확인합니다",
+   "url": "https://pickdam.com/bidet-self-installation-cost-saving-tips/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "비데 자가 설치 비용을 절약하는 데 필요한 공구와 주의사항을 확인합니다",
+   "pin_desc": "2026년 9월 기준, 비데 자가 설치로 비용을 절약하는 방법을 알아봅니다. 필요한 공구와 흔한 실수, 그리고 모델별 설치 난이도를 비교하여 성공적인 자가 설치를 돕는 정보를 제공합니다.",
+   "hashtags": [],
+   "image": "out/pin_pickdam_21.png",
+   "made_at": "2026-09-09T15:04:56+09:00",
+   "sent": false,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
+  },
+  {
+   "site": "pickdam",
+   "post_id": 24,
+   "post_title": "새 아파트 시스템 가전, 2026년 9월 4인 가족 기준 1,000만원 절약하는 설치 전략",
+   "url": "https://pickdam.com/new-apartment-system-appliance-guide-2026-september/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "새 아파트 시스템 가전, 2026년 9월 4인 가족 기준 1,000만원 ",
+   "pin_desc": "2026년 9월 새 아파트 입주를 앞두고 시스템 가전 설치를 고민하고 있다면 이 글을 참고하세요. 시스템 에어컨과 빌트인 주방 가전의 장단점, 2026년 기준 예상 비용을 비교하고 후회 없는 선택을 위한 주의사항까지 상세히 알려드립니다.",
+   "hashtags": [],
+   "image": "out/pin_pickdam_24.png",
+   "made_at": "2026-09-09T15:04:56+09:00",
+   "sent": false,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
+  }
+ ]
 }
