@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Markto — 핀터레스트 유입</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#F5A46A">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Markto">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   마크토 대시보드 — 파스텔 오렌지 (#F5A46A)
+   색 규칙(실측 대비값으로 정한 것이니 임의로 바꾸지 말 것):
+   · --brand #F5A46A : 마크토 메인. **면·틴트·글로우 전용.**
+     라이트 카드 위 글자로 쓰면 1.90:1로 안 읽힌다. 파스텔 위 흰 글자도 금지(2.02:1).
+   · --ink   #C2662E : 작은 글자·아이콘·활성 표시. 라이트 3.46:1 / 다크 4.63:1
+     (기존 3앱 S 3.41 · P 2.95 · C 2.70 대역의 최상단)
+   · 파스텔 면 위 글자는 #4A3728 (5.57:1)
+   핀 이미지 팔레트는 여기와 무관하다 — 핀은 픽담 브랜드 그린을 쓴다(도착지가 픽담이므로).
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --brand:#F5A46A; --ink:#F5A46A; --ink-2:#E98A4F;
+  --bg:#100c09; --card:#1b1512; --card2:#241c17; --line:#332720;
+  --txt:#f7f3f0; --muted:#a89a90; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185;
+  --tint:rgba(245,164,106,.16); --glow:rgba(245,164,106,.22); --ring:rgba(245,164,106,.45);
+  --radius:12px;
+  --safe-t:env(safe-area-inset-top); --safe-b:env(safe-area-inset-bottom);
+}
+html[data-theme="light"]{
+  --brand:#F5A46A; --ink:#C2662E; --ink-2:#A8551F;
+  --bg:#FFF6EF; --card:rgba(255,255,255,.72); --card2:rgba(255,255,255,.9);
+  --line:rgba(194,102,46,.16);
+  --txt:#4A3728; --muted:#9C8776; --ok:#3d9e7d; --warn:#c9911f; --danger:#e0697f;
+  --tint:rgba(245,164,106,.20); --glow:rgba(245,164,106,.30); --ring:rgba(245,164,106,.5);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",
+    "맑은 고딕",system-ui,sans-serif;
+  padding-bottom:calc(24px + var(--safe-b));-webkit-font-smoothing:antialiased}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(1100px 520px at 10% -8%, #FFE8D5 0%, transparent 60%),
+    radial-gradient(900px 460px at 106% 10%, #FFF0E0 0%, transparent 55%),
+    var(--bg);
+  background-attachment:fixed}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+a{color:var(--ink);text-decoration:none}
+.num{font-variant-numeric:tabular-nums}
+
+/* ── 헤더 ── */
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:9px;
+  padding:calc(10px + var(--safe-t)) 14px 10px;background:var(--tint);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+header img{border-radius:9px;flex:0 0 auto}
+header h1{font-size:17px;font-weight:800}
+header .sub{font-size:11px;color:var(--muted);margin-top:1px}
+.spacer{flex:1}
+.icon-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);
+  background:var(--card);color:var(--txt);font-size:14px;cursor:pointer;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;padding:0}
+.icon-btn:active{transform:translateY(1px)}
+
+/* ── 4앱 스위처 — 스크립토(보라)·픽토(그린)·캐스토(블루)·마크토(파스텔 오렌지) ── */
+.appsw{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:999px;
+  overflow:hidden;flex:0 0 auto;height:30px;background:var(--card)}
+.appsw a{display:flex;align-items:center;justify-content:center;width:26px;
+  font-size:11px;font-weight:800;color:var(--muted);transition:background .16s,color .16s}
+.appsw a+a{border-left:1px solid var(--line)}
+.appsw a[data-hue="s"]:hover{color:#8b5cf6}
+.appsw a[data-hue="p"]:hover{color:#2e9e6b}
+.appsw a[data-hue="c"]:hover{color:#5b8def}
+.appsw a[data-hue="m"]:hover{color:var(--ink)}
+.appsw a.on[data-hue="s"]{background:rgba(139,92,246,.16);color:#8b5cf6}
+.appsw a.on[data-hue="p"]{background:rgba(46,158,107,.16);color:#2e9e6b}
+.appsw a.on[data-hue="c"]{background:rgba(91,141,239,.16);color:#5b8def}
+.appsw a.on[data-hue="m"]{background:var(--tint);color:var(--ink)}
+
+/* ── 카드 ── */
+.wrap{padding:12px 14px 0;max-width:720px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:13px 14px;margin-bottom:10px;backdrop-filter:blur(10px)}
+html[data-theme="light"] .card{box-shadow:0 10px 28px -18px var(--glow)}
+.card h2{font-size:13px;font-weight:800;color:var(--muted);text-transform:none;
+  margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.card h2 .dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+
+/* ── 상태 타일 ── */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{background:var(--card2);border:1px solid var(--line);border-radius:10px;
+  padding:10px 8px;text-align:center}
+.tile .v{font-size:21px;font-weight:800;line-height:1.15;color:var(--ink)}
+.tile .k{font-size:10.5px;color:var(--muted);margin-top:3px}
+.bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:10px}
+.bar>i{display:block;height:100%;background:var(--brand);border-radius:99px;
+  transition:width .35s ease}
+
+/* ── 배지 ── */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
+  padding:3px 8px;border-radius:999px;background:var(--tint);color:var(--ink);
+  border:1px solid var(--line)}
+.badge.warn{background:rgba(251,191,36,.16);color:var(--warn);border-color:transparent}
+.badge.ok{background:rgba(52,211,153,.16);color:var(--ok);border-color:transparent}
+
+/* ── 체크리스트 ── */
+.chk{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);align-items:flex-start}
+.chk:first-of-type{border-top:0}
+.chk input{appearance:none;width:20px;height:20px;flex:0 0 auto;margin:1px 0 0;
+  border:1.5px solid var(--line);border-radius:6px;background:var(--card2);cursor:pointer;
+  position:relative}
+.chk input:checked{background:var(--brand);border-color:var(--brand)}
+.chk input:checked::after{content:"";position:absolute;left:6px;top:2.5px;width:5px;height:10px;
+  border:solid #4A3728;border-width:0 2.2px 2.2px 0;transform:rotate(45deg)}
+.chk .t{font-size:13.5px;font-weight:700}
+.chk .d{font-size:12px;color:var(--muted);margin-top:2px}
+.chk input:checked~div .t{color:var(--muted);text-decoration:line-through}
+
+/* ── 핀 카드 ── */
+.pin{border-top:1px solid var(--line);padding:12px 0}
+.pin:first-of-type{border-top:0;padding-top:2px}
+.pin .top{display:flex;gap:11px}
+.pin img{width:72px;height:108px;object-fit:cover;border-radius:8px;flex:0 0 auto;
+  background:var(--card2);border:1px solid var(--line)}
+.pin .ttl{font-size:14px;font-weight:800;line-height:1.35}
+.pin .dsc{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.5}
+.pin .tags{font-size:11.5px;color:var(--ink);margin-top:5px;font-weight:700}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.btn{font-size:12px;font-weight:700;padding:6px 11px;border-radius:8px;cursor:pointer;
+  border:1px solid var(--line);background:var(--card2);color:var(--txt)}
+.btn.primary{background:var(--brand);border-color:transparent;color:#4A3728}
+.btn:active{transform:translateY(1px)}
+.btn.done{opacity:.55}
+
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:18px 6px;line-height:1.6}
+.foot{text-align:center;color:var(--muted);font-size:11px;padding:14px 0 4px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + var(--safe-b));
+  background:var(--brand);color:#4A3728;font-size:13px;font-weight:800;padding:9px 16px;
+  border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="./icons/icon-192.png" alt="Markto" width="30" height="30">
+  <div>
+    <h1>Markto</h1>
+    <div class="sub" id="genat">불러오는 중…</div>
+  </div>
+  <div class="spacer"></div>
+  <nav class="appsw" aria-label="앱 전환">
+    <a data-hue="s" href="https://one2k87.github.io/Scripto/dashboard/" title="Scripto — 애드센스 라인">S</a>
+    <a data-hue="p" href="https://one2k87.github.io/Picto/dashboard/" title="Picto — 쿠팡 픽 라인">P</a>
+    <a data-hue="c" href="https://one2k87.github.io/Casto/dashboard/" title="Casto — 쇼츠 배포 라인">C</a>
+    <a class="on" data-hue="m" href="#" onclick="return false" title="Markto — 핀터레스트 유입">M</a>
+  </nav>
+  <button class="icon-btn" id="themeBtn" title="라이트·다크 전환">◐</button>
+  <button class="icon-btn" id="reload" title="새로고침">↻</button>
+</header>
+
+<div class="wrap">
+
+  <!-- 현황 -->
+  <div class="card">
+    <h2><span class="dot"></span>오늘 현황</h2>
+    <div class="tiles">
+      <div class="tile"><div class="v num" id="tToday">–</div><div class="k">오늘 만든 핀</div></div>
+      <div class="tile"><div class="v num" id="tQueue">–</div><div class="k">큐 대기 글</div></div>
+      <div class="tile"><div class="v num" id="tTotal">–</div><div class="k">누적 핀</div></div>
+    </div>
+    <div class="bar"><i id="capBar" style="width:0"></i></div>
+    <div style="display:flex;justify-content:space-between;margin-top:7px;font-size:11.5px;color:var(--muted)">
+      <span id="capTxt">하루 상한</span>
+      <span id="modeTxt"></span>
+    </div>
+  </div>
+
+  <!-- 오늘 올릴 핀 -->
+  <div class="card">
+    <h2><span class="dot"></span>올릴 핀 <span class="badge" id="pendBadge" style="margin-left:auto">–</span></h2>
+    <div id="pinList"><div class="empty">불러오는 중…</div></div>
+  </div>
+
+  <!-- 준비 체크리스트 -->
+  <div class="card">
+    <h2><span class="dot"></span>핀터레스트 준비</h2>
+    <div id="setup"></div>
+    <div class="row" style="margin-top:11px">
+      <a class="btn" href="https://github.com/one2k87/Markto/blob/main/docs/%ED%95%80%ED%84%B0%EB%A0%88%EC%8A%A4%ED%8A%B8_%EA%B3%84%EC%A0%95_%EC%A4%80%EB%B9%84.md" target="_blank" rel="noopener">준비 가이드 열기</a>
+      <a class="btn" href="https://github.com/one2k87/Markto/actions" target="_blank" rel="noopener">지금 실행(Actions)</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    마크토 = 발행된 글을 핀터레스트에 뿌려 픽담 유입을 만드는 도구 ·
+    성공 지표는 <b>핀 클릭·세션 유입</b> (팔로워 수가 아니다)<br>
+    <span id="buildTxt"></span>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   APP_BUILD — 배포마다 +1 (versions.md의 M 행과 맞춘다)
+   localStorage 키는 반드시 `markto_` 접두 (공유_경계.md 3-2 강제:
+   네 앱이 one2k87.github.io 한 오리진에 살아 저장소가 물리적으로 공유된다.
+   S의 무접두 키·picto_*·casto_*를 읽거나 쓰면 안 된다.)
+   ══════════════════════════════════════════════════════════════════ */
+const APP_BUILD = 1;
+const K = {
+  theme: "markto_theme",
+  posted: "markto_posted",     // 수동 게시 완료 표시 {키:true}
+  setup:  "markto_setup"        // 준비 체크리스트 {id:true}
+};
+const $ = (id) => document.getElementById(id);
+const ls = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }
+              catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+
+/* ── 테마 ── */
+(function initTheme(){
+  const saved = ls.get(K.theme, null);
+  const dark = saved === null
+    ? window.matchMedia("(prefers-color-scheme: dark)").matches
+    : saved === "dark";
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+})();
+$("themeBtn").onclick = () => {
+  const el = document.documentElement;
+  const next = el.dataset.theme === "dark" ? "light" : "dark";
+  el.dataset.theme = next; ls.set(K.theme, next);
+};
+$("reload").onclick = () => location.reload();
+
+function toast(msg){
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 1600);
+}
+function esc(s){ return String(s || "").replace(/[&<>"]/g,
+  (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c])); }
+
+async function copy(text, what){
+  try { await navigator.clipboard.writeText(text); toast(what + " 복사됨"); }
+  catch (e) {
+    // 클립보드 권한이 없는 브라우저(구형 iOS 사파리 등) 폴백
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast(what + " 복사됨"); }
+    catch (e2) { toast("복사 실패 — 길게 눌러 선택하세요"); }
+    ta.remove();
+  }
+}
+
+/* ── 준비 체크리스트 ── */
+const SETUP = [
+  ["biz",   "비즈니스 계정 만들기", "픽담 전용으로. 개인 계정과 섞지 않는다"],
+  ["prof",  "프로필 채우기", "로고·소개·사용자명. 빈 프로필은 초기 노출을 못 받는다"],
+  ["claim", "사이트 소유권 확인", "Rank Math → 일반 설정 → 웹마스터 도구 → Pinterest Verification ID"],
+  ["board", "보드 「픽담 살까 말까」 만들기", "이름이 글자 그대로 같아야 API가 찾는다"],
+  ["secret","GitHub 시크릿 3종 등록", "LLM_API_KEY · TELEGRAM_TOKEN · TELEGRAM_CHAT_ID"],
+  ["api",   "API 앱 standard 승인", "trial 핀은 Sandbox라 아무에게도 안 보인다. 승인 전엔 수동 게시"]
+];
+function renderSetup(){
+  const st = ls.get(K.setup, {});
+  $("setup").innerHTML = SETUP.map(([id, t, d]) => `
+    <label class="chk">
+      <input type="checkbox" data-sid="${id}"${st[id] ? " checked" : ""}>
+      <div><div class="t">${esc(t)}</div><div class="d">${esc(d)}</div></div>
+    </label>`).join("");
+  $("setup").querySelectorAll("input[data-sid]").forEach((el) => {
+    el.onchange = () => {
+      const st2 = ls.get(K.setup, {}); st2[el.dataset.sid] = el.checked; ls.set(K.setup, st2);
+    };
+  });
+}
+
+/* ── 데이터 ── */
+const nc = () => "?nc=" + Date.now();
+async function getJson(path, fallback){
+  try {
+    const r = await fetch(path + nc(), { cache: "no-store" });
+    if (!r.ok) return fallback;
+    return await r.json();
+  } catch (e) { return fallback; }
+}
+
+function pinKey(p){ return p.site + "#" + p.post_id + "@" + String(p.made_at || "").slice(0, 10); }
+
+function renderPins(pins, cfg){
+  const posted = ls.get(K.posted, {});
+  const recent = pins.slice().reverse().slice(0, 12);
+  const pending = recent.filter((p) => !posted[pinKey(p)]);
+  $("pendBadge").textContent = pending.length ? pending.length + "건 대기" : "모두 게시됨";
+  $("pendBadge").className = "badge" + (pending.length ? "" : " ok");
+
+  if (!recent.length) {
+    $("pinList").innerHTML = `<div class="empty">아직 만든 핀이 없습니다.<br>
+      시크릿 3종을 넣으면 매일 10:20에 핀이 만들어집니다.</div>`;
+    return;
+  }
+  const board = (cfg && cfg.board) || "";
+  $("pinList").innerHTML = recent.map((p) => {
+    const k = pinKey(p);
+    const done = !!posted[k];
+    const img = "../" + String(p.image || "").replace(/^out\//, "dashboard/pins/");
+    const tags = (p.hashtags || []).map((t) => "#" + t).join(" ");
+    return `<div class="pin" data-k="${esc(k)}">
+      <div class="top">
+        <img src="${esc(img)}" alt="" loading="lazy"
+          onerror="this.style.visibility='hidden'">
+        <div style="min-width:0;flex:1">
+          <div class="ttl">${esc(p.pin_title)}</div>
+          <div class="dsc">${esc(p.pin_desc)}</div>
+          ${tags ? `<div class="tags">${esc(tags)}</div>` : ""}
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn" data-c="t">제목 복사</button>
+        <button class="btn" data-c="d">설명+태그 복사</button>
+        <button class="btn" data-c="l">링크 복사</button>
+        <a class="btn" href="${esc(img)}" target="_blank" rel="noopener">이미지</a>
+        <button class="btn primary${done ? " done" : ""}" data-c="ok">${done ? "게시 완료 ✓" : "게시했음"}</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  $("pinList").querySelectorAll(".pin").forEach((el) => {
+    const p = recent.find((x) => pinKey(x) === el.dataset.k);
+    const tags = (p.hashtags || []).map((t) => "#" + t).join(" ");
+    el.querySelector('[data-c="t"]').onclick = () => copy(p.pin_title, "제목");
+    el.querySelector('[data-c="d"]').onclick =
+      () => copy(p.pin_desc + (tags ? "\n" + tags : ""), "설명");
+    el.querySelector('[data-c="l"]').onclick = () => copy(p.url, "링크");
+    el.querySelector('[data-c="ok"]').onclick = () => {
+      const st = ls.get(K.posted, {});
+      st[el.dataset.k] = !st[el.dataset.k];
+      ls.set(K.posted, st);
+      renderPins(pins, cfg);
+      if (st[el.dataset.k] && board) toast("보드: " + board);
+    };
+  });
+}
+
+async function load(){
+  const [pinsDoc, queueDoc, cfg] = await Promise.all([
+    getJson("../data/pins.json", { pins: [] }),
+    getJson("../data/queue.json", { items: [] }),
+    getJson("../markto.json", null)
+  ]);
+  const pins = (pinsDoc && pinsDoc.pins) || [];
+  const queue = (queueDoc && queueDoc.items) || [];
+  const site = cfg && (cfg.sites || []).find((s) => s.enabled);
+  const perDay = (cfg && cfg.quota && cfg.quota.per_day) || 3;
+
+  // '오늘'은 KST 기준 — 러너가 UTC라 브라우저 시각으로 세면 어긋난다
+  const kst = new Date(Date.now() + (new Date().getTimezoneOffset() + 540) * 60000);
+  const today = kst.toISOString().slice(0, 10);
+  const madeToday = pins.filter((p) => String(p.made_at || "").slice(0, 10) === today).length;
+
+  $("tToday").textContent = madeToday;
+  $("tQueue").textContent = queue.length;
+  $("tTotal").textContent = pins.length;
+  $("capBar").style.width = Math.min(100, (madeToday / perDay) * 100) + "%";
+  $("capTxt").textContent = `하루 상한 ${madeToday}/${perDay}건`;
+
+  const mode = cfg && cfg.publish ? cfg.publish.mode : "telegram";
+  const tier = cfg && cfg.publish ? (cfg.publish.access_tier || "trial") : "trial";
+  $("modeTxt").innerHTML = mode === "pinterest" && tier === "standard"
+    ? '<span class="badge ok">자동 게시</span>'
+    : '<span class="badge warn">수동 게시 (' + (tier === "standard" ? "모드 미전환" : "API " + tier) + ")</span>";
+
+  const last = pins.length ? pins[pins.length - 1].made_at : null;
+  $("genat").textContent = last
+    ? "마지막 핀 " + String(last).replace("T", " ").slice(0, 16)
+    : "아직 만든 핀이 없습니다";
+  $("buildTxt").textContent = "build " + APP_BUILD + (site ? " · 대상 " + site.name : "");
+
+  renderPins(pins, site);
+}
+
+renderSetup();
+load();
+
+/* ── PWA ── */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+}
+</script>
+</body>
+</html>

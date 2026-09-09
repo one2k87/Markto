@@ -129,6 +129,34 @@ class TestQuota(Base):
         self.assertNotEqual(a[0]["post_id"], b[0]["post_id"])
 
 
+class TestGallery(Base):
+    """대시보드 갤러리 — 최근 N장만 남기고, 테스트가 실제 레포를 오염시키지 않는지."""
+
+    def test_핀_이미지가_갤러리로_복사된다(self):
+        common.save_json("queue.json", {"items": [self.post(1)]})
+        make_pin.run(1, dry=False)
+        gal = os.path.join(self.tmp, "dashboard", "pins")
+        self.assertEqual(len(os.listdir(gal)), 1)
+
+    def test_갤러리는_실제_레포를_건드리지_않는다(self):
+        # gallery_dir()이 호출 시점에 common.ROOT를 읽어야 한다(상수로 굳히면 실제 레포에 쓴다)
+        self.assertTrue(make_pin.gallery_dir().startswith(self.tmp))
+
+    def test_오래된_이미지는_상한만큼만_남는다(self):
+        import time
+        gal = os.path.join(self.tmp, "dashboard", "pins")
+        os.makedirs(gal, exist_ok=True)
+        src = os.path.join(self.tmp, "seed.png")
+        with open(src, "wb") as f:
+            f.write(b"x")
+        for i in range(5):
+            with open(os.path.join(gal, f"old{i}.png"), "wb") as f:
+                f.write(b"x")
+            os.utime(os.path.join(gal, f"old{i}.png"), (1000 + i, 1000 + i))
+        make_pin.publish_to_gallery(src, keep=3)
+        self.assertEqual(len(os.listdir(gal)), 3)
+
+
 class TestCopy(Base):
     def test_이모지는_문구에서_제거된다(self):
         self.assertEqual(make_pin.strip_emoji("좋아요 👍 정말 ✅"), "좋아요 정말")

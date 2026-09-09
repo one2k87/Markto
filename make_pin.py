@@ -9,14 +9,47 @@
 같은 글 재게시는 min_hours_between_same_post 이후에만. 사람이 실수로 여러 번
 돌려도 초과분은 만들지 않는다.
 """
+import glob
 import os
 import re
+import shutil
 import sys
 
 import common
 import pin_image
 
 OUT = os.path.join(common.ROOT, "out")
+GALLERY_KEEP = 30
+
+
+def gallery_dir():
+    """대시보드 갤러리 경로. **호출 시점에** common.ROOT를 읽는다.
+
+    모듈 상수로 굳히면 테스트가 common.ROOT를 임시 폴더로 갈아끼워도 상수는 실제 레포를
+    가리켜, 테스트가 진짜 dashboard/pins/에 파일을 쓴다(2026-09-09 실측: 커밋 직전에
+    테스트 잔재 3장이 스테이징돼 있었다).
+    """
+    return os.path.join(common.ROOT, "dashboard", "pins")
+
+
+def publish_to_gallery(path, keep=GALLERY_KEEP):
+    """핀 이미지를 대시보드가 볼 수 있는 곳으로 복사하고, 최근 keep장만 남긴다.
+
+    out/은 커밋하지 않는다(.gitignore) — 레포가 이미지로 불어나면 곤란하다.
+    다만 대시보드에서 이미지를 보고 폰으로 저장하는 것이 수동 게시의 핵심 동작이라,
+    최근 것만 레포에 둔다(3건/일 × 30장 ≈ 1.5MB로 묶인다).
+    """
+    gal = gallery_dir()
+    os.makedirs(gal, exist_ok=True)
+    dst = os.path.join(gal, os.path.basename(path))
+    shutil.copyfile(path, dst)
+    imgs = sorted(glob.glob(os.path.join(gal, "*.png")), key=os.path.getmtime)
+    for old in imgs[:-keep]:
+        try:
+            os.remove(old)
+        except OSError:
+            pass          # 지우지 못해도 파이프라인을 세우지 않는다(다음 실행이 다시 시도한다)
+    return dst
 
 PROMPT = """너는 한국 핀터레스트에서 블로그 유입을 만드는 카피라이터다.
 아래 글 하나를 핀으로 만들 문구를 쓴다.
@@ -88,7 +121,8 @@ def caption(post, copy, site, cfg):
     """텔레그램으로 보낼 수동 게시용 안내문. 폰에서 그대로 복사해 핀에 붙여넣는다."""
     tags = " ".join("#" + t for t in copy.get("hashtags", []))
     link = common.with_utm(post["url"], site)
-    return (f"[핀 준비] {site['name']} · 보드: {site.get('board', '')}\n\n"
+    # 머리에 앱 표기를 붙인다 — 네 앱이 텔레그램 한 채널을 공유하므로(공유_경계.md 1절)
+    return (f"📌 마크토 · [핀 준비] {site['name']} · 보드: {site.get('board', '')}\n\n"
             f"■ 제목\n{copy['title']}\n\n"
             f"■ 설명\n{copy['description']}\n{tags}\n\n"
             f"■ 링크\n{link}\n\n"
@@ -127,6 +161,8 @@ def run(n=None, dry=False):
                              subtitle=copy["title"] if copy["title"] != copy["image_text"] else "",
                              kicker=copy.get("kicker", ""), cfg_pin=cfg["pin"])
         print(f"[make] {post['site']}#{post['id']} → {os.path.basename(path)} · {copy['title']}")
+        if not dry:
+            publish_to_gallery(path)      # 대시보드에서 보고 폰으로 저장하기 위한 사본
 
         sent = False
         if not dry and cfg["publish"]["mode"] == "telegram":
