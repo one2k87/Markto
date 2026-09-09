@@ -11,14 +11,14 @@
 <meta name="apple-mobile-web-app-title" content="Markto">
 <style>
 /* ═══════════════════════════════════════════════════════════════════
-   마크토 대시보드 build 2 — 파스텔 오렌지 (#F5A46A)
+   마크토 대시보드 build 3 — 파스텔 오렌지 (#F5A46A)
    색 규칙(대비 실측으로 정한 값이니 임의로 합치지 말 것):
    · --brand #F5A46A : 면·틴트·글로우 전용. 라이트 카드 위 글자로는 1.90:1로 안 읽힌다.
    · --ink   #C2662E : 작은 글자·활성 표시. 라이트 3.46 / 다크 4.63
    · 파스텔 면 위 글자는 #4A3728 (5.57:1). 흰 글자 금지(2.02:1).
    핀 이미지 팔레트는 여기와 무관 — 핀은 픽담 브랜드 그린을 쓴다(도착지가 픽담이므로).
 
-   build 2 구조 원칙: **매일 하는 일이 첫 화면 위쪽에 온다.**
+   build 2~3 구조 원칙: **매일 하는 일이 첫 화면 위쪽에 온다.**
    1회용(준비 체크리스트)은 다 끝나면 한 줄로 접힌다. 설명은 줄이고 아이콘·번호로 대체.
    ═══════════════════════════════════════════════════════════════════ */
 :root{
@@ -26,6 +26,10 @@
   --bg:#100c09; --card:#1b1512; --card2:#241c17; --line:#332720;
   --txt:#f7f3f0; --muted:#a89a90; --ok:#34d399; --warn:#fbbf24; --danger:#fb7185;
   --tint:rgba(245,164,106,.16); --glow:rgba(245,164,106,.22); --ring:rgba(245,164,106,.45);
+  /* 차트 마크 전용 — 브랜드 오렌지를 각 모드에서 '데이터 마크로 통과하는' 단계로 내렸다.
+     #F5A46A는 다크 표면에서 OKLCH L 0.787로 밝기 밴드(0.48~0.67)를 벗어난다(검증기 FAIL).
+     검증: 라이트 #C2662E · 다크 #D4713C 모두 6항목 전부 PASS, 실제 카드 대비 3.78 / 5.36 */
+  --chart:#D4713C;
   --radius:12px;
   --safe-t:env(safe-area-inset-top); --safe-b:env(safe-area-inset-bottom);
 }
@@ -35,6 +39,7 @@ html[data-theme="light"]{
   --line:rgba(194,102,46,.16);
   --txt:#4A3728; --muted:#9C8776; --ok:#3d9e7d; --warn:#c9911f; --danger:#e0697f;
   --tint:rgba(245,164,106,.20); --glow:rgba(245,164,106,.30); --ring:rgba(245,164,106,.5);
+  --chart:#C2662E;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--txt);
@@ -155,6 +160,31 @@ html[data-theme="light"] .card{box-shadow:0 10px 28px -18px var(--glow)}
 .chk input:checked~div .t{color:var(--muted);text-decoration:line-through}
 .chk input:checked~div .d{display:none}   /* 끝난 항목의 설명은 지운다 — 화면을 비워준다 */
 
+/* ── 성과: 스탯 타일 + 스파크라인 ────────────────────────────────────
+   지표 하나(주간 핀 클릭)뿐이라 범례는 두지 않는다 — 제목이 그 계열을 가리킨다.
+   숫자는 모든 점에 붙이지 않고 '이번 주'만 직접 라벨한다. */
+.stat{display:flex;align-items:flex-end;gap:12px}
+.stat .v{font-size:30px;font-weight:800;line-height:1.05;letter-spacing:-.02em}
+.stat .lab{font-size:11.5px;color:var(--muted);margin-bottom:3px}
+.delta{font-size:12px;font-weight:800;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.delta.up{background:rgba(52,211,153,.16);color:var(--ok)}
+.delta.down{background:rgba(251,113,133,.16);color:var(--danger)}
+.delta.flat{background:var(--line);color:var(--muted)}
+.spark{margin-top:14px;position:relative}
+.spark svg{display:block;width:100%;height:auto;overflow:hidden}
+.spark .tip{position:absolute;transform:translate(-50%,-100%);background:var(--card2);
+  border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:11px;
+  white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .12s}
+.spark .tip.on{opacity:1}
+.wk{display:flex;gap:6px;margin-top:10px}
+.wk input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 10px;border-radius:9px;
+  border:1px solid var(--line);background:var(--card2);color:var(--txt);
+  font-variant-numeric:tabular-nums}
+table.tv{width:100%;border-collapse:collapse;margin-top:9px;font-size:12px}
+table.tv th,table.tv td{text-align:right;padding:4px 6px;border-top:1px solid var(--line)}
+table.tv th:first-child,table.tv td:first-child{text-align:left;color:var(--muted)}
+table.tv td{font-variant-numeric:tabular-nums}
+
 .empty{text-align:center;color:var(--muted);font-size:13px;padding:16px 6px;line-height:1.65}
 .foot{display:flex;align-items:center;justify-content:center;gap:8px;
   color:var(--muted);font-size:11px;padding:12px 0 4px;flex-wrap:wrap}
@@ -209,7 +239,15 @@ html[data-theme="light"] .card{box-shadow:0 10px 28px -18px var(--glow)}
     <div id="pinList"><div class="empty">불러오는 중…</div></div>
   </div>
 
-  <!-- ② 준비 — 다 끝나면 한 줄로 접힌다 -->
+  <!-- ② 성과 — 주 1회. 이 도구의 목표가 '핀 클릭'이므로 그 숫자가 여기 있어야 한다 -->
+  <div class="card" id="perfCard">
+    <h2><span class="dot"></span>핀 클릭 · 주간
+      <button class="icon-btn" id="tvBtn" style="width:24px;height:24px;font-size:11px;margin-left:auto"
+        title="표로 보기" aria-label="표로 보기">☰</button></h2>
+    <div id="perfBody"></div>
+  </div>
+
+  <!-- ③ 준비 — 다 끝나면 한 줄로 접힌다 -->
   <div class="card" id="setupCard">
     <h2><span class="dot"></span>핀터레스트 준비
       <span class="badge" id="setupBadge" style="margin-left:auto">–</span>
@@ -220,7 +258,6 @@ html[data-theme="light"] .card{box-shadow:0 10px 28px -18px var(--glow)}
       <div class="acts" style="margin-top:10px">
         <a class="btn grow" href="https://github.com/one2k87/Markto/blob/main/docs/%ED%95%80%ED%84%B0%EB%A0%88%EC%8A%A4%ED%8A%B8_%EA%B3%84%EC%A0%95_%EC%A4%80%EB%B9%84.md"
            target="_blank" rel="noopener">📖 준비 가이드</a>
-        <a class="btn grow" href="https://analytics.pinterest.com/" target="_blank" rel="noopener">📈 핀 클릭 보기</a>
       </div>
     </div>
   </div>
@@ -240,7 +277,7 @@ html[data-theme="light"] .card{box-shadow:0 10px 28px -18px var(--glow)}
    localStorage 키는 반드시 `markto_` 접두 (공유_경계.md 3-2 강제:
    네 앱이 one2k87.github.io 한 오리진에 살아 저장소가 물리적으로 공유된다)
    ══════════════════════════════════════════════════════════════════════ */
-const APP_BUILD = 2;
+const APP_BUILD = 3;
 const K = {
   theme:    "markto_theme",
   progress: "markto_progress",   // {pinKey:{t,d,l,done,at}} — 복사 진행까지 기억한다
@@ -530,6 +567,170 @@ $("pinList").addEventListener("click", async (e) => {
   }
 });
 
+/* ══ 성과: 주간 핀 클릭 ════════════════════════════════════════════════
+   왜 손으로 넣는가: 핀터레스트 애널리틱스는 공개 API로 읽을 수 없고(핀 클릭 지표는
+   OAuth+standard 승인 뒤에나 열린다), 이 화면은 정적 페이지라 서버가 없다.
+   그래서 주 1회 숫자 하나를 옮겨 적는 방식으로 시작한다 — 자동화는 API 승인 후.
+
+   저장 위치: localStorage(`markto_clicks`). **기기마다 따로 쌓인다** —
+   폰과 데스크톱을 오가려면 아래 '내보내기/불러오기'로 옮긴다(레포에 쓸 수 없으므로).
+   ══════════════════════════════════════════════════════════════════════ */
+const K_CLICKS = "markto_clicks";     // { "YYYY-MM-DD"(그 주 월요일): 클릭수 }
+const WEEKS = 8;
+
+function kstDate(ms){ return new Date((ms == null ? Date.now() : ms)
+  + (new Date().getTimezoneOffset() + 540) * 60000); }
+function weekStart(d){                 // 그 주 월요일(KST) — 주간 집계의 기준점
+  const x = new Date(d.getTime());
+  const dow = (x.getUTCDay() + 6) % 7; // 월=0
+  x.setUTCDate(x.getUTCDate() - dow);
+  return x.toISOString().slice(0, 10);
+}
+function weekList(n){
+  const out = [];
+  const base = kstDate();
+  for (let i = n - 1; i >= 0; i--) {
+    const d = new Date(base.getTime() - i * 7 * 864e5);
+    out.push(weekStart(d));
+  }
+  return out;
+}
+const fmtWk = (w) => w.slice(5).replace("-", "/");   // 09-08 → 09/08
+const compact = (n) => n >= 10000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K"
+                                  : n.toLocaleString("ko-KR");
+
+function sparkline(weeks, vals){
+  const W = 300, H = 52, pad = 7;   // pad: 마커(r=4.5)+링(2)이 잘리지 않을 여유
+  const pts = vals.map((v, i) => v == null ? null : [
+    pad + (W - 2 * pad) * (vals.length === 1 ? .5 : i / (vals.length - 1)),
+    null, i, v
+  ]);
+  const nums = vals.filter((v) => v != null);
+  const max = Math.max(1, ...nums), min = Math.min(0, ...nums);
+  pts.forEach((p) => { if (p) p[1] = H - pad - (H - 2 * pad) * ((p[3] - min) / (max - min || 1)); });
+  const solid = pts.filter(Boolean);
+  // 값이 빈 주는 선을 끊는다 — 없는 데이터를 이어 그리면 없던 추세가 생긴다
+  let path = "", prev = null;
+  solid.forEach((p) => {
+    const gap = prev !== null && p[2] - prev > 1;
+    path += (path === "" || gap ? "M" : "L") + p[0].toFixed(1) + " " + p[1].toFixed(1) + " ";
+    prev = p[2];
+  });
+  const last = solid[solid.length - 1];
+  return `<div class="spark">
+    <svg viewBox="0 0 ${W} ${H}" role="img"
+         aria-label="최근 ${weeks.length}주 주간 핀 클릭 추이">
+      <path d="${path}" fill="none" stroke="var(--chart)" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+      ${solid.map((p) => `<circle class="pt" data-i="${p[2]}" cx="${p[0].toFixed(1)}"
+        cy="${p[1].toFixed(1)}" r="7" fill="transparent"/>`).join("")}
+      ${last ? `<circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4.5"
+        fill="var(--chart)" stroke="var(--card)" stroke-width="2"/>` : ""}
+    </svg>
+    <div class="tip" id="spTip"></div>
+  </div>`;
+}
+
+function renderPerf(){
+  const rec = ls.get(K_CLICKS, {});
+  const weeks = weekList(WEEKS);
+  const vals = weeks.map((w) => (typeof rec[w] === "number" ? rec[w] : null));
+  const thisW = weeks[weeks.length - 1], lastW = weeks[weeks.length - 2];
+  const cur = rec[thisW], prev = rec[lastW];
+  const has = vals.some((v) => v != null);
+
+  let delta = "";
+  if (typeof cur === "number" && typeof prev === "number") {
+    const d = prev === 0 ? (cur > 0 ? 100 : 0) : Math.round(((cur - prev) / prev) * 100);
+    const cls = d > 0 ? "up" : d < 0 ? "down" : "flat";
+    delta = `<span class="delta ${cls}">${d > 0 ? "+" : ""}${d}% <span
+      style="font-weight:600;opacity:.8">지난주</span></span>`;
+  }
+
+  const total = Object.values(rec).reduce((a, b) => a + (Number(b) || 0), 0);
+  const tv = ls.get("markto_tv", false);
+
+  $("perfBody").innerHTML = has ? `
+    <div class="stat">
+      <div>
+        <div class="lab">이번 주 (${fmtWk(thisW)}~)</div>
+        <div class="v">${typeof cur === "number" ? compact(cur) : "–"}</div>
+      </div>
+      ${delta}
+      <div style="margin-left:auto;text-align:right">
+        <div class="lab">누적</div>
+        <div style="font-size:15px;font-weight:800">${compact(total)}</div>
+      </div>
+    </div>
+    ${sparkline(weeks, vals)}
+    ${tv ? `<table class="tv"><thead><tr><th>주 시작</th><th>핀 클릭</th></tr></thead>
+      <tbody>${weeks.map((w, i) => `<tr><td>${fmtWk(w)}</td>
+      <td>${vals[i] == null ? "–" : vals[i].toLocaleString("ko-KR")}</td></tr>`).join("")}
+      </tbody></table>` : ""}
+  ` : `<div class="empty">핀터레스트 애널리틱스의 <b>핀 클릭</b> 수를 주 1회 적어두면
+      추이가 쌓입니다. 이게 마크토의 성적표입니다.</div>`;
+
+  $("perfBody").insertAdjacentHTML("beforeend", `
+    <div class="wk">
+      <input id="clkIn" type="number" inputmode="numeric" min="0" step="1"
+        placeholder="이번 주 핀 클릭" value="${typeof cur === "number" ? cur : ""}"
+        aria-label="이번 주 핀 클릭 수">
+      <button class="btn primary" id="clkSave">저장</button>
+    </div>
+    <div class="acts">
+      <a class="btn grow" href="https://analytics.pinterest.com/" target="_blank"
+         rel="noopener">📈 애널리틱스</a>
+      <button class="btn" id="expBtn" title="기록 내보내기" aria-label="기록 내보내기">⇪</button>
+      <button class="btn" id="impBtn" title="기록 불러오기" aria-label="기록 불러오기">⇩</button>
+    </div>`);
+
+  $("clkSave").onclick = () => {
+    const v = $("clkIn").value.trim();
+    const r = ls.get(K_CLICKS, {});
+    if (v === "") { delete r[thisW]; } else {
+      const n = Math.max(0, Math.round(Number(v)));
+      if (!isFinite(n)) return toast("숫자를 넣어주세요");
+      r[thisW] = n;
+    }
+    ls.set(K_CLICKS, r); renderPerf(); toast("기록 저장");
+  };
+  $("expBtn").onclick = () => copy(JSON.stringify(ls.get(K_CLICKS, {})), "기록");
+  $("impBtn").onclick = async () => {
+    let txt = "";
+    try { txt = await navigator.clipboard.readText(); } catch (e) { txt = ""; }
+    if (!txt) txt = prompt("붙여넣기 (내보낸 JSON)") || "";
+    try {
+      const inc = JSON.parse(txt);
+      if (!inc || typeof inc !== "object" || Array.isArray(inc)) throw new Error("형식");
+      const r = ls.get(K_CLICKS, {});
+      let n = 0;
+      Object.keys(inc).forEach((k) => {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(k) && typeof inc[k] === "number") { r[k] = inc[k]; n++; }
+      });
+      if (!n) throw new Error("항목 없음");
+      ls.set(K_CLICKS, r); renderPerf(); toast(n + "주 불러옴");
+    } catch (e) { toast("불러오지 못했습니다 — 내보낸 JSON을 붙여넣으세요"); }
+  };
+
+  // 스파크라인 지점 안내 — 모든 점에 숫자를 붙이지 않고, 짚은 점만 보여준다
+  const tip = $("spTip");
+  $("perfBody").querySelectorAll(".pt").forEach((c) => {
+    const show = (e) => {
+      const i = Number(c.dataset.i);
+      const box = c.closest(".spark").getBoundingClientRect();
+      const r = c.getBoundingClientRect();
+      tip.textContent = fmtWk(weeks[i]) + " · " + (vals[i] == null ? "–" : vals[i].toLocaleString("ko-KR"));
+      tip.style.left = (r.left - box.left + r.width / 2) + "px";
+      tip.style.top = (r.top - box.top - 4) + "px";
+      tip.classList.add("on");
+    };
+    c.addEventListener("pointerenter", show);
+    c.addEventListener("pointerdown", show);
+    c.addEventListener("pointerleave", () => tip.classList.remove("on"));
+  });
+}
+$("tvBtn").onclick = () => { ls.set("markto_tv", !ls.get("markto_tv", false)); renderPerf(); };
+
 /* ── 초기화 ── */
 function showErr(msg){
   $("errTxt").textContent = msg;
@@ -608,6 +809,7 @@ $("resetBtn").onclick = (e) => {
 };
 
 renderSetup();
+renderPerf();
 load();
 
 if ("serviceWorker" in navigator) {

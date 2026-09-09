@@ -1,7 +1,7 @@
 // 마크토 서비스워커 — 아이폰 홈화면 설치(PWA)
 // 캐시 이름 접두는 반드시 "markto-" : 같은 오리진(one2k87.github.io)에 네 앱이 살아
 // 접두 없이 지우면 남의 앱 캐시를 날린다(픽토가 2026-09-09에 실측한 사고).
-const CACHE = "markto-v2";
+const CACHE = "markto-v3";
 
 self.addEventListener("message", (e) => {
   if (e.data === "SKIP_WAITING") self.skipWaiting();
