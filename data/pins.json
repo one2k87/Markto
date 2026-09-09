@@ -32,6 +32,26 @@
    "pin_id": null,
    "posted_at": null,
    "fallback_copy": true
+  },
+  {
+   "site": "pickdam",
+   "post_id": 32,
+   "post_title": "정수기 고장 시 수리비 12만 원 넘는다면, 새 렌탈 위약금 50만 원까지 면제받고 교체하는 3가지 방법",
+   "url": "https://pickdam.com/broken-water-purifier-rental-penalty-waiver-strategy/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "정수기 위약금 면제받고 새 걸로 바꾸는 3가지 방법",
+   "pin_desc": "정수기 고장으로 수리비 12만원 이상 나왔을 때, 새 정수기 렌탈로 갈아타면서 기존 위약금 50만원까지 면제받는 3가지 실질적인 방법을 소개합니다. 복잡한 위약금 구조를 이해하고 현명하게 대처하는 전략을 픽담에서 확인하여 불필요한 지출을 줄여보세요.",
+   "hashtags": [
+    "정수기렌탈",
+    "정수기고장",
+    "위약금면제",
+    "가전제품교체"
+   ],
+   "image": "out/pin_pickdam_32.png",
+   "made_at": "2026-09-09T21:45:06+09:00",
+   "sent": false,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
