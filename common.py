@@ -191,8 +191,31 @@ def llm_json(prompt, **kw):
 
 
 # ── 텔레그램 (Pinterest API 승인 전 게시 경로) ──────────────────────────
+def _tg():
+    """토큰·chat_id를 읽어 **양끝 공백·따옴표를 떼낸다.**
+    시크릿을 복사·붙여넣을 때 줄바꿈이나 따옴표가 함께 들어가는 사고가 흔하고,
+    그러면 텔레그램이 chat not found / Unauthorized로 떨어진다."""
+    tok = os.getenv("TELEGRAM_TOKEN", "").strip().strip('"\'')
+    chat = os.getenv("TELEGRAM_CHAT_ID", "").strip().strip('"\'')
+    return tok, chat
+
+
+def _tg_hint(resp):
+    """전송 실패의 원인을 그 자리에서 짚어준다 — 로그만 보고 고칠 수 있게."""
+    t = (resp.text or "")[:300]
+    if "chat not found" in t:
+        print("[tg] ↳ CHAT_ID가 이 봇의 채팅이 아닙니다. 확인: "
+              "https://api.telegram.org/bot<토큰>/getUpdates 를 열어 "
+              "\"chat\":{\"id\":…} 값을 그대로 넣으세요"
+              "(그 봇과의 채팅에서 /start 또는 아무 메시지를 먼저 보내야 나타납니다. "
+              "그룹이면 -100… 으로 시작하고, 봇이 그 그룹에 초대돼 있어야 합니다).")
+    elif "Unauthorized" in t or "bot token" in t:
+        print("[tg] ↳ TELEGRAM_TOKEN이 잘못됐습니다. @BotFather → /mybots → API Token 으로 다시 확인하세요.")
+    print("[tg]", t)
+
+
 def telegram_photo(path, caption=""):
-    tok, chat = os.getenv("TELEGRAM_TOKEN", ""), os.getenv("TELEGRAM_CHAT_ID", "")
+    tok, chat = _tg()
     if not (tok and chat):
         print("[tg] 토큰 없음 — 전송 생략")
         return False
@@ -202,14 +225,14 @@ def telegram_photo(path, caption=""):
                           files={"photo": f}, timeout=120)
     print("[tg] sendPhoto", r.status_code)
     if r.status_code != 200:
-        print("[tg]", r.text[:300])
+        _tg_hint(r)
     return r.status_code == 200
 
 
 def telegram_document(path, caption=""):
     """핀 원본(1000×1500)을 압축 없이 받기 위한 경로.
     sendPhoto는 텔레그램이 재압축하므로 그대로 업로드하면 화질이 떨어진다."""
-    tok, chat = os.getenv("TELEGRAM_TOKEN", ""), os.getenv("TELEGRAM_CHAT_ID", "")
+    tok, chat = _tg()
     if not (tok and chat):
         return False
     with open(path, "rb") as f:
@@ -221,7 +244,7 @@ def telegram_document(path, caption=""):
 
 
 def telegram_msg(text):
-    tok, chat = os.getenv("TELEGRAM_TOKEN", ""), os.getenv("TELEGRAM_CHAT_ID", "")
+    tok, chat = _tg()
     if not (tok and chat):
         return False
     requests.post(f"https://api.telegram.org/bot{tok}/sendMessage",

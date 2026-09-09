@@ -214,6 +214,24 @@ class TestAccessTier(Base):
         self.assertEqual(common.cfg()["publish"]["access_tier"], "trial")
 
 
+class TestTelegramEnv(Base):
+    """시크릿에 공백·따옴표가 섞여 들어오는 흔한 사고를 코드가 흡수하는지."""
+
+    def test_공백과_따옴표를_떼낸다(self):
+        os.environ["TELEGRAM_TOKEN"] = '  "123:abc"\n'
+        os.environ["TELEGRAM_CHAT_ID"] = " '-1001234' "
+        try:
+            tok, chat = common._tg()
+            self.assertEqual(tok, "123:abc")
+            self.assertEqual(chat, "-1001234")
+        finally:
+            os.environ.pop("TELEGRAM_TOKEN", None)
+            os.environ.pop("TELEGRAM_CHAT_ID", None)
+
+    def test_값이_없으면_빈_문자열(self):
+        self.assertEqual(common._tg(), ("", ""))
+
+
 class TestImage(Base):
     def test_핀은_1000x1500으로_저장된다(self):
         from PIL import Image
