@@ -147,6 +147,33 @@ class TestCopy(Base):
         self.assertIn(site["board"], cap)
 
 
+class TestAccessTier(Base):
+    """trial 등급으로 자동 게시가 켜지는 사고를 막는 가드."""
+
+    def test_trial이면_게시를_거부한다(self):
+        import publish
+        cfg = common.cfg()
+        cfg["publish"]["access_tier"] = "trial"
+        with self.assertRaises(SystemExit):
+            publish.require_standard_access(cfg)
+
+    def test_standard이면_통과한다(self):
+        import publish
+        cfg = common.cfg()
+        cfg["publish"]["access_tier"] = "standard"
+        publish.require_standard_access(cfg)      # 예외 없이 통과해야 한다
+
+    def test_등급이_비어_있으면_trial로_간주한다(self):
+        import publish
+        cfg = common.cfg()
+        cfg["publish"].pop("access_tier", None)
+        with self.assertRaises(SystemExit):
+            publish.require_standard_access(cfg)
+
+    def test_기본_설정은_아직_trial이다(self):
+        self.assertEqual(common.cfg()["publish"]["access_tier"], "trial")
+
+
 class TestImage(Base):
     def test_핀은_1000x1500으로_저장된다(self):
         from PIL import Image

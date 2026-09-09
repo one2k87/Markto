@@ -71,6 +71,8 @@
 
   "publish": {
     "mode": "telegram",
+    "access_tier": "trial",
+    "_access_tier_설명": "Pinterest API 접근 등급. **trial에서는 API로 만든 핀·보드가 Sandbox 취급이라 만든 사람에게만 보인다**(공식 문서 실측 2026-09-09) — 즉 trial로 자동 게시를 켜면 아무도 못 보는 핀을 만들면서 큐만 소진한다. 그래서 publish.py가 standard가 아니면 게시를 거부한다. 앱이 standard로 승인된 뒤에만 이 값을 \"standard\"로 바꾼다.",
     "_mode_설명": "telegram=이미지+문구를 텔레그램으로 보내 사람이 수동 게시(현재). pinterest=Pinterest API v5 자동 게시(앱 승인 후 전환). 전환은 이 값 한 글자만 바꾸면 된다.",
     "pinterest_api": "https://api.pinterest.com/v5"
   }

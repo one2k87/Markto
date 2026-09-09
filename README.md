@@ -38,7 +38,8 @@ python -m unittest discover -s tests
 | `sites[].brand` | 핀 팔레트. 픽담 그린 `#12503A`·`#2E9E6B`·`#F7F5EF` — 블로그 리디자인·로고와 **같은 값이어야** 핀→사이트 이동에 이질감이 없다 |
 | `quota.per_day` | 하루 상한(기본 3). 코드가 강제한다 |
 | `quota.min_hours_between_same_post` | 같은 글 재게시 최소 간격(기본 720시간=30일) |
-| `publish.mode` | `telegram`(현재) / `pinterest`(API 승인 후) — **이 한 값만 바꾸면 자동 게시로 전환** |
+| `publish.mode` | `telegram`(현재) / `pinterest`(API 승인 후) |
+| `publish.access_tier` | `trial`(현재) / `standard`. **trial 핀은 Sandbox라 만든 사람만 보인다** — 그래서 standard가 아니면 코드가 게시를 거부한다 |
 
 ## 시크릿 (GitHub Actions)
 
@@ -47,7 +48,7 @@ python -m unittest discover -s tests
 | `LLM_API_KEY` | 예 | Gemini. 캐스토와 같은 값 (`공유_경계.md`) |
 | `LLM_MODEL` | 선택 | 기본 `gemini-2.5-flash` |
 | `TELEGRAM_TOKEN` / `TELEGRAM_CHAT_ID` | 예 | 수동 게시용 전송 |
-| `PINTEREST_TOKEN` | 승인 후 | 스코프 `boards:read`, `pins:write` |
+| `PINTEREST_TOKEN` | 승인 후 | 스코프 `boards:read`, `pins:write`. **standard 승인 후에만 의미가 있다** |
 | `PINTEREST_BOARD_ID_PICKDAM` | 승인 후 | 없으면 보드 이름으로 조회 |
 
 키가 하나도 없어도 파이프라인은 죽지 않는다 — 폴백 문구로 이미지를 만들고 전송만 건너뛴다.
@@ -63,6 +64,10 @@ python -m unittest discover -s tests
   `thinkingBudget=0` + MAX_TOKENS 재시도.
 - **GitHub Actions에서 `git add`에 없는 경로를 나열하면 pathspec 에러**가 나고 `|| true`가
   그걸 삼켜 커밋이 조용히 건너뛰어진다. `git add -A data`로 붙인다.
+- **Pinterest trial 등급의 핀은 Sandbox — 만든 사람에게만 보인다**(공식 문서, 2026-09-09).
+  trial로 자동 게시를 켜면 아무도 못 보는 핀을 만들면서 큐를 태운다(핀 완료로 기록돼 30일간 재시도 없음).
+  `publish.access_tier`가 `standard`가 아니면 `publish.py`가 게시를 거부한다.
+  계정·API 준비 절차는 `docs/핀터레스트_계정_준비.md`.
 
 ## 하지 말아야 할 것
 

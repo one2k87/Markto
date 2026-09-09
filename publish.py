@@ -49,11 +49,29 @@ def find_board_id(site, cfg):
     raise RuntimeError(f"보드 '{want}' 를 찾지 못했습니다 — 핀터레스트에서 먼저 만들어 주세요")
 
 
+def require_standard_access(cfg):
+    """**trial 등급에서는 게시를 거부한다.**
+
+    Pinterest 공식 문서: "all Pins and Boards created with Trial access are only visible to
+    their creator as Sandbox entities" (2026-09-09 확인). trial로 자동 게시를 켜면
+    ①아무도 볼 수 없는 핀이 만들어지고 ②make_pin이 그 글을 '핀 완료'로 기록해 큐에서 빼버려
+    30일간 재시도도 안 된다. 즉 조용히 백로그를 태운다 — 그래서 코드가 막는다.
+    """
+    tier = (cfg["publish"].get("access_tier") or "trial").lower()
+    if tier != "standard":
+        raise SystemExit(
+            "Pinterest 앱이 아직 standard 등급이 아닙니다(현재: %s).\n"
+            "trial 등급의 핀은 Sandbox라 만든 사람만 볼 수 있어 유입이 0입니다.\n"
+            "→ markto.json의 publish.mode는 \"telegram\"으로 두고 수동 게시를 유지하세요.\n"
+            "   standard 승인 후 access_tier를 \"standard\"로 바꾸면 자동 게시가 열립니다." % tier)
+
+
 def publish_pin(image_path, copy, post, site, cfg):
     """핀 1건 게시. 성공하면 pin id 문자열, 실패하면 False.
 
     이미지는 base64로 직접 올린다(외부에 이미지 URL을 두지 않아도 되므로 경로가 단순하다).
     """
+    require_standard_access(cfg)
     base = cfg["publish"]["pinterest_api"]
     with open(image_path, "rb") as f:
         b64 = base64.b64encode(f.read()).decode()
