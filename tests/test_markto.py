@@ -166,6 +166,18 @@ class TestCopy(Base):
         self.assertTrue(c["_fallback"])
         self.assertTrue(c["title"])
 
+    def test_폴백_제목은_낱말_중간에서_끊지_않는다(self):
+        long = "새 아파트 시스템 가전, 2026년 9월 4인 가족 기준 1,000만원 절약하는 설치 전략"
+        c = make_pin.fallback_copy({"title": long, "excerpt": ""}, common.site_by_key("pickdam"))
+        self.assertLessEqual(len(c["title"]), 40)
+        self.assertFalse(c["title"].endswith(" "))
+        self.assertTrue(long.startswith(c["title"]))
+
+    def test_짧은_제목은_그대로_둔다(self):
+        c = make_pin.fallback_copy({"title": "건조기 필터", "excerpt": ""},
+                                   common.site_by_key("pickdam"))
+        self.assertEqual(c["title"], "건조기 필터")
+
     def test_캡션에_링크와_보드가_들어간다(self):
         site = common.site_by_key("pickdam")
         cfg = common.cfg()

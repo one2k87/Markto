@@ -56,7 +56,10 @@ jobs:
           git config user.email markto@solvup.local
           # 함정: git add에 없는 경로를 나열하면 pathspec 에러가 나고 `|| true`가 그걸 삼켜
           # 커밋이 조용히 건너뛰어진다(캐스토 실측). 디렉터리 단위 -A 로 붙인다.
-          git add -A data
+          #
+          # dashboard/pins 도 반드시 붙인다 — 2026-09-09 첫 실행에서 data만 커밋되어
+          # 핀 이미지가 레포에 올라가지 않았고, 대시보드가 이미지를 보여주지 못했다(실측).
+          git add -A data dashboard/pins
           git commit -m "핀 기록 $(TZ=Asia/Seoul date +%F)" || echo "변경 없음 — 커밋 생략"
           git pull --rebase --autostash origin main && git push origin main
 

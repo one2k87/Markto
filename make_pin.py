@@ -74,13 +74,26 @@ PROMPT = """너는 한국 핀터레스트에서 블로그 유입을 만드는 �
 JSON 스키마: {{"image_text":"","title":"","description":"","kicker":"","hashtags":[]}}"""
 
 
+def clip(s, n):
+    """n자 이내로 자르되 **낱말 중간에서 끊지 않는다.**
+    2026-09-09 첫 실행 실측: 폴백 제목이 그대로 잘려 "…1,000만원 "으로 끝났다."""
+    s = (s or "").strip()
+    if len(s) <= n:
+        return s
+    cut = s[:n]
+    sp = max(cut.rfind(" "), cut.rfind("·"), cut.rfind(","))
+    if sp >= n * 0.6:            # 너무 앞에서 끊기면 그냥 n자로 둔다
+        cut = cut[:sp]
+    return cut.rstrip(" ,·-—") 
+
+
 def fallback_copy(post, site, tag_n=4):
     """LLM 없이도 파이프라인이 굴러가게 하는 최소 문구.
     (키 미등록·쿼터 초과 상황에서 '아무것도 안 만들어짐'보다 낫다. 품질은 LLM 경로가 담당한다.)"""
     t = re.sub(r"\s*[\|\-–—]\s*.*$", "", post["title"]).strip()
     return {
-        "image_text": t[:22],
-        "title": post["title"][:40],
+        "image_text": clip(t, 22),
+        "title": clip(post["title"], 40),
         "description": (post.get("excerpt") or post["title"])[:200],
         "kicker": site.get("tagline", "")[:6],
         "hashtags": [],
