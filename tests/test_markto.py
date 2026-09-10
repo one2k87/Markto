@@ -420,10 +420,27 @@ class TestIndexNow(Base):
         eps = " ".join(common.cfg()["indexnow"]["endpoints"])
         self.assertNotIn("google", eps.lower())
 
-    def test_모든_사이트에_키가_있다(self):
-        for s in common.cfg()["sites"]:
-            k = s.get("indexnow_key", "")
-            self.assertRegex(k, r"^[0-9a-f-]{8,128}$", f"{s['key']} 키 형식이 규격에 맞지 않습니다")
+    def test_키가_있는_사이트는_규격에_맞는_형식이다(self):
+        """키가 없는 사이트는 정상이다 — 아직 키 파일을 안 올린 사이트는 건너뛴다."""
+        keyed = [s for s in common.cfg()["sites"] if s.get("indexnow_key")]
+        self.assertTrue(keyed, "키를 가진 사이트가 하나도 없습니다")
+        for s in keyed:
+            self.assertRegex(s["indexnow_key"], r"^[0-9a-f-]{8,128}$",
+                             f"{s['key']} 키 형식이 규격에 맞지 않습니다")
+
+    def test_키_없는_사이트는_조용히_건너뛴다(self):
+        """매일 도는 작업이라, 아직 준비 안 된 사이트가 로그를 오염시키면 안 된다."""
+        site = dict(common.site_by_key("pickdam"))
+        site.pop("indexnow_key", None)
+        called = []
+        real = self.ix.requests.get
+        self.ix.requests.get = lambda *a, **k: called.append(1) or _Resp(200, {})
+        try:
+            ok, msg = self.ix.key_file_ok(site)
+        finally:
+            self.ix.requests.get = real
+        self.assertFalse(ok)
+        self.assertEqual(called, [], "키가 없는데 네트워크를 때렸다")
 
     def test_키_파일이_없으면_통보하지_않는다(self):
         """이게 없으면 키 파일을 안 올린 채 매일 403을 받는다."""
