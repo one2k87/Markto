@@ -54,7 +54,13 @@ jobs:
           PINTEREST_BOARD_ID_PICKDAM: ${{ secrets.PINTEREST_BOARD_ID_PICKDAM }}
         run: python make_pin.py ${{ github.event.inputs.count }}
 
-      - name: 기록 커밋 (queue.json · pins.json)
+      # 핀 제작과 독립적으로 돈다 — 핀을 못 만든 날도 색인 통보는 나가야 한다.
+      # 실패해도 워크플로를 세우지 않는다(색인 통보는 부가 기능, 핀 기록 커밋이 더 중요하다).
+      - name: 색인 통보 (네이버·빙 IndexNow)
+        continue-on-error: true
+        run: python indexnow.py
+
+      - name: 기록 커밋 (queue.json · pins.json · indexnow.json)
         run: |
           git config user.name markto-bot
           git config user.email markto@solvup.local

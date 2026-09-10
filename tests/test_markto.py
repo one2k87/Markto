@@ -16,6 +16,7 @@ import common          # noqa: E402
 import collect         # noqa: E402
 import make_pin        # noqa: E402
 import pin_image       # noqa: E402
+import indexnow        # noqa: E402
 
 
 class _Resp:
@@ -28,6 +29,10 @@ class _Resp:
 
     def json(self):
         return self._payload
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise RuntimeError(f"HTTP {self.status_code}")
 
 
 class Base(unittest.TestCase):
@@ -394,3 +399,121 @@ class TestOauthSetup(Base):
         got = set(oauth_setup.SCOPES.split(","))
         self.assertEqual(got, {"boards:read", "pins:read", "pins:write"})
         self.assertFalse([s for s in got if "secret" in s], "비공개 스코프를 요청하고 있다")
+
+
+class TestIndexNow(Base):
+    """색인 통보. 네트워크 없이 대역으로만 검증한다."""
+
+    def setUp(self):
+        super().setUp()
+        import indexnow
+        self.ix = indexnow
+
+    def test_설정이_켜져_있고_두_엔드포인트를_쓴다(self):
+        c = common.cfg()["indexnow"]
+        self.assertTrue(c["enabled"])
+        self.assertIn("https://searchadvisor.naver.com/indexnow", c["endpoints"])
+        self.assertTrue(any("indexnow.org" in e for e in c["endpoints"]))
+
+    def test_구글_엔드포인트는_넣지_않는다(self):
+        """구글은 IndexNow를 받지 않는다 — 넣어두면 매 실행마다 실패 로그만 쌓인다."""
+        eps = " ".join(common.cfg()["indexnow"]["endpoints"])
+        self.assertNotIn("google", eps.lower())
+
+    def test_모든_사이트에_키가_있다(self):
+        for s in common.cfg()["sites"]:
+            k = s.get("indexnow_key", "")
+            self.assertRegex(k, r"^[0-9a-f-]{8,128}$", f"{s['key']} 키 형식이 규격에 맞지 않습니다")
+
+    def test_키_파일이_없으면_통보하지_않는다(self):
+        """이게 없으면 키 파일을 안 올린 채 매일 403을 받는다."""
+        site = common.site_by_key("pickdam")
+        real = self.ix.requests.get
+        self.ix.requests.get = lambda *a, **k: _Resp(404, {})
+        try:
+            ok, msg = self.ix.key_file_ok(site)
+        finally:
+            self.ix.requests.get = real
+        self.assertFalse(ok)
+        self.assertIn("404", msg)
+
+    def test_키_파일_내용이_다르면_거부한다(self):
+        site = common.site_by_key("pickdam")
+        real = self.ix.requests.get
+        r = _Resp(200, {})
+        r.text = "다른값"
+        self.ix.requests.get = lambda *a, **k: r
+        try:
+            ok, msg = self.ix.key_file_ok(site)
+        finally:
+            self.ix.requests.get = real
+        self.assertFalse(ok)
+
+    def test_본문에_host_key_keyLocation_urlList가_모두_들어간다(self):
+        """하나라도 빠지면 422로 조용히 거절된다."""
+        site = common.site_by_key("pickdam")
+        sent = []
+        real = self.ix.requests.post
+        self.ix.requests.post = lambda ep, **k: (sent.append((ep, k.get("json"))), _Resp(200, {}))[1]
+        try:
+            n = self.ix.submit(site, ["https://pickdam.com/a/"], ["https://e1", "https://e2"])
+        finally:
+            self.ix.requests.post = real
+        self.assertEqual(n, 2, "엔드포인트 두 곳 모두에 보내지 않았다")
+        body = sent[0][1]
+        self.assertEqual(body["host"], "pickdam.com")
+        self.assertEqual(body["key"], site["indexnow_key"])
+        self.assertIn(site["indexnow_key"] + ".txt", body["keyLocation"])
+        self.assertEqual(body["urlList"], ["https://pickdam.com/a/"])
+
+    def test_202도_성공으로_센다(self):
+        """IndexNow는 202(접수됨)를 정상 응답으로 쓴다. 실패로 세면 기록이 안 남는다."""
+        site = common.site_by_key("pickdam")
+        real = self.ix.requests.post
+        self.ix.requests.post = lambda ep, **k: _Resp(202, {})
+        try:
+            n = self.ix.submit(site, ["https://pickdam.com/a/"], ["https://e1"])
+        finally:
+            self.ix.requests.post = real
+        self.assertEqual(n, 1)
+
+    def test_이미_보낸_URL은_다시_보내지_않는다(self):
+        common.save_json(self.ix.STATE, {"sent": ["https://pickdam.com/a/"]})
+        site = common.site_by_key("pickdam")
+        calls = []
+        real_get, real_post = self.ix.requests.get, self.ix.requests.post
+        keyr = _Resp(200, {})
+        keyr.text = site["indexnow_key"]
+
+        def fake_get(url, **k):
+            if url.endswith(".txt"):
+                return keyr
+            r = _Resp(200, [{"link": "https://pickdam.com/a/"}, {"link": "https://pickdam.com/b/"}])
+            return r
+
+        self.ix.requests.get = fake_get
+        self.ix.requests.post = lambda ep, **k: (calls.append(k.get("json")), _Resp(200, {}))[1]
+        try:
+            self.ix.run()
+        finally:
+            self.ix.requests.get, self.ix.requests.post = real_get, real_post
+        urls = [u for c in calls for u in c["urlList"]]
+        self.assertIn("https://pickdam.com/b/", urls)
+        self.assertNotIn("https://pickdam.com/a/", urls, "이미 보낸 URL을 다시 보냈다")
+
+    def test_max_per_run을_넘기지_않는다(self):
+        site = common.site_by_key("pickdam")
+        cap = common.cfg()["indexnow"]["max_per_run"]
+        many = [{"link": f"https://pickdam.com/p{i}/"} for i in range(cap + 10)]
+        calls = []
+        real_get, real_post = self.ix.requests.get, self.ix.requests.post
+        keyr = _Resp(200, {})
+        keyr.text = site["indexnow_key"]
+        self.ix.requests.get = lambda url, **k: keyr if url.endswith(".txt") else _Resp(200, many)
+        self.ix.requests.post = lambda ep, **k: (calls.append(k.get("json")), _Resp(200, {}))[1]
+        try:
+            self.ix.run()
+        finally:
+            self.ix.requests.get, self.ix.requests.post = real_get, real_post
+        for c in calls:
+            self.assertLessEqual(len(c["urlList"]), cap)

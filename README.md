@@ -15,6 +15,7 @@
 ③ 이미지 pin_image.py  PIL 1000×1500(2:3) 픽담 그린 타이포 카드
 ④ 게시   make_pin.py   텔레그램 전송(수동 게시) → API 승인 후 publish.py 자동 게시
 ⑤ 기록   data/pins.json
+⑥ 통보   indexnow.py   발행 글을 네이버·빙에 즉시 알림 (구글은 IndexNow를 받지 않는다)
 ```
 
 ## 실행
@@ -37,6 +38,8 @@ python -m unittest discover -s tests
 | `sites[].enabled` | 대상 사이트. **1단계는 픽담만 true.** 원더랜드는 계정·소유권 확인 후 true로 바꾸면 코드 수정 없이 합류 |
 | `sites[].brand` | 핀 팔레트. 픽담 그린 `#12503A`·`#2E9E6B`·`#F7F5EF` — 블로그 리디자인·로고와 **같은 값이어야** 핀→사이트 이동에 이질감이 없다 |
 | `quota.per_day` | 하루 상한(기본 3). 코드가 강제한다 |
+| `indexnow.enabled` | 색인 통보 on/off |
+| `sites[].indexnow_key` | IndexNow 키. **비밀이 아니다** — 규격상 `https://<사이트>/<키>.txt` 에 공개로 올려야 소유 증명이 된다. 키 파일이 없으면 `indexnow.py`가 통보를 건너뛴다 |
 | `quota.min_hours_between_same_post` | 같은 글 재게시 최소 간격(기본 720시간=30일) |
 | `publish.mode` | `telegram`(현재) / `pinterest`(API 승인 후) |
 | `publish.access_tier` | `trial`(현재) / `standard`. **trial 핀은 Sandbox라 만든 사람만 보인다** — 그래서 standard가 아니면 코드가 게시를 거부한다 |

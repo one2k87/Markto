@@ -20,7 +20,8 @@
       },
       "_brand_설명": "픽담 브랜드 그린 — Picto/brand/make_brand_images.py(로고·OG)와 같은 값. 사이트 리디자인 팔레트와 동일해야 핀→사이트 이동 시 이질감이 없다. 바꿀 때 양쪽을 함께 바꾼다.",
       "wordmark": "픽담",
-      "tagline": "사기 전에 확인하는 곳"
+      "tagline": "사기 전에 확인하는 곳",
+      "indexnow_key": "29b88652f34d231d7ba239e63f306055"
     },
     {
       "key": "wontheland",
@@ -38,7 +39,8 @@
         "muted": [166, 187, 214]
       },
       "wordmark": "원더랜드",
-      "tagline": "오늘 필요한 생활정보"
+      "tagline": "오늘 필요한 생활정보",
+      "indexnow_key": "d0f41e40f271a94443c4f311382d3f83"
     }
   ],
 
@@ -67,6 +69,18 @@
     "min_days_old": 0,
     "skip_categories": [],
     "_설명": "WP REST에서 가져올 글 범위. min_days_old=발행 후 N일 지난 글만 대상(0=제한 없음)."
+  },
+
+  "indexnow": {
+    "enabled": true,
+    "endpoints": [
+      "https://searchadvisor.naver.com/indexnow",
+      "https://api.indexnow.org/indexnow"
+    ],
+    "max_per_run": 20,
+    "_설명": "발행 글을 네이버·빙에 즉시 통보한다. 사이트맵만으로는 신생 사이트의 크롤을 기다려야 한다(픽담 실측: 글 16편 중 색인 5편). 구글은 IndexNow를 받지 않으므로 여기 대상이 아니다.",
+    "_키_설명": "sites[].indexnow_key. 규격상 https://<사이트>/<키>.txt 에 공개로 올려야 소유 증명이 되므로 비밀이 아니다. 키 파일이 없으면 indexnow.py가 통보를 건너뛴다.",
+    "_사이트_설명": "sites[].enabled와 무관하게 indexnow_key가 있고 키 파일이 확인되는 사이트를 모두 통보한다 — 핀 게시와 색인 통보는 별개의 일이다."
   },
 
   "publish": {
