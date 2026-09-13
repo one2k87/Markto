@@ -276,10 +276,6 @@ class TestImage(Base):
         self.assertIn("KR", fam)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class TestPinterestToken(Base):
     """액세스 토큰 30일 만료 사고를 막는 층. 네트워크는 부르지 않는다."""
 
@@ -534,3 +530,7 @@ class TestIndexNow(Base):
             self.ix.requests.get, self.ix.requests.post = real_get, real_post
         for c in calls:
             self.assertLessEqual(len(c["urlList"]), cap)
+
+
+if __name__ == "__main__":
+    unittest.main()
