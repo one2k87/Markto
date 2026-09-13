@@ -212,6 +212,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 71,
+   "post_title": "정수기 필터 3개월 주기 놓치면 침전 필터 5천 원으로도 해결 못 하는 물맛 변화, 자가 교체 전 3가지 필수 확인 사항",
+   "url": "https://pickdam.com/water-purifier-filter-replacement-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "정수기 필터 교체 주기 3개월 놓치면? 자가 교체 전 3가지 필수 확인",
+   "pin_desc": "정수기 필터 교체 주기를 놓쳐 물맛이 이상해졌다면, 이 글을 꼭 확인하세요. 2026년 9월 기준 평대 정수기 필터 자가 교체에 필요한 준비물과 주의사항, 예상 비용 범위를 자세히 알려드립니다. 흔한 실수와 올바른 교체 방법으로 깨끗한 물을 마시는 팁을 얻어가세요.",
+   "hashtags": [
+    "정수기필터",
+    "정수기자가교체",
+    "정수기관리",
+    "물맛변화"
+   ],
+   "image": "out/pin_pickdam_71.png",
+   "made_at": "2026-09-13T15:17:47+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 90,
+   "post_title": "현관문 문풍지, 틈새 3mm 이상이라면 모헤어, 1mm 미만이라면 실리콘 틈막이로 난방비 15% 절약하는 조건",
+   "url": "https://pickdam.com/door-draft-stopper-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "현관문 문풍지, 틈새 크기별 난방비 절약법",
+   "pin_desc": "현관문 문풍지 선택, 틈새 크기에 따라 난방비 15% 절약하는 방법을 알려드려요. 3mm 이상 틈새에는 모헤어, 1mm 미만 틈새에는 실리콘 틈막이가 효과적입니다. 우리집에 꼭 맞는 문풍지 선택으로 외풍, 소음, 미세먼지까지 한번에 해결하는 구체적인 팁을 확인하세요.",
+   "hashtags": [
+    "현관문틈막이",
+    "문풍지추천",
+    "난방비절약",
+    "외풍차단"
+   ],
+   "image": "out/pin_pickdam_90.png",
+   "made_at": "2026-09-13T15:17:51+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
