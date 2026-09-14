@@ -1,28 +1,6 @@
 {
- "built_at": "2026-09-13T15:17:43+09:00",
+ "built_at": "2026-09-14T15:25:42+09:00",
  "items": [
-  {
-   "id": 100,
-   "site": "pickdam",
-   "title": "비데 자가설치, 생각보다 어려울까? 2026년 9월 기준 모델별 비교와 설치 전 확인 사항",
-   "url": "https://pickdam.com/bidet-self-installation-guide-2026/",
-   "excerpt": "2026년 9월, 비데 자가설치를 고민 중이라면 필독! 간편형부터 다기능형까지 다양한 비데 자가설치형 모델들의 가격대, 설치 난이도를 비교하고, 누구나 쉽게 따라 할 수 있는 설치 전 필수 확인 사항과 흔한 실수들을 자세히 알아봅니다.",
-   "date": "2026-09-09T11:59:00",
-   "categories": [
-    2
-   ]
-  },
-  {
-   "id": 164,
-   "site": "pickdam",
-   "title": "비데 자가설치, 흔한 고장 원인과 2026년 9월 모델별 비교로 현명한 선택",
-   "url": "https://pickdam.com/bidet-self-installation-2026-sep-comparison/",
-   "excerpt": "2026년 9월 기준 비데 자가설치형 모델 선택 가이드. 설치 전 확인 사항부터 고장 원인, 직수형과 저수조형의 장단점 비교로 우리 집에 딱 맞는 비데를 찾는 방법을 소개합니다.",
-   "date": "2026-09-09T21:39:21",
-   "categories": [
-    2
-   ]
-  },
   {
    "id": 201,
    "site": "pickdam",
@@ -49,7 +27,7 @@
    "id": 216,
    "site": "pickdam",
    "title": "음식물처리기 탈취필터 3개월마다 교체하지 않으면, 주방 냄새 왜 더 심해지는가",
-   "url": "https://pickdam.com/eumsikmulcheorigi-talchwipilteo-naemsae-an-nage-jettae/",
+   "url": "https://pickdam.com/food-waste-disposer-deodorizing-filter-replacement/",
    "excerpt": "음식물처리기는 주방 위생을 위한 필수 가전으로 자리 잡았지만, 정작 중요한 탈취필터 관리를 소홀히 하여 악취 문제에 시달리는 가정이 많습니다.",
    "date": "2026-09-12T08:35:33",
    "categories": [
@@ -60,9 +38,20 @@
    "id": 222,
    "site": "pickdam",
    "title": "제습기 20L 용량, 30평대 아파트에서 곰팡이 해결보다 전기요금 폭탄 맞는 3가지 이유",
-   "url": "https://pickdam.com/jeseupgi-20l-uri-jip-pyeongsue-matneun-yongryang-seontaek/",
+   "url": "https://pickdam.com/dehumidifier-20l-electricity-bill-30pyeong/",
    "excerpt": "✍️ 편집부 · 최종 업데이트 2026년 9월 13일 ⚠️ 본 콘텐츠(텍스트·이미지)는 생성형 AI를 통해 작성되었습니다.",
    "date": "2026-09-13T08:29:18",
+   "categories": [
+    2
+   ]
+  },
+  {
+   "id": 228,
+   "site": "pickdam",
+   "title": "음식물처리기 냄새, 탈취필터만 제때 갈면 정말 괜찮을까요?",
+   "url": "https://pickdam.com/food-waste-smell-filter-cleaning/",
+   "excerpt": "2026년 9월 기준, 음식물처리기 냄새 문제로 고민이시라면 탈취필터 교체주기와 올바른 청소법을 확인하세요. 고단가 키워드 분석을 통해 효과적인 관리 팁을 알려드립니다.",
+   "date": "2026-09-14T08:38:14",
    "categories": [
     2
    ]
