@@ -50,10 +50,16 @@ class Base(unittest.TestCase):
         # (러너에는 시크릿이 있으므로 이 격리가 없으면 CI에서 진짜 API를 때린다)
         self.env = {k: os.environ.pop(k, None)
                     for k in ("LLM_API_KEY", "TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID")}
+        # 생사 확인은 기본으로 "살아있음"을 돌려준다. 실제로 네트워크를 때리면
+        # 테스트가 느려지고(막힌 환경에서 타임아웃마다 15초) 외부 상태에 의존하게 된다.
+        # 가드 자체는 TestLiveGuard가 requests를 직접 대역으로 바꿔 검증한다.
+        self.real_is_live = common.is_live
+        common.is_live = lambda url, timeout=15: True
 
     def tearDown(self):
         common.ROOT = self.real_root
         common.wp_posts = self.real_wp
+        common.is_live = self.real_is_live
         make_pin.OUT = os.path.join(self.real_root, "out")
         for k, v in self.env.items():
             if v is not None:
@@ -531,6 +537,67 @@ class TestIndexNow(Base):
         for c in calls:
             self.assertLessEqual(len(c["urlList"]), cap)
 
+
+class TestLiveGuard(Base):
+    """내려간 글로 핀을 만들지 않는다. 2026-09-15 실측 사고에서 나온 층."""
+
+    def setUp(self):
+        super().setUp()
+        common.is_live = self.real_is_live      # 이 묶음만 진짜 가드를 검증한다
+
+    def test_200이_아니면_죽은_글로_본다(self):
+        real = common.requests.head
+        common.requests.head = lambda *a, **k: _Resp(404, {})
+        try:
+            self.assertFalse(common.is_live("https://pickdam.com/gone/"))
+        finally:
+            common.requests.head = real
+
+    def test_200이면_살아있는_글이다(self):
+        real = common.requests.head
+        common.requests.head = lambda *a, **k: _Resp(200, {})
+        try:
+            self.assertTrue(common.is_live("https://pickdam.com/alive/"))
+        finally:
+            common.requests.head = real
+
+    def test_HEAD를_막는_서버는_GET으로_다시_본다(self):
+        """405를 죽은 글로 세면 멀쩡한 사이트가 통째로 막힌다."""
+        real_h, real_g = common.requests.head, common.requests.get
+        common.requests.head = lambda *a, **k: _Resp(405, {})
+        common.requests.get = lambda *a, **k: _Resp(200, {})
+        try:
+            self.assertTrue(common.is_live("https://pickdam.com/no-head/"))
+        finally:
+            common.requests.head, common.requests.get = real_h, real_g
+
+    def test_네트워크가_막히면_통과시킨다(self):
+        """확인 못 했다는 이유로 정상 글을 막으면 파이프라인이 통째로 선다."""
+        real = common.requests.head
+
+        def boom(*a, **k):
+            raise common.requests.RequestException("no egress")
+
+        common.requests.head = boom
+        try:
+            self.assertTrue(common.is_live("https://pickdam.com/whatever/"))
+        finally:
+            common.requests.head = real
+
+    def test_내려간_글은_핀을_만들지_않는다(self):
+        """이게 없으면 404를 가리키는 핀이 보드에 올라간다(핀 #164 실측)."""
+        import make_pin
+        common.save_json("queue.json", {"items": [
+            {"id": 901, "site": "pickdam", "title": "내려간 글", "excerpt": "x",
+             "url": "https://pickdam.com/gone/", "date": "2026-09-01T00:00:00", "categories": []},
+        ]})
+        real = common.requests.head
+        common.requests.head = lambda *a, **k: _Resp(404, {})
+        try:
+            made = make_pin.run(1)
+        finally:
+            common.requests.head = real
+        self.assertEqual(made, [], "내려간 글로 핀을 만들었다")
 
 if __name__ == "__main__":
     unittest.main()

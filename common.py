@@ -127,6 +127,33 @@ def wp_posts(site, per_page=50, pages=4, timeout=30):
     return out
 
 
+def is_live(url, timeout=15):
+    """글이 아직 **공개 상태인지** 확인한다. 200이 아니면 핀을 만들지 않는다.
+
+    왜 필요한가(2026-09-15 실측). 9/14 크론이 픽담 #164로 핀을 만들어 텔레그램까지
+    보냈는데, 그 글은 그 사이 비공개로 바뀌어 지금 **404**다. 수집(collect.py)은
+    WP REST에서 공개 글만 받지만, **수집과 게시 사이에 글이 내려갈 수 있다.**
+    죽은 링크를 가리키는 핀은 핀터레스트 계정 평판에 직접 해롭고, 지금은 API 심사
+    중이라 더 위험하다.
+
+    네트워크가 막힌 환경에서는 판단을 보류하고 True를 돌려준다 — 확인 못 했다는
+    이유로 정상 글을 막으면 파이프라인이 통째로 선다.
+    """
+    try:
+        r = requests.head(url, timeout=timeout, allow_redirects=True,
+                          headers={"User-Agent": "markto/1.0"})
+        if r.status_code == 405:          # HEAD를 막는 서버가 있다
+            r = requests.get(url, timeout=timeout, allow_redirects=True,
+                             headers={"User-Agent": "markto/1.0"})
+    except requests.RequestException as e:   # noqa: BLE001
+        print(f"[live] {url} 확인 실패({e}) — 통과시킵니다")
+        return True
+    if r.status_code != 200:
+        print(f"[live] {url} → HTTP {r.status_code} (내려간 글로 보고 건너뜁니다)")
+        return False
+    return True
+
+
 def with_utm(url, site):
     """핀 → 사이트 유입을 애널리틱스에서 분리 측정하기 위한 UTM 부착.
     성공 지표가 '핀 클릭·세션 유입'이므로 UTM 없이는 이 툴의 성과를 증명할 수 없다."""

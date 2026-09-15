@@ -167,6 +167,9 @@ def run(n=None, dry=False):
             break
         if (post["site"], post["id"]) in done_ids:
             continue
+        # 수집 이후 글이 내려갔을 수 있다 — 죽은 링크를 가리키는 핀은 만들지 않는다
+        if not dry and not common.is_live(post["url"]):
+            continue
         site = common.site_by_key(post["site"], cfg)
         copy = make_copy(post, site, cfg, dry=dry)
         path = os.path.join(OUT, f"pin_{post['site']}_{post['id']}.png")
