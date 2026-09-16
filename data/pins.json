@@ -1,341 +1,381 @@
 {
-  "_설명": "핀 대장 — 어떤 글로 언제 핀을 만들었는지. 같은 글 반복 게시(핀터레스트 스팸 판정 1순위)를 막는 근거 파일이므로 손으로 지우지 말 것.",
-  "pins": [
-    {
-      "site": "pickdam",
-      "post_id": 21,
-      "post_title": "비데 자가 설치 비용을 절약하는 데 필요한 공구와 주의사항을 확인합니다",
-      "url": "https://pickdam.com/bidet-self-installation-cost-saving-tips/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "비데 자가 설치 비용을 절약하는 데 필요한 공구와 주의사항을 확인합니다",
-      "pin_desc": "2026년 9월 기준, 비데 자가 설치로 비용을 절약하는 방법을 알아봅니다. 필요한 공구와 흔한 실수, 그리고 모델별 설치 난이도를 비교하여 성공적인 자가 설치를 돕는 정보를 제공합니다.",
-      "hashtags": [],
-      "image": "out/pin_pickdam_21.png",
-      "made_at": "2026-09-09T15:04:56+09:00",
-      "sent": false,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null,
-      "fallback_copy": true
-    },
-    {
-      "site": "pickdam",
-      "post_id": 24,
-      "post_title": "새 아파트 시스템 가전, 2026년 9월 4인 가족 기준 1,000만원 절약하는 설치 전략",
-      "url": "https://pickdam.com/new-apartment-system-appliance-guide-2026-september/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "새 아파트 시스템 가전, 2026년 9월 4인 가족 기준 1,000만원 ",
-      "pin_desc": "2026년 9월 새 아파트 입주를 앞두고 시스템 가전 설치를 고민하고 있다면 이 글을 참고하세요. 시스템 에어컨과 빌트인 주방 가전의 장단점, 2026년 기준 예상 비용을 비교하고 후회 없는 선택을 위한 주의사항까지 상세히 알려드립니다.",
-      "hashtags": [],
-      "image": "out/pin_pickdam_24.png",
-      "made_at": "2026-09-09T15:04:56+09:00",
-      "sent": false,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null,
-      "fallback_copy": true
-    },
-    {
-      "site": "pickdam",
-      "post_id": 32,
-      "post_title": "정수기 고장 시 수리비 12만 원 넘는다면, 새 렌탈 위약금 50만 원까지 면제받고 교체하는 3가지 방법",
-      "url": "https://pickdam.com/broken-water-purifier-rental-penalty-waiver-strategy/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "정수기 위약금 면제받고 새 걸로 바꾸는 3가지 방법",
-      "pin_desc": "정수기 고장으로 수리비 12만원 이상 나왔을 때, 새 정수기 렌탈로 갈아타면서 기존 위약금 50만원까지 면제받는 3가지 실질적인 방법을 소개합니다. 복잡한 위약금 구조를 이해하고 현명하게 대처하는 전략을 픽담에서 확인하여 불필요한 지출을 줄여보세요.",
-      "hashtags": [
-        "정수기렌탈",
-        "정수기고장",
-        "위약금면제",
-        "가전제품교체"
-      ],
-      "image": "out/pin_pickdam_32.png",
-      "made_at": "2026-09-09T21:45:06+09:00",
-      "sent": false,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 51,
-      "post_title": "2026년 9월, 고효율 가전 구매 시 최대 30만원 환급 받으려면 이 4가지 조건을 충족해야 합니다",
-      "url": "https://pickdam.com/high-efficiency-appliance-energy-cashback-2026-09/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "2026년 고효율 가전 환급 30만원? 핵심 조건 4가지",
-      "pin_desc": "2026년 고효율 가전제품 구매 시 최대 30만원 환급 혜택, 놓치지 마세요. 에너지 캐시백과 정부 지원 환급을 비교하고, 우리 집에 딱 맞는 신청 방법과 흔한 실수, 주의할 점까지 꼼꼼히 확인해서 전기 요금 절약하는 노하우를 알려드립니다. 픽담에서 사기 전에 꼭 확인하세요.",
-      "hashtags": [
-        "고효율가전",
-        "가전환급",
-        "에너지캐시백",
-        "전기요금절약"
-      ],
-      "image": "out/pin_pickdam_51.png",
-      "made_at": "2026-09-09T22:20:35+09:00",
-      "sent": false,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 53,
-      "post_title": "20평대 이사청소 30만원 vs 45만원, 계약서에 명시해야 할 3가지 필수 조항",
-      "url": "https://pickdam.com/moving-cleaning-quote-cost-comparison-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "20평대 이사청소, 30만원 vs 45만원? 계약서 필수조항 3가지",
-      "pin_desc": "20평대 이사청소 업체를 선정할 때 합리적인 비용 고르는 기준을 찾고 계신가요? 픽담에서 2026년 9월 이사 준비를 위한 청소 견적 비교 팁과 흔한 실수 및 실패 시나리오를 피하고 만족스러운 청소를 위한 핵심 계약서 조항 3가지를 알려드립니다.",
-      "hashtags": [
-        "이사청소",
-        "20평대이사청소",
-        "이사청소비용",
-        "이사청소체크리스트"
-      ],
-      "image": "out/pin_pickdam_53.png",
-      "made_at": "2026-09-09T22:31:21+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 57,
-      "post_title": "음식물처리기 렌탈 36개월 약정, 위약금 50만원 피하려면 이사 전 2가지 조건부터 확인해야 합니다",
-      "url": "https://pickdam.com/food-waste-disposer-rental-cancellation-fee/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "음식물처리기 렌탈 위약금 50만원 피하는 법 (이사 전 필수)",
-      "pin_desc": "음식물처리기 렌탈 위약금 걱정 없이 이사하고 싶다면 꼭 보세요. 정수기처럼 위약금 면제받고 새 제품으로 교체하는 3가지 방법과 흔한 실패 사례, 현명한 선택 기준을 이 글에서 자세히 알려드립니다. 이사 계획이 있다면 지금 바로 확인하고 불필요한 지출을 막으세요.",
-      "hashtags": [
-        "음식물처리기렌탈",
-        "렌탈위약금",
-        "이사준비",
-        "주방필수템"
-      ],
-      "image": "out/pin_pickdam_57.png",
-      "made_at": "2026-09-10T15:04:23+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 59,
-      "post_title": "포장이사 비용 20% 줄이려면, 짐 부피 측정부터 계약서 특약 3가지 확인해야 하는 이유",
-      "url": "https://pickdam.com/moving-packing-cost-conditions/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "포장이사 비용 20% 줄이는 3가지 핵심 조건 (2026년 9월)",
-      "pin_desc": "포장이사 비용 때문에 고민이 많으셨죠? 2026년 9월 이사 예정이라면 꼭 확인해야 할 정보입니다. 짐 부피 측정부터 계약서 특약 3가지까지, 추가 비용 없이 이사 견적을 합리적으로 받는 노하우를 픽담에서 상세히 알려드려요. 이사 사기 당하지 않고 현명하게 이사하는 방법을 알아보세요.",
-      "hashtags": [
-        "포장이사비용",
-        "이사견적",
-        "이사팁",
-        "이사준비"
-      ],
-      "image": "out/pin_pickdam_59.png",
-      "made_at": "2026-09-10T15:04:26+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 61,
-      "post_title": "새 아파트 시스템 에어컨, 30만원 추가 비용 막으려면 실외기실 너비 70cm부터 재야 하는 조건",
-      "url": "https://pickdam.com/new-apartment-system-aircon-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "새 아파트 시스템 에어컨 설치 전, 실외기실 너비 재는 법",
-      "pin_desc": "새 아파트 시스템 에어컨 설치 시 추가 비용 30만원을 막으려면 실외기실 너비 70cm를 꼭 확인해야 합니다. 이 글에서는 시스템 에어컨 설치 전 실외기실 너비를 정확히 재는 방법과 함께, 추가 비용 발생을 피할 수 있는 구체적인 조건을 알려드립니다. 계약 전 꼭 알아야 할 정보들을 확인하여 현명하게 에어컨을 준비하세요.",
-      "hashtags": [
-        "시스템에어컨",
-        "아파트인테리어",
-        "실외기실",
-        "에어컨설치"
-      ],
-      "image": "out/pin_pickdam_61.png",
-      "made_at": "2026-09-11T15:06:30+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 63,
-      "post_title": "새 가전 장기 무이자 할부, 24개월 조건 충족하려면 최소 200만원 이상 결제해야 하는 이유",
-      "url": "https://pickdam.com/new-appliance-installment-plan-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "새 가전 24개월 무이자 할부, 200만원 이상 결제해야 하는 이유",
-      "pin_desc": "새 가전 장기 무이자 할부 조건을 찾고 있다면 주목하세요. 2026년 9월 최신 정보를 바탕으로 카드사별 24개월 이상 무이자 할부 조건을 상세히 비교 분석합니다. 고가 가전 구매 시 현명한 할부 선택 기준과 흔히 저지르는 실수를 파악하고, 최적의 결제 플랜을 세워 후회 없는 구매를 할 수 있도록 도와드립니다.",
-      "hashtags": [
-        "가전제품",
-        "무이자할부",
-        "카드혜택",
-        "가전구매가이드"
-      ],
-      "image": "out/pin_pickdam_63.png",
-      "made_at": "2026-09-11T15:06:33+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 65,
-      "post_title": "환기 시스템 렌탈과 구매 고민이라면, 2026년 9월 설치 전 우리 집 최적 비용부터 따져야 합니다",
-      "url": "https://pickdam.com/kitchen-ventilation-rental-vs-buy-2026-september/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "환기 시스템 렌탈 vs 구매, 2026년 최적 비용 가이드",
-      "pin_desc": "환기 시스템 렌탈과 구매 중 어떤 선택이 우리 집에 최적의 비용 효율을 가져올지 고민이라면, 2026년 9월 설치 전 반드시 고려해야 할 핵심 요소를 알려드립니다. 숨겨진 비용과 조건별 선택 가이드를 통해 우리 집에 딱 맞는 합리적인 결정을 내릴 수 있도록 픽담이 도와드립니다.",
-      "hashtags": [
-        "환기시스템",
-        "주방환기",
-        "가전고민",
-        "렌탈구매"
-      ],
-      "image": "out/pin_pickdam_65.png",
-      "made_at": "2026-09-12T14:54:44+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 67,
-      "post_title": "음식물처리기 보상 판매, 렌탈 약정 18개월 미만이라면 위약금 30% 발생, 설치 전 배수관 규격 40mm 재야 하는 이유",
-      "url": "https://pickdam.com/food-waste-disposer-trade-in-vs-rental-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "음식물처리기 보상 판매 전, 위약금 30% 피하는 법",
-      "pin_desc": "음식물처리기 보상 판매나 렌탈을 고민 중이라면, 18개월 미만 약정 시 발생하는 위약금 30%에 대해 꼭 확인하세요. 이 글에서는 위약금 발생 조건과 설치 전 배수관 규격 40mm를 재야 하는 이유 등, 구매 전 반드시 알아야 할 핵심 정보를 상세히 알려드립니다. 픽담에서 현명한 구매를 위한 팁을 얻어가세요.",
-      "hashtags": [
-        "음식물처리기",
-        "음식물처리기렌탈",
-        "음식물처리기위약금",
-        "주방필수템"
-      ],
-      "image": "out/pin_pickdam_67.png",
-      "made_at": "2026-09-12T14:54:47+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 71,
-      "post_title": "정수기 필터 3개월 주기 놓치면 침전 필터 5천 원으로도 해결 못 하는 물맛 변화, 자가 교체 전 3가지 필수 확인 사항",
-      "url": "https://pickdam.com/water-purifier-filter-replacement-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "정수기 필터 교체 주기 3개월 놓치면? 자가 교체 전 3가지 필수 확인",
-      "pin_desc": "정수기 필터 교체 주기를 놓쳐 물맛이 이상해졌다면, 이 글을 꼭 확인하세요. 2026년 9월 기준 평대 정수기 필터 자가 교체에 필요한 준비물과 주의사항, 예상 비용 범위를 자세히 알려드립니다. 흔한 실수와 올바른 교체 방법으로 깨끗한 물을 마시는 팁을 얻어가세요.",
-      "hashtags": [
-        "정수기필터",
-        "정수기자가교체",
-        "정수기관리",
-        "물맛변화"
-      ],
-      "image": "out/pin_pickdam_71.png",
-      "made_at": "2026-09-13T15:17:47+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": "2026-09-14T00:35:00+09:00",
-      "posted_via": "수동(크롬 자동화) — 핀터레스트 API standard 승인 전"
-    },
-    {
-      "site": "pickdam",
-      "post_id": 90,
-      "post_title": "현관문 문풍지, 틈새 3mm 이상이라면 모헤어, 1mm 미만이라면 실리콘 틈막이로 난방비 15% 절약하는 조건",
-      "url": "https://pickdam.com/door-draft-stopper-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "현관문 문풍지, 틈새 크기별 난방비 절약법",
-      "pin_desc": "현관문 문풍지 선택, 틈새 크기에 따라 난방비 15% 절약하는 방법을 알려드려요. 3mm 이상 틈새에는 모헤어, 1mm 미만 틈새에는 실리콘 틈막이가 효과적입니다. 우리집에 꼭 맞는 문풍지 선택으로 외풍, 소음, 미세먼지까지 한번에 해결하는 구체적인 팁을 확인하세요.",
-      "hashtags": [
-        "현관문틈막이",
-        "문풍지추천",
-        "난방비절약",
-        "외풍차단"
-      ],
-      "image": "out/pin_pickdam_90.png",
-      "made_at": "2026-09-13T15:17:51+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": "2026-09-14T00:35:00+09:00",
-      "posted_via": "수동(크롬 자동화) — 핀터레스트 API standard 승인 전"
-    },
-    {
-      "site": "pickdam",
-      "post_id": 100,
-      "post_title": "비데 자가설치, 생각보다 어려울까? 2026년 9월 기준 모델별 비교와 설치 전 확인 사항",
-      "url": "https://pickdam.com/bidet-self-installation-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "비데 자가설치? 모델별 비교와 설치 전 확인 사항",
-      "pin_desc": "비데 자가설치를 고민하고 있다면 이 글을 주목해주세요. 2026년 9월 기준, 간편형부터 다기능형까지 다양한 비데 자가설치형 모델들의 가격대와 설치 난이도를 비교 분석합니다. 설치 전 필수 확인 사항과 흔히 하는 실수들을 미리 파악하고, 누구나 쉽고 성공적으로 비데를 설치할 수 있도록 픽담에서 도와드립니다.",
-      "hashtags": [
-        "비데설치",
-        "자가설치",
-        "비데비교",
-        "욕실인테리어"
-      ],
-      "image": "out/pin_pickdam_100.png",
-      "made_at": "2026-09-14T15:25:45+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 164,
-      "post_title": "비데 자가설치, 흔한 고장 원인과 2026년 9월 모델별 비교로 현명한 선택",
-      "url": "https://pickdam.com/bidet-self-installation-2026-sep-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "비데 자가설치 전 꼭 봐야 할 2026년 최신 가이드",
-      "pin_desc": "비데 자가설치, 더 이상 어렵지 않아요. 2026년 9월 기준 모델별 비교부터 설치 전 확인 사항, 흔한 고장 원인까지 이 글 하나로 완벽 대비할 수 있습니다. 직수형과 저수조형의 장단점을 명확히 비교하여 우리 집에 가장 적합한 비데를 현명하게 선택하는 방법을 알려드립니다.",
-      "hashtags": [
-        "비데자가설치",
-        "비데추천",
-        "비데고장",
-        "욕실인테리어"
-      ],
-      "image": "out/pin_pickdam_164.png",
-      "made_at": "2026-09-14T15:25:49+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null,
-      "dead_link": true,
-      "note": "2026-09-15 확인: 원글이 비공개로 바뀌어 URL이 404다. 보드에 올리지 말 것."
-    },
-    {
-      "site": "pickdam",
-      "post_id": 201,
-      "post_title": "2026년 9월 창문 단열 뽁뽁이와 방풍비닐, 우리 집 유형에 맞는 선택 기준을 비교합니다",
-      "url": "https://pickdam.com/window-insulation-bubble-wrap-windproof-vinyl-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "창문 단열 뽁뽁이 vs 방풍비닐, 우리 집 유형별 선택 기준 비교",
-      "pin_desc": "2026년 9월, 창문 단열 뽁뽁이와 방풍비닐 중 어떤 것을 선택해야 할지 고민이라면 이 글을 확인하세요. 각 제품의 장단점과 우리 집 창문 유형에 맞는 설치법, 그리고 설치 시 주의할 단점까지 상세히 분석해 올겨울 난방비를 절약할 수 있는 실질적인 팁을 얻을 수 있습니다.",
-      "hashtags": [
-        "창문단열",
-        "뽁뽁이",
-        "방풍비닐",
-        "겨울준비"
-      ],
-      "image": "out/pin_pickdam_201.png",
-      "made_at": "2026-09-15T15:12:55+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    },
-    {
-      "site": "pickdam",
-      "post_id": 211,
-      "post_title": "2026년 9월 비데 자가 설치, 우리 집 변기에 맞지 않는 분기밸브는 절대 사지 마세요",
-      "url": "https://pickdam.com/bidet-self-installation-check-valve/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
-      "pin_title": "비데 자가 설치 전 필독! 변기 타입별 분기밸브 선택법",
-      "pin_desc": "2026년 9월 비데 자가 설치 시, 우리 집 변기 급수 방식에 맞는 분기밸브 선택이 무엇보다 중요해요. 이 글에서 테프론테이프 올바른 사용법과 흔한 실수, 누수 없는 설치 팁까지 확인하고 현명하게 비데를 설치하는 방법을 알아보세요. 픽담에서 사기 전에 꼭 확인하세요!",
-      "hashtags": [
-        "비데설치",
-        "분기밸브",
-        "자가설치",
-        "누수방지"
-      ],
-      "image": "out/pin_pickdam_211.png",
-      "made_at": "2026-09-15T15:12:58+09:00",
-      "sent": true,
-      "mode": "telegram",
-      "pin_id": null,
-      "posted_at": null
-    }
-  ]
+ "_설명": "핀 대장 — 어떤 글로 언제 핀을 만들었는지. 같은 글 반복 게시(핀터레스트 스팸 판정 1순위)를 막는 근거 파일이므로 손으로 지우지 말 것.",
+ "pins": [
+  {
+   "site": "pickdam",
+   "post_id": 21,
+   "post_title": "비데 자가 설치 비용을 절약하는 데 필요한 공구와 주의사항을 확인합니다",
+   "url": "https://pickdam.com/bidet-self-installation-cost-saving-tips/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "비데 자가 설치 비용을 절약하는 데 필요한 공구와 주의사항을 확인합니다",
+   "pin_desc": "2026년 9월 기준, 비데 자가 설치로 비용을 절약하는 방법을 알아봅니다. 필요한 공구와 흔한 실수, 그리고 모델별 설치 난이도를 비교하여 성공적인 자가 설치를 돕는 정보를 제공합니다.",
+   "hashtags": [],
+   "image": "out/pin_pickdam_21.png",
+   "made_at": "2026-09-09T15:04:56+09:00",
+   "sent": false,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
+  },
+  {
+   "site": "pickdam",
+   "post_id": 24,
+   "post_title": "새 아파트 시스템 가전, 2026년 9월 4인 가족 기준 1,000만원 절약하는 설치 전략",
+   "url": "https://pickdam.com/new-apartment-system-appliance-guide-2026-september/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "새 아파트 시스템 가전, 2026년 9월 4인 가족 기준 1,000만원 ",
+   "pin_desc": "2026년 9월 새 아파트 입주를 앞두고 시스템 가전 설치를 고민하고 있다면 이 글을 참고하세요. 시스템 에어컨과 빌트인 주방 가전의 장단점, 2026년 기준 예상 비용을 비교하고 후회 없는 선택을 위한 주의사항까지 상세히 알려드립니다.",
+   "hashtags": [],
+   "image": "out/pin_pickdam_24.png",
+   "made_at": "2026-09-09T15:04:56+09:00",
+   "sent": false,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
+  },
+  {
+   "site": "pickdam",
+   "post_id": 32,
+   "post_title": "정수기 고장 시 수리비 12만 원 넘는다면, 새 렌탈 위약금 50만 원까지 면제받고 교체하는 3가지 방법",
+   "url": "https://pickdam.com/broken-water-purifier-rental-penalty-waiver-strategy/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "정수기 위약금 면제받고 새 걸로 바꾸는 3가지 방법",
+   "pin_desc": "정수기 고장으로 수리비 12만원 이상 나왔을 때, 새 정수기 렌탈로 갈아타면서 기존 위약금 50만원까지 면제받는 3가지 실질적인 방법을 소개합니다. 복잡한 위약금 구조를 이해하고 현명하게 대처하는 전략을 픽담에서 확인하여 불필요한 지출을 줄여보세요.",
+   "hashtags": [
+    "정수기렌탈",
+    "정수기고장",
+    "위약금면제",
+    "가전제품교체"
+   ],
+   "image": "out/pin_pickdam_32.png",
+   "made_at": "2026-09-09T21:45:06+09:00",
+   "sent": false,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 51,
+   "post_title": "2026년 9월, 고효율 가전 구매 시 최대 30만원 환급 받으려면 이 4가지 조건을 충족해야 합니다",
+   "url": "https://pickdam.com/high-efficiency-appliance-energy-cashback-2026-09/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "2026년 고효율 가전 환급 30만원? 핵심 조건 4가지",
+   "pin_desc": "2026년 고효율 가전제품 구매 시 최대 30만원 환급 혜택, 놓치지 마세요. 에너지 캐시백과 정부 지원 환급을 비교하고, 우리 집에 딱 맞는 신청 방법과 흔한 실수, 주의할 점까지 꼼꼼히 확인해서 전기 요금 절약하는 노하우를 알려드립니다. 픽담에서 사기 전에 꼭 확인하세요.",
+   "hashtags": [
+    "고효율가전",
+    "가전환급",
+    "에너지캐시백",
+    "전기요금절약"
+   ],
+   "image": "out/pin_pickdam_51.png",
+   "made_at": "2026-09-09T22:20:35+09:00",
+   "sent": false,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 53,
+   "post_title": "20평대 이사청소 30만원 vs 45만원, 계약서에 명시해야 할 3가지 필수 조항",
+   "url": "https://pickdam.com/moving-cleaning-quote-cost-comparison-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "20평대 이사청소, 30만원 vs 45만원? 계약서 필수조항 3가지",
+   "pin_desc": "20평대 이사청소 업체를 선정할 때 합리적인 비용 고르는 기준을 찾고 계신가요? 픽담에서 2026년 9월 이사 준비를 위한 청소 견적 비교 팁과 흔한 실수 및 실패 시나리오를 피하고 만족스러운 청소를 위한 핵심 계약서 조항 3가지를 알려드립니다.",
+   "hashtags": [
+    "이사청소",
+    "20평대이사청소",
+    "이사청소비용",
+    "이사청소체크리스트"
+   ],
+   "image": "out/pin_pickdam_53.png",
+   "made_at": "2026-09-09T22:31:21+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 57,
+   "post_title": "음식물처리기 렌탈 36개월 약정, 위약금 50만원 피하려면 이사 전 2가지 조건부터 확인해야 합니다",
+   "url": "https://pickdam.com/food-waste-disposer-rental-cancellation-fee/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "음식물처리기 렌탈 위약금 50만원 피하는 법 (이사 전 필수)",
+   "pin_desc": "음식물처리기 렌탈 위약금 걱정 없이 이사하고 싶다면 꼭 보세요. 정수기처럼 위약금 면제받고 새 제품으로 교체하는 3가지 방법과 흔한 실패 사례, 현명한 선택 기준을 이 글에서 자세히 알려드립니다. 이사 계획이 있다면 지금 바로 확인하고 불필요한 지출을 막으세요.",
+   "hashtags": [
+    "음식물처리기렌탈",
+    "렌탈위약금",
+    "이사준비",
+    "주방필수템"
+   ],
+   "image": "out/pin_pickdam_57.png",
+   "made_at": "2026-09-10T15:04:23+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 59,
+   "post_title": "포장이사 비용 20% 줄이려면, 짐 부피 측정부터 계약서 특약 3가지 확인해야 하는 이유",
+   "url": "https://pickdam.com/moving-packing-cost-conditions/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "포장이사 비용 20% 줄이는 3가지 핵심 조건 (2026년 9월)",
+   "pin_desc": "포장이사 비용 때문에 고민이 많으셨죠? 2026년 9월 이사 예정이라면 꼭 확인해야 할 정보입니다. 짐 부피 측정부터 계약서 특약 3가지까지, 추가 비용 없이 이사 견적을 합리적으로 받는 노하우를 픽담에서 상세히 알려드려요. 이사 사기 당하지 않고 현명하게 이사하는 방법을 알아보세요.",
+   "hashtags": [
+    "포장이사비용",
+    "이사견적",
+    "이사팁",
+    "이사준비"
+   ],
+   "image": "out/pin_pickdam_59.png",
+   "made_at": "2026-09-10T15:04:26+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 61,
+   "post_title": "새 아파트 시스템 에어컨, 30만원 추가 비용 막으려면 실외기실 너비 70cm부터 재야 하는 조건",
+   "url": "https://pickdam.com/new-apartment-system-aircon-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "새 아파트 시스템 에어컨 설치 전, 실외기실 너비 재는 법",
+   "pin_desc": "새 아파트 시스템 에어컨 설치 시 추가 비용 30만원을 막으려면 실외기실 너비 70cm를 꼭 확인해야 합니다. 이 글에서는 시스템 에어컨 설치 전 실외기실 너비를 정확히 재는 방법과 함께, 추가 비용 발생을 피할 수 있는 구체적인 조건을 알려드립니다. 계약 전 꼭 알아야 할 정보들을 확인하여 현명하게 에어컨을 준비하세요.",
+   "hashtags": [
+    "시스템에어컨",
+    "아파트인테리어",
+    "실외기실",
+    "에어컨설치"
+   ],
+   "image": "out/pin_pickdam_61.png",
+   "made_at": "2026-09-11T15:06:30+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 63,
+   "post_title": "새 가전 장기 무이자 할부, 24개월 조건 충족하려면 최소 200만원 이상 결제해야 하는 이유",
+   "url": "https://pickdam.com/new-appliance-installment-plan-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "새 가전 24개월 무이자 할부, 200만원 이상 결제해야 하는 이유",
+   "pin_desc": "새 가전 장기 무이자 할부 조건을 찾고 있다면 주목하세요. 2026년 9월 최신 정보를 바탕으로 카드사별 24개월 이상 무이자 할부 조건을 상세히 비교 분석합니다. 고가 가전 구매 시 현명한 할부 선택 기준과 흔히 저지르는 실수를 파악하고, 최적의 결제 플랜을 세워 후회 없는 구매를 할 수 있도록 도와드립니다.",
+   "hashtags": [
+    "가전제품",
+    "무이자할부",
+    "카드혜택",
+    "가전구매가이드"
+   ],
+   "image": "out/pin_pickdam_63.png",
+   "made_at": "2026-09-11T15:06:33+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 65,
+   "post_title": "환기 시스템 렌탈과 구매 고민이라면, 2026년 9월 설치 전 우리 집 최적 비용부터 따져야 합니다",
+   "url": "https://pickdam.com/kitchen-ventilation-rental-vs-buy-2026-september/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "환기 시스템 렌탈 vs 구매, 2026년 최적 비용 가이드",
+   "pin_desc": "환기 시스템 렌탈과 구매 중 어떤 선택이 우리 집에 최적의 비용 효율을 가져올지 고민이라면, 2026년 9월 설치 전 반드시 고려해야 할 핵심 요소를 알려드립니다. 숨겨진 비용과 조건별 선택 가이드를 통해 우리 집에 딱 맞는 합리적인 결정을 내릴 수 있도록 픽담이 도와드립니다.",
+   "hashtags": [
+    "환기시스템",
+    "주방환기",
+    "가전고민",
+    "렌탈구매"
+   ],
+   "image": "out/pin_pickdam_65.png",
+   "made_at": "2026-09-12T14:54:44+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 67,
+   "post_title": "음식물처리기 보상 판매, 렌탈 약정 18개월 미만이라면 위약금 30% 발생, 설치 전 배수관 규격 40mm 재야 하는 이유",
+   "url": "https://pickdam.com/food-waste-disposer-trade-in-vs-rental-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "음식물처리기 보상 판매 전, 위약금 30% 피하는 법",
+   "pin_desc": "음식물처리기 보상 판매나 렌탈을 고민 중이라면, 18개월 미만 약정 시 발생하는 위약금 30%에 대해 꼭 확인하세요. 이 글에서는 위약금 발생 조건과 설치 전 배수관 규격 40mm를 재야 하는 이유 등, 구매 전 반드시 알아야 할 핵심 정보를 상세히 알려드립니다. 픽담에서 현명한 구매를 위한 팁을 얻어가세요.",
+   "hashtags": [
+    "음식물처리기",
+    "음식물처리기렌탈",
+    "음식물처리기위약금",
+    "주방필수템"
+   ],
+   "image": "out/pin_pickdam_67.png",
+   "made_at": "2026-09-12T14:54:47+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 71,
+   "post_title": "정수기 필터 3개월 주기 놓치면 침전 필터 5천 원으로도 해결 못 하는 물맛 변화, 자가 교체 전 3가지 필수 확인 사항",
+   "url": "https://pickdam.com/water-purifier-filter-replacement-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "정수기 필터 교체 주기 3개월 놓치면? 자가 교체 전 3가지 필수 확인",
+   "pin_desc": "정수기 필터 교체 주기를 놓쳐 물맛이 이상해졌다면, 이 글을 꼭 확인하세요. 2026년 9월 기준 평대 정수기 필터 자가 교체에 필요한 준비물과 주의사항, 예상 비용 범위를 자세히 알려드립니다. 흔한 실수와 올바른 교체 방법으로 깨끗한 물을 마시는 팁을 얻어가세요.",
+   "hashtags": [
+    "정수기필터",
+    "정수기자가교체",
+    "정수기관리",
+    "물맛변화"
+   ],
+   "image": "out/pin_pickdam_71.png",
+   "made_at": "2026-09-13T15:17:47+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": "2026-09-14T00:35:00+09:00",
+   "posted_via": "수동(크롬 자동화) — 핀터레스트 API standard 승인 전"
+  },
+  {
+   "site": "pickdam",
+   "post_id": 90,
+   "post_title": "현관문 문풍지, 틈새 3mm 이상이라면 모헤어, 1mm 미만이라면 실리콘 틈막이로 난방비 15% 절약하는 조건",
+   "url": "https://pickdam.com/door-draft-stopper-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "현관문 문풍지, 틈새 크기별 난방비 절약법",
+   "pin_desc": "현관문 문풍지 선택, 틈새 크기에 따라 난방비 15% 절약하는 방법을 알려드려요. 3mm 이상 틈새에는 모헤어, 1mm 미만 틈새에는 실리콘 틈막이가 효과적입니다. 우리집에 꼭 맞는 문풍지 선택으로 외풍, 소음, 미세먼지까지 한번에 해결하는 구체적인 팁을 확인하세요.",
+   "hashtags": [
+    "현관문틈막이",
+    "문풍지추천",
+    "난방비절약",
+    "외풍차단"
+   ],
+   "image": "out/pin_pickdam_90.png",
+   "made_at": "2026-09-13T15:17:51+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": "2026-09-14T00:35:00+09:00",
+   "posted_via": "수동(크롬 자동화) — 핀터레스트 API standard 승인 전"
+  },
+  {
+   "site": "pickdam",
+   "post_id": 100,
+   "post_title": "비데 자가설치, 생각보다 어려울까? 2026년 9월 기준 모델별 비교와 설치 전 확인 사항",
+   "url": "https://pickdam.com/bidet-self-installation-guide-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "비데 자가설치? 모델별 비교와 설치 전 확인 사항",
+   "pin_desc": "비데 자가설치를 고민하고 있다면 이 글을 주목해주세요. 2026년 9월 기준, 간편형부터 다기능형까지 다양한 비데 자가설치형 모델들의 가격대와 설치 난이도를 비교 분석합니다. 설치 전 필수 확인 사항과 흔히 하는 실수들을 미리 파악하고, 누구나 쉽고 성공적으로 비데를 설치할 수 있도록 픽담에서 도와드립니다.",
+   "hashtags": [
+    "비데설치",
+    "자가설치",
+    "비데비교",
+    "욕실인테리어"
+   ],
+   "image": "out/pin_pickdam_100.png",
+   "made_at": "2026-09-14T15:25:45+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 164,
+   "post_title": "비데 자가설치, 흔한 고장 원인과 2026년 9월 모델별 비교로 현명한 선택",
+   "url": "https://pickdam.com/bidet-self-installation-2026-sep-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "비데 자가설치 전 꼭 봐야 할 2026년 최신 가이드",
+   "pin_desc": "비데 자가설치, 더 이상 어렵지 않아요. 2026년 9월 기준 모델별 비교부터 설치 전 확인 사항, 흔한 고장 원인까지 이 글 하나로 완벽 대비할 수 있습니다. 직수형과 저수조형의 장단점을 명확히 비교하여 우리 집에 가장 적합한 비데를 현명하게 선택하는 방법을 알려드립니다.",
+   "hashtags": [
+    "비데자가설치",
+    "비데추천",
+    "비데고장",
+    "욕실인테리어"
+   ],
+   "image": "out/pin_pickdam_164.png",
+   "made_at": "2026-09-14T15:25:49+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "dead_link": true,
+   "note": "2026-09-15 확인: 원글이 비공개로 바뀌어 URL이 404다. 보드에 올리지 말 것."
+  },
+  {
+   "site": "pickdam",
+   "post_id": 201,
+   "post_title": "2026년 9월 창문 단열 뽁뽁이와 방풍비닐, 우리 집 유형에 맞는 선택 기준을 비교합니다",
+   "url": "https://pickdam.com/window-insulation-bubble-wrap-windproof-vinyl-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "창문 단열 뽁뽁이 vs 방풍비닐, 우리 집 유형별 선택 기준 비교",
+   "pin_desc": "2026년 9월, 창문 단열 뽁뽁이와 방풍비닐 중 어떤 것을 선택해야 할지 고민이라면 이 글을 확인하세요. 각 제품의 장단점과 우리 집 창문 유형에 맞는 설치법, 그리고 설치 시 주의할 단점까지 상세히 분석해 올겨울 난방비를 절약할 수 있는 실질적인 팁을 얻을 수 있습니다.",
+   "hashtags": [
+    "창문단열",
+    "뽁뽁이",
+    "방풍비닐",
+    "겨울준비"
+   ],
+   "image": "out/pin_pickdam_201.png",
+   "made_at": "2026-09-15T15:12:55+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 211,
+   "post_title": "2026년 9월 비데 자가 설치, 우리 집 변기에 맞지 않는 분기밸브는 절대 사지 마세요",
+   "url": "https://pickdam.com/bidet-self-installation-check-valve/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "비데 자가 설치 전 필독! 변기 타입별 분기밸브 선택법",
+   "pin_desc": "2026년 9월 비데 자가 설치 시, 우리 집 변기 급수 방식에 맞는 분기밸브 선택이 무엇보다 중요해요. 이 글에서 테프론테이프 올바른 사용법과 흔한 실수, 누수 없는 설치 팁까지 확인하고 현명하게 비데를 설치하는 방법을 알아보세요. 픽담에서 사기 전에 꼭 확인하세요!",
+   "hashtags": [
+    "비데설치",
+    "분기밸브",
+    "자가설치",
+    "누수방지"
+   ],
+   "image": "out/pin_pickdam_211.png",
+   "made_at": "2026-09-15T15:12:58+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 216,
+   "post_title": "음식물처리기 탈취필터 3개월마다 교체하지 않으면, 주방 냄새 왜 더 심해지는가",
+   "url": "https://pickdam.com/food-waste-disposer-deodorizing-filter-replacement/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "음식물처리기 탈취필터 교체 안 하면 주방 냄새 왜 더 심해질까",
+   "pin_desc": "음식물처리기 냄새 때문에 고민이신가요? 주방 위생의 필수 가전인 음식물처리기를 사용하면서도 악취에 시달린다면 탈취필터 관리가 문제일 수 있습니다. 이 글에서 필터 교체를 소홀히 할 때 냄새가 심해지는 이유와 올바른 관리법을 알려드립니다. 픽담에서 현명한 주방 위생 팁을 확인하세요.",
+   "hashtags": [
+    "음식물처리기",
+    "탈취필터",
+    "주방냄새",
+    "가전관리"
+   ],
+   "image": "out/pin_pickdam_216.png",
+   "made_at": "2026-09-16T15:08:47+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 222,
+   "post_title": "제습기 20L 용량, 30평대 아파트에서 곰팡이 해결보다 전기요금 폭탄 맞는 3가지 이유",
+   "url": "https://pickdam.com/dehumidifier-20l-electricity-bill-30pyeong/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "30평대 아파트 제습기 20L, 곰팡이 못 잡고 전기요금만 느는 이유 3",
+   "pin_desc": "30평대 아파트에 20L 제습기를 들이면 곰팡이 해결은커녕 전기요금 폭탄을 맞을 수 있습니다. 제습기 권장 평형의 숨겨진 비밀과 우리 집에 딱 맞는 제습기 용량을 고르는 현실적인 기준을 픽담에서 자세히 알려드립니다.",
+   "hashtags": [
+    "제습기용량",
+    "30평대제습기",
+    "제습기전기요금",
+    "제습기구매가이드"
+   ],
+   "image": "out/pin_pickdam_222.png",
+   "made_at": "2026-09-16T15:08:57+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  }
+ ]
 }
