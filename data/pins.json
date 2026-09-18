@@ -416,6 +416,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 248,
+   "post_title": "1인 가구 건조분쇄형 음식물처리기, 30dB대 소음과 50만 원대 가격 사이에서 후회 없이 고르는 결정적 기준",
+   "url": "https://pickdam.com/one-person-food-waste-disposer-low-noise-tips/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "1인 가구 음식물처리기, 소음·가격 후회 없이 고르는 법",
+   "pin_desc": "1인 가구 음식물처리기 선택 가이드. 30dB대 소음은 어느 정도인지, 50만원대 제품 중 나에게 맞는 건 무엇인지 알려드려요. 설치 시 주의할 점과 유지 보수 비용까지, 구매 전 꼭 알아야 할 정보들을 담았습니다.",
+   "hashtags": [
+    "음식물처리기",
+    "1인가구필수템",
+    "주방템",
+    "가전제품추천"
+   ],
+   "image": "out/pin_pickdam_248.png",
+   "made_at": "2026-09-18T15:01:07+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 319,
+   "post_title": "침실 무드등, 수면등과 수유등 중 우리 집에 맞는 조명은 따로 있습니다",
+   "url": "https://pickdam.com/bedroom-lamp-guide/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "침실 무드등 수면등 수유등, 우리 집에 맞는 조명 고르는 법",
+   "pin_desc": "침실 무드등, 수면등, 수유등의 차이점을 명확히 비교하고 우리 집에 맞는 조명을 고르는 기준을 제시합니다. 흔히 하는 실수부터 스마트 조명의 장단점까지, 내 침실에 딱 맞는 조명을 픽담에서 확인하고 후회 없는 선택을 해보세요.",
+   "hashtags": [
+    "침실조명",
+    "무드등",
+    "수면등",
+    "수유등"
+   ],
+   "image": "out/pin_pickdam_319.png",
+   "made_at": "2026-09-18T15:01:12+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
