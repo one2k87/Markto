@@ -536,6 +536,26 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 355,
+   "post_title": "접이식 블루투스 키보드, 갑자기 고장 날 때 흔한 문제 2가지와 복구 절차",
+   "url": "https://pickdam.com/folding-bluetooth-keyboard-fix/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "접이식 블루투스 키보드 고장, 해결법 2가지",
+   "pin_desc": "접이식 블루투스 키보드 고장으로 답답하신가요? 키보드가 인식 안 되거나 특정 키가 작동하지 않을 때 겪는 흔한 문제 2가지와 직접 시도해볼 수 있는 복구 절차를 상세히 안내합니다. 픽담에서 자세한 해결법을 확인하고 소중한 키보드를 고쳐보세요.",
+   "hashtags": [
+    "블루투스키보드",
+    "키보드고장",
+    "접이식키보드",
+    "기기문제해결"
+   ],
+   "image": "out/pin_pickdam_355.png",
+   "made_at": "2026-09-23T15:04:56+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
