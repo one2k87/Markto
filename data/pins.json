@@ -576,6 +576,26 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 367,
+   "post_title": "1인 가구 미니 건조기, 초기 40만 원 더 주고 히트펌프식 사는 것이 2년 내 전기료 20만 원 아끼는 길",
+   "url": "https://pickdam.com/mini-dryer-electricity-cost-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "1인 가구 미니 건조기, 통돌이 vs 히트펌프 전기료 비교",
+   "pin_desc": "1인 가구 미니 건조기 구매를 고민한다면, 통돌이와 히트펌프식 건조기의 전기료 차이를 꼼꼼하게 비교했습니다. 실제 비용 절감 팁과 설치 전 꼭 확인해야 할 3가지 사항까지, 현명한 선택을 위한 모든 정보를 픽담에서 확인하세요.",
+   "hashtags": [
+    "미니건조기",
+    "1인가전",
+    "건조기전기료",
+    "히트펌프건조기"
+   ],
+   "image": "out/pin_pickdam_367.png",
+   "made_at": "2026-09-25T15:12:00+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
