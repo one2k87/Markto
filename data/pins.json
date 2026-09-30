@@ -616,6 +616,22 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 388,
+   "post_title": "1인 가구 미니 인덕션, 좁은 주방 60cm vs 여유 90cm 공간 활용, 1구와 2구 중 어떤 모델이 당신에게 유리할까?",
+   "url": "https://pickdam.com/in-gagu-mini-indeoksyeon-gumae-si-1gu-vs/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "1인 가구 미니 인덕션, 좁은 주방 60cm vs 여유 90cm 공간",
+   "pin_desc": "미니 인덕션을 고를 때 가장 먼저 마주하는 고민은 바로 1구와 2구 중 어떤 형태를 선택할 것인가입니다.",
+   "hashtags": [],
+   "image": "out/pin_pickdam_388.png",
+   "made_at": "2026-09-30T15:50:20+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
   }
  ]
 }
