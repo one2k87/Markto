@@ -632,6 +632,26 @@
    "pin_id": null,
    "posted_at": null,
    "fallback_copy": true
+  },
+  {
+   "site": "pickdam",
+   "post_id": 394,
+   "post_title": "픽담 주제별 가이드",
+   "url": "https://pickdam.com/guides/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "음식물처리기, 비데, 정수기 구매 가이드 & 이사 체크리스트",
+   "pin_desc": "음식물처리기, 비데, 정수기 구매 전 꼭 알아야 할 정보와 이사, 단열, 가전 구매까지! 픽담의 주제별 가이드를 통해 현명한 선택을 돕습니다. 지금 나에게 필요한 주제를 찾아보고 실패 없는 구매와 생활 팁을 얻어가세요.",
+   "hashtags": [
+    "가전제품",
+    "이사준비",
+    "생활가전",
+    "구매가이드"
+   ],
+   "image": "out/pin_pickdam_394.png",
+   "made_at": "2026-10-01T16:15:48+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
