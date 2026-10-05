@@ -692,6 +692,26 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 555,
+   "post_title": "주방용품 소재, 스텐만 고집하다 생기는 문제 3가지: 실리콘·나무 조리도구 비교 (2026년 10월)",
+   "url": "https://pickdam.com/kitchen-tools-material-guide/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "스텐 vs 실리콘 vs 나무, 주방용품 소재 똑똑하게 고르는 법",
+   "pin_desc": "주방용품 소재 스텐, 실리콘, 나무 중 하나만 고집하면 겪을 수 있는 3가지 문제점을 비교 분석합니다. 각 조리도구 소재별 장단점은 물론, 우리 집 요리 스타일에 딱 맞는 최적의 선택법까지 픽담에서 자세히 알려드릴게요.",
+   "hashtags": [
+    "주방용품",
+    "조리도구",
+    "스텐",
+    "살림템"
+   ],
+   "image": "out/pin_pickdam_555.png",
+   "made_at": "2026-10-05T16:10:56+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
