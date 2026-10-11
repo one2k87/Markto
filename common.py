@@ -127,6 +127,47 @@ def wp_posts(site, per_page=50, pages=4, timeout=30):
     return out
 
 
+def page_meta(url, timeout=20):
+    """글 주소를 **한 번만** 받아서 생사와 SEO 문구를 동시에 얻는다.
+
+    반환: {"ok", "status", "title", "desc"}
+
+    왜 HTML을 보나(2026-09-16 픽토 통보). 핀 문구의 원천을 **요약(excerpt)에서
+    Rank Math 값으로** 바꾼다. 요약은 본문 첫 문단이라 "2026년 9월 기준 평대 정수기…"처럼
+    잘린 조각이나 고지문이 그대로 들어왔다(9/14 실측). Rank Math의
+    `rank_math_description`(73~91자)·`rank_math_title`(23~28자)은 답과 숫자를 앞에
+    배치해 둔 값이라 핀 설명·제목에 훨씬 맞는다.
+
+    `/wp-json/.../posts?context=edit`은 인증이 필요하지만, **라이브 HTML의
+    `<title>`과 `<meta name="description">`이 같은 값**이라 인증 없이 읽을 수 있다.
+    마크토는 자격증명을 다루지 않으므로 이 경로를 쓴다.
+
+    생사 확인을 겸하는 이유: 따로 HEAD를 치면 왕복이 두 번이고, 수집과 게시 사이에
+    글이 내려가는 창이 그만큼 벌어진다(#164 사고).
+    """
+    out = {"ok": True, "status": 0, "title": "", "desc": ""}
+    try:
+        r = requests.get(url, timeout=timeout, allow_redirects=True,
+                         headers={"User-Agent": "markto/1.0"})
+    except requests.RequestException as e:      # noqa: BLE001
+        print(f"[meta] {url} 확인 실패({e}) — 통과시킵니다")
+        return out                               # 네트워크 탓으로 정상 글을 막지 않는다
+    out["status"] = r.status_code
+    if r.status_code != 200:
+        out["ok"] = False
+        print(f"[meta] {url} → HTTP {r.status_code} (내려간 글로 보고 건너뜁니다)")
+        return out
+    h = r.text
+    m = re.search(r"<title[^>]*>(.*?)</title>", h, re.S | re.I)
+    if m:
+        out["title"] = _html.unescape(strip_html(m.group(1))).strip()
+    m = re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']',
+                  h, re.S | re.I)
+    if m:
+        out["desc"] = _html.unescape(strip_html(m.group(1))).strip()
+    return out
+
+
 def is_live(url, timeout=15):
     """글이 아직 **공개 상태인지** 확인한다. 200이 아니면 핀을 만들지 않는다.
 

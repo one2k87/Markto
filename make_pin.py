@@ -93,8 +93,8 @@ def fallback_copy(post, site, tag_n=4):
     t = re.sub(r"\s*[\|\-–—]\s*.*$", "", post["title"]).strip()
     return {
         "image_text": clip(t, 22),
-        "title": clip(post["title"], 40),
-        "description": (post.get("excerpt") or post["title"])[:200],
+        "title": clip(post.get("seo_title") or post["title"], 40),
+        "description": (post.get("seo_desc") or post.get("excerpt") or post["title"])[:200],
         "kicker": site.get("tagline", "")[:6],
         "hashtags": [],
         "_fallback": True,
@@ -104,7 +104,11 @@ def fallback_copy(post, site, tag_n=4):
 def make_copy(post, site, cfg, dry=False):
     if dry or not os.getenv("LLM_API_KEY"):
         return fallback_copy(post, site, cfg["pin"]["hashtags_max"])
-    p = PROMPT.format(title=post["title"], excerpt=(post.get("excerpt") or "")[:600],
+    # 원천 우선순위: Rank Math 설명 > 요약(excerpt). 요약은 본문 첫 문단이라
+    # 잘린 조각·고지문이 섞여 들어왔다(9/14 "평대 정수기" 실측). 픽토가 전 글에
+    # rank_math_description을 채워 뒀으므로 그쪽이 답과 숫자를 앞에 둔 더 좋은 재료다.
+    source = (post.get("seo_desc") or post.get("excerpt") or "")[:600]
+    p = PROMPT.format(title=post.get("seo_title") or post["title"], excerpt=source,
                       site_name=site["name"], tagline=site.get("tagline", ""),
                       tag_n=cfg["pin"]["hashtags_max"])
     try:
@@ -118,6 +122,12 @@ def make_copy(post, site, cfg, dry=False):
     j["kicker"] = strip_emoji(j.get("kicker") or "")[:8]
     tags = [strip_emoji(str(t)).lstrip("#").strip() for t in (j.get("hashtags") or [])]
     j["hashtags"] = [t for t in tags if t][:cfg["pin"]["hashtags_max"]]
+    # 제목·설명은 사람이 검색 노출용으로 다듬어 둔 Rank Math 값을 그대로 쓴다.
+    # 이미지 문구·키커·해시태그만 LLM 몫이다 — 그건 Rank Math에 없는 값이다.
+    if post.get("seo_title"):
+        j["title"] = strip_emoji(post["seo_title"])[:cfg["pin"]["title_max"]]
+    if post.get("seo_desc"):
+        j["description"] = strip_emoji(post["seo_desc"])[:cfg["pin"]["desc_max"]]
     return j
 
 
@@ -167,9 +177,13 @@ def run(n=None, dry=False):
             break
         if (post["site"], post["id"]) in done_ids:
             continue
-        # 수집 이후 글이 내려갔을 수 있다 — 죽은 링크를 가리키는 핀은 만들지 않는다
-        if not dry and not common.is_live(post["url"]):
-            continue
+        # 수집 이후 글이 내려갔을 수 있다 — 죽은 링크를 가리키는 핀은 만들지 않는다.
+        # 같은 왕복에서 Rank Math 제목·설명도 받아 핀 문구의 원천으로 쓴다.
+        if not dry:
+            meta = common.page_meta(post["url"])
+            if not meta["ok"]:
+                continue
+            post["seo_title"], post["seo_desc"] = meta["title"], meta["desc"]
         site = common.site_by_key(post["site"], cfg)
         copy = make_copy(post, site, cfg, dry=dry)
         path = os.path.join(OUT, f"pin_{post['site']}_{post['id']}.png")

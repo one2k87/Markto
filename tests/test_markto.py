@@ -55,11 +55,15 @@ class Base(unittest.TestCase):
         # 가드 자체는 TestLiveGuard가 requests를 직접 대역으로 바꿔 검증한다.
         self.real_is_live = common.is_live
         common.is_live = lambda url, timeout=15: True
+        self.real_page_meta = common.page_meta
+        common.page_meta = lambda url, timeout=20: {"ok": True, "status": 200,
+                                                    "title": "", "desc": ""}
 
     def tearDown(self):
         common.ROOT = self.real_root
         common.wp_posts = self.real_wp
         common.is_live = self.real_is_live
+        common.page_meta = self.real_page_meta
         make_pin.OUT = os.path.join(self.real_root, "out")
         for k, v in self.env.items():
             if v is not None:
@@ -544,6 +548,7 @@ class TestLiveGuard(Base):
     def setUp(self):
         super().setUp()
         common.is_live = self.real_is_live      # 이 묶음만 진짜 가드를 검증한다
+        common.page_meta = self.real_page_meta
 
     def test_200이_아니면_죽은_글로_본다(self):
         real = common.requests.head
@@ -591,13 +596,62 @@ class TestLiveGuard(Base):
             {"id": 901, "site": "pickdam", "title": "내려간 글", "excerpt": "x",
              "url": "https://pickdam.com/gone/", "date": "2026-09-01T00:00:00", "categories": []},
         ]})
-        real = common.requests.head
-        common.requests.head = lambda *a, **k: _Resp(404, {})
+        real = common.requests.get
+        common.requests.get = lambda *a, **k: _Resp(404, {})
         try:
             made = make_pin.run(1)
         finally:
-            common.requests.head = real
+            common.requests.get = real
         self.assertEqual(made, [], "내려간 글로 핀을 만들었다")
+
+class TestSeoCopy(Base):
+    """핀 문구의 원천을 Rank Math 값으로 바꾼 층(2026-09-16 픽토 통보 → 10-11 반영)."""
+
+    def setUp(self):
+        super().setUp()
+        common.page_meta = self.real_page_meta
+
+    def _html(self, title, desc):
+        r = _Resp(200, {})
+        r.text = (f'<html><head><title>{title}</title>'
+                  f'<meta name="description" content="{desc}"></head><body>x</body></html>')
+        return r
+
+    def test_라이브_HTML에서_제목과_설명을_읽는다(self):
+        real = common.requests.get
+        common.requests.get = lambda *a, **k: self._html("짧은 검색용 제목", "답이 앞에 오는 설명")
+        try:
+            m = common.page_meta("https://pickdam.com/a/")
+        finally:
+            common.requests.get = real
+        self.assertTrue(m["ok"])
+        self.assertEqual(m["title"], "짧은 검색용 제목")
+        self.assertEqual(m["desc"], "답이 앞에 오는 설명")
+
+    def test_HTML_엔티티를_푼다(self):
+        """&amp;가 그대로 핀에 찍히면 사람이 쓴 글로 안 보인다."""
+        real = common.requests.get
+        common.requests.get = lambda *a, **k: self._html("A &amp; B", "3mm &lt; 틈새")
+        try:
+            m = common.page_meta("https://pickdam.com/a/")
+        finally:
+            common.requests.get = real
+        self.assertEqual(m["title"], "A & B")
+        self.assertIn("<", m["desc"])
+
+    def test_폴백_문구가_SEO값을_우선한다(self):
+        post = self.post()
+        post["seo_title"] = "정수기 필터 교체 주기 3개월"
+        post["seo_desc"] = "침전 필터만으로는 물맛이 안 돌아옵니다."
+        c = make_pin.fallback_copy(post, common.site_by_key("pickdam"))
+        self.assertEqual(c["title"], "정수기 필터 교체 주기 3개월")
+        self.assertIn("침전 필터", c["description"])
+
+    def test_SEO값이_없으면_기존_경로를_쓴다(self):
+        """픽토가 아직 못 채운 글이 있어도 파이프라인이 서면 안 된다."""
+        c = make_pin.fallback_copy(self.post(), common.site_by_key("pickdam"))
+        self.assertTrue(c["title"])
+        self.assertTrue(c["description"])
 
 if __name__ == "__main__":
     unittest.main()
