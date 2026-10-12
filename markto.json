@@ -71,8 +71,8 @@
       },
       "wordmark": "원더랜드",
       "tagline": "오늘 필요한 생활정보",
-      "_indexnow_key_대기": "d0f41e40f271a94443c4f311382d3f83",
-      "_indexnow_설명": "2026-10-12 실측으로 보류를 유지한다. S가 '스크립토 키를 그대로 쓰라'고 알려줬으나(key=edad166e…, keyLocation=/wp-content/uploads/2026/08/…txt), 그 키로 원더랜드**루트 글 주소**를 통보하면 네이버·indexnow.org 둘 다 **422**를 돌려준다(네이버 'Invalid urls' / indexnow.org 'One or more URLs are not related to your site verified through the key'). 같은 키로 **키 파일과 같은 디렉터리** 아래 URL을 보내면 200·202로 수리된다. 즉 IndexNow는 keyLocation의 **디렉터리 범위**로 제출 URL을 제한한다 — '같은 호스트면 아무 경로나 된다'는 전제가 틀렸다. 대조군: 픽담은 키 파일이 루트에 있어 루트 글이 200으로 통과한다. 따라서 원더랜드를 붙이려면 키 파일이 **루트** (https://wontheland.com/<키>.txt)에 있어야 하고, 그건 S 사이트 내부 작업이다. 루트 키 파일이 생기면 이 필드를 indexnow_key 로 바꾸기만 하면 코드 수정 없이 합류한다."
+      "_indexnow_설명": "2026-10-12 합류. 9/10부터 보류했던 이유(키 파일을 루트에 올릴 수단이 없음)가 해소됐다. 경위: S가 '스크립토 키를 그대로 쓰라'고 했으나 그 키 파일이 /wp-content/uploads/2026/08/ 에 있어서 루트 글을 통보하면 네이버·indexnow.org 둘 다 422였다(실측). IndexNow는 keyLocation의 **디렉터리 범위**로 제출 URL을 제한한다 — '같은 호스트면 아무 경로나 된다'는 전제가 틀렸다. S가 이를 수용해 테마 functions.php의 init 훅으로 루트 가상 키 파일을 만들었고, 같은 URL이 이제 네이버 200·indexnow.org 200이다(마크토 재실측 2026-10-12). **키의 단일 출처는 Scripto/data/site_categories.json 의 indexnow** — 여기 값은 사본이므로 S가 키를 바꾸면 같이 바꾼다. indexnow.py는 keyLocation을 루트로 만들므로 코드 수정은 없었다. sites[].enabled는 false 그대로다 — 핀은 아직 픽담만, IndexNow만 합류한다.",
+      "indexnow_key": "edad166e85cf27f3fa370ef1d1350577"
     }
   ],
   "pin": {
