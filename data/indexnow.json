@@ -65,7 +65,71 @@
   "https://wontheland.com/senior-smartphone-touch-troubleshoot/",
   "https://wontheland.com/smart-phone-dark-screen-solution-2026-10/",
   "https://wontheland.com/2026-10-senior-smartphone-airplane-mode-communication/",
-  "https://wontheland.com/senior-hospital-kiosk-registration/"
+  "https://wontheland.com/senior-hospital-kiosk-registration/",
+  "https://wontheland.com/senior-international-call-block/",
+  "https://wontheland.com/senior-digital-education-2026-september/",
+  "https://wontheland.com/2026-september-senior-data-usage-check/",
+  "https://wontheland.com/mvno-data-usage-check-after-switch/",
+  "https://wontheland.com/senior-mobile-drivers-license-guide/",
+  "https://wontheland.com/mobile-id-screen-instead-of-photo/",
+  "https://wontheland.com/senior-smartphone-document-pdf-send-method/",
+  "https://wontheland.com/smartphone-photo-google-photos-backup-senior/",
+  "https://wontheland.com/senior-digital-kiosk-order-2026/",
+  "https://wontheland.com/senior-digital-assistance-2026-09/",
+  "https://wontheland.com/senior-telecom-saving-mvno-2026-09/",
+  "https://wontheland.com/senior-smartphone-notification-important-call-setting/",
+  "https://wontheland.com/senior-digital-low-cost-unlimited-plan-202609/",
+  "https://wontheland.com/senior-smartphone-google-account-password-reset/",
+  "https://wontheland.com/senior-smartphone-ringtones-notifications/",
+  "https://wontheland.com/senior-smartphone-unexpected-charges/",
+  "https://wontheland.com/senior-express-bus-app-destination-check-2026/",
+  "https://wontheland.com/senior-train-ticket-app-reservation/",
+  "https://wontheland.com/senior-digital-phone-payment-phishing-block/",
+  "https://wontheland.com/senior-alttelphone-value-added-service-cancel/"
  ],
- "last_at": "2026-10-12T14:36:29+09:00"
+ "last_at": "2026-10-12T16:27:28+09:00",
+ "last_run": {
+  "at": "2026-10-12T16:27:28+09:00",
+  "results": [
+   {
+    "site": "wontheland",
+    "ep": "https://searchadvisor.naver.com/indexnow",
+    "status": 200,
+    "n": 20,
+    "ok": true,
+    "body": ""
+   },
+   {
+    "site": "wontheland",
+    "ep": "https://api.indexnow.org/indexnow",
+    "status": 200,
+    "n": 20,
+    "ok": true,
+    "body": ""
+   }
+  ]
+ },
+ "runs": [
+  {
+   "at": "2026-10-12T16:27:28+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 20,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 20,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  }
+ ]
 }
