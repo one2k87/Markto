@@ -33,6 +33,7 @@ REDIRECT_URI = f"http://localhost:{PORT}/"
 OAUTH_URL = "https://www.pinterest.com/oauth/"
 API = "https://api.pinterest.com/v5"
 SCOPES = "boards:read,pins:read,pins:write"
+AUTH_TIMEOUT = 180       # 동의 화면을 띄워놓고 기다리는 최대 시간(초)
 # pins:read 를 함께 받는다 — 게시 후 핀이 실제로 살아있는지 확인하는 데 쓴다.
 # 문서 권장대로 필요한 최소 스코프만 요청한다(user_accounts, secret 계열은 받지 않는다).
 
@@ -97,7 +98,13 @@ def get_auth_code(app_id):
         "scope": SCOPES,
         "state": state,
     })
-    srv = HTTPServer(("localhost", PORT), _Handler)
+    try:
+        srv = HTTPServer(("localhost", PORT), _Handler)
+    except OSError as e:          # noqa: BLE001 — 녹화 중에 트레이스백이 뜨면 다시 찍어야 한다
+        sys.exit(f"포트 {PORT}를 열 수 없습니다({e}).\n"
+                 f"이전 실행이 남아 있을 수 있습니다. 터미널에서 "
+                 f"`lsof -ti tcp:{PORT} | xargs kill` 를 돌린 뒤 다시 실행하세요.")
+    srv.timeout = AUTH_TIMEOUT
     srv.want_state, srv.auth_code, srv.oauth_error, srv.state_ok = state, None, None, False
 
     print(f"\n브라우저에서 핀터레스트 동의 화면을 엽니다 (리다이렉트 {REDIRECT_URI})")
@@ -106,11 +113,14 @@ def get_auth_code(app_id):
         print("브라우저가 자동으로 열리지 않았습니다. 아래 주소를 직접 여세요:\n" + url)
 
     try:
-        srv.handle_request()      # 리다이렉트가 올 때까지 블록
+        srv.handle_request()      # 리다이렉트가 올 때까지 블록(최대 AUTH_TIMEOUT초)
     except KeyboardInterrupt:
         sys.exit("\n중단했습니다.")
     finally:
         srv.server_close()        # 포트를 물고 있지 않도록 (재실행 시 8085 충돌 방지)
+
+    if not (srv.auth_code or srv.oauth_error or srv.state_ok):
+        sys.exit(f"{AUTH_TIMEOUT}초 안에 동의가 오지 않았습니다. 녹화를 멈추고 다시 실행하세요.")
 
     if srv.oauth_error:
         sys.exit(f"핀터레스트가 인증을 거부했습니다: {srv.oauth_error}")
@@ -144,6 +154,11 @@ def main():
 
     print("\n인증 성공.")
     print("  스코프:", tok.get("scope", "?"))
+    granted = (tok.get("scope") or "").replace(",", " ").split()
+    if "pins:write" not in granted:
+        sys.exit("pins:write 가 부여되지 않았습니다 — 이 토큰으로는 핀을 만들 수 없습니다.\n"
+                 "개발자 포털의 [토큰 생성] 단축 버튼으로 받은 토큰이 아닌지,\n"
+                 "동의 화면에서 권한을 모두 허용했는지 확인하고 다시 실행하세요.")
     print("  액세스 토큰 만료:", tok.get("expires_in", "?"), "초")
     if not refresh:
         sys.exit("리프레시 토큰이 오지 않았습니다 — 앱 설정에서 refreshable 을 확인하세요.")
@@ -195,23 +210,39 @@ def _demo_pin(hdr, boards, board_name):
         print(f"\n[demo] 보드 '{want}' 를 찾지 못해 핀 생성을 건너뜁니다.")
         return
 
-    imgs = sorted(glob.glob(os.path.join(common.ROOT, "dashboard", "pins", "*.png")),
-                  key=os.path.getmtime)
-    if not imgs:
-        print("\n[demo] 핀 이미지가 없습니다 — 먼저 `python make_pin.py 1` 을 돌리세요.")
+    # 이미지와 문구는 **같은 글의 것**이어야 한다. 예전에는 '가장 새 이미지'와
+    # '대장의 마지막 줄'을 따로 집어서, 둘이 어긋나면 A의 그림에 B의 제목·링크가
+    # 붙은 핀이 심사 영상에 찍힐 수 있었다. 그리고 dead_link(원글이 내려간 글)는
+    # 건너뛴다 — 404를 가리키는 핀을 심사자에게 보여줄 수는 없다(#164 사고).
+    pins = common.load_json("pins.json", {"pins": []})["pins"]
+    chosen, img = None, None
+    for rec in reversed(pins):
+        if not isinstance(rec, dict) or rec.get("dead_link"):
+            continue
+        cand = os.path.join(common.ROOT, "dashboard", "pins",
+                            f"pin_{rec.get('site')}_{rec.get('post_id')}.png")
+        if os.path.exists(cand):
+            chosen, img = rec, cand
+            break
+    if not chosen:
+        print("\n[demo] 쓸 수 있는 핀(이미지+문구 한 쌍)이 없습니다 — "
+              "먼저 `python make_pin.py 1` 을 돌리세요.")
+        return
+    if chosen.get("site") != "pickdam":
+        print(f"\n[demo] 최근 핀이 '{chosen.get('site')}' 것이라 픽담 보드와 맞지 않습니다 — 건너뜁니다.")
         return
 
-    pins = common.load_json("pins.json", {"pins": []})
-    last = pins["pins"][-1] if pins["pins"] else {}
     body = {
         "board_id": bid,
-        "title": (last.get("pin_title") or "픽담 살까 말까")[:100],
-        "description": (last.get("pin_desc") or "")[:800],
-        "link": last.get("url") or site["url"],
+        "title": (chosen.get("pin_title") or "픽담 살까 말까")[:100],
+        "description": (chosen.get("pin_desc") or "")[:800],
+        "link": chosen.get("url") or site["url"],
         "media_source": {"source_type": "image_base64", "content_type": "image/png",
-                         "data": base64.b64encode(open(imgs[-1], "rb").read()).decode()},
+                         "data": base64.b64encode(open(img, "rb").read()).decode()},
     }
-    print(f"\n[demo] 핀 생성 중 — 보드 '{want}', 이미지 {os.path.basename(imgs[-1])}")
+    print(f"\n[demo] 핀 생성 중 — 보드 '{want}', 이미지 {os.path.basename(img)}")
+    print(f"[demo]   제목: {body['title']}")
+    print(f"[demo]   링크: {body['link']}")
     r = requests.post(f"{API}/pins", headers={**hdr, "Content-Type": "application/json"},
                       json=body, timeout=120)
     if r.status_code in (200, 201):
