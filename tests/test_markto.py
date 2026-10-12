@@ -524,6 +524,47 @@ class TestIndexNow(Base):
         self.assertIn("https://pickdam.com/b/", urls)
         self.assertNotIn("https://pickdam.com/a/", urls, "이미 보낸 URL을 다시 보냈다")
 
+    def test_거절당하면_기록하고_알린다(self):
+        """조용한 실패가 6주를 삼킨 적이 있다(원더랜드 422, 8/31~10/12)."""
+        site = common.site_by_key("pickdam")
+        alerts = []
+        real_get, real_post = self.ix.requests.get, self.ix.requests.post
+        real_tg = common.telegram_msg
+        keyr = _Resp(200, {})
+        keyr.text = site["indexnow_key"]
+        bad = _Resp(422, {})
+        bad.text = "Invalid urls"
+        self.ix.requests.get = lambda url, **k: (
+            keyr if url.endswith(".txt") else _Resp(200, [{"link": "https://pickdam.com/z/"}]))
+        self.ix.requests.post = lambda ep, **k: bad
+        common.telegram_msg = lambda t: alerts.append(t)
+        try:
+            self.ix.run()
+        finally:
+            self.ix.requests.get, self.ix.requests.post = real_get, real_post
+            common.telegram_msg = real_tg
+        st = common.load_json(self.ix.STATE, {})
+        self.assertIn("last_run", st, "거절 결과가 상태 파일에 남지 않았다")
+        self.assertTrue(any(r["status"] == 422 for r in st["last_run"]["results"]))
+        self.assertTrue(alerts, "거절당했는데 텔레그램 알림이 없다")
+        self.assertIn("422", alerts[0])
+
+    def test_성공해도_실행기록을_남긴다(self):
+        site = common.site_by_key("pickdam")
+        real_get, real_post = self.ix.requests.get, self.ix.requests.post
+        keyr = _Resp(200, {})
+        keyr.text = site["indexnow_key"]
+        self.ix.requests.get = lambda url, **k: (
+            keyr if url.endswith(".txt") else _Resp(200, [{"link": "https://pickdam.com/z/"}]))
+        self.ix.requests.post = lambda ep, **k: _Resp(200, {})
+        try:
+            self.ix.run()
+        finally:
+            self.ix.requests.get, self.ix.requests.post = real_get, real_post
+        st = common.load_json(self.ix.STATE, {})
+        self.assertTrue(st.get("last_run", {}).get("results"))
+        self.assertTrue(all(r["ok"] for r in st["last_run"]["results"]))
+
     def test_max_per_run을_넘기지_않는다(self):
         site = common.site_by_key("pickdam")
         cap = common.cfg()["indexnow"]["max_per_run"]
@@ -652,6 +693,88 @@ class TestSeoCopy(Base):
         c = make_pin.fallback_copy(self.post(), common.site_by_key("pickdam"))
         self.assertTrue(c["title"])
         self.assertTrue(c["description"])
+
+class TestAnswerBlock(Base):
+    """답변 블록 생성. 마크토는 만들기만 하고 본문에는 넣지 않는다."""
+
+    def setUp(self):
+        super().setUp()
+        import answer_block
+        self.ab = answer_block
+        self.real_body = self.ab.body_text
+        self.ab.body_text = lambda url, limit=1800: ("본문입니다", {"title": "제목", "desc": "요약"})
+
+    def tearDown(self):
+        self.ab.body_text = self.real_body
+        super().tearDown()
+
+    def _posts(self, n):
+        common.wp_posts = lambda site, **k: [self.post(pid=i, title=f"글 {i}") for i in range(1, n + 1)]
+
+    def test_설정이_픽담만_대상으로_둔다(self):
+        """원더랜드 본문은 S 소관이다 — 마크토가 블록을 만들 대상이 아니다."""
+        self.assertEqual(common.cfg()["answer_block"]["sites"], ["pickdam"])
+
+    def test_max_per_run을_넘기지_않는다(self):
+        self._posts(20)
+        real = common.llm_json
+        common.llm_json = lambda p, **k: {"question": "질문?", "answer": "답.", "conditions": ""}
+        try:
+            blocks = self.ab.run()
+        finally:
+            common.llm_json = real
+        self.assertLessEqual(len(blocks), common.cfg()["answer_block"]["max_per_run"])
+
+    def test_답이_비면_버린다(self):
+        """빈 블록을 본문 맨 위에 넣으면 글이 망가진다."""
+        self._posts(3)
+        real = common.llm_json
+        common.llm_json = lambda p, **k: {"question": "질문?", "answer": "  "}
+        try:
+            blocks = self.ab.run()
+        finally:
+            common.llm_json = real
+        self.assertEqual(blocks, {})
+
+    def test_내려간_글은_건너뛴다(self):
+        self._posts(2)
+        self.ab.body_text = lambda url, limit=1800: (None, {"ok": False, "status": 404})
+        blocks = self.ab.run()
+        self.assertEqual(blocks, {})
+
+    def test_LLM이_실패해도_나머지를_계속한다(self):
+        """한 글의 실패가 그날 작업 전체를 멈추면 안 된다."""
+        self._posts(3)
+        calls = {"n": 0}
+        real = common.llm_json
+
+        def flaky(p, **k):
+            calls["n"] += 1
+            if calls["n"] == 1:
+                raise RuntimeError("쿼터 초과")
+            return {"question": "질문?", "answer": "답.", "conditions": "조건"}
+
+        common.llm_json = flaky
+        try:
+            blocks = self.ab.run()
+        finally:
+            common.llm_json = real
+        self.assertEqual(len(blocks), 2, "첫 글 실패 뒤 나머지를 포기했다")
+
+    def test_마크다운_사본을_남긴다(self):
+        """픽토가 그대로 보고 옮길 수 있어야 한다."""
+        self._posts(1)
+        real = common.llm_json
+        common.llm_json = lambda p, **k: {"question": "몇 개월마다 갈아야 하나요?",
+                                          "answer": "3개월입니다.", "conditions": "4인 가구 기준"}
+        try:
+            self.ab.run()
+        finally:
+            common.llm_json = real
+        import io as _io
+        md = _io.open(os.path.join(common.ROOT, "out", self.ab.OUT_MD), encoding="utf-8").read()
+        self.assertIn("몇 개월마다 갈아야 하나요?", md)
+        self.assertIn("4인 가구 기준", md)
 
 if __name__ == "__main__":
     unittest.main()

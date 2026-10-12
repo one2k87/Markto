@@ -25,6 +25,7 @@ import requests
 import common
 
 STATE = "indexnow.json"          # data/indexnow.json — 이미 통보한 URL
+RUNS_KEEP = 14           # 최근 실행 기록(조용한 실패 추적용)
 KEEP = 500                       # 기록은 최근 500건만 남긴다(무한히 불어나지 않게)
 
 
@@ -55,10 +56,15 @@ def recent_urls(site, limit=50):
     return [p["link"] for p in r.json() if p.get("link")]
 
 
-def submit(site, urls, endpoints, dry=False):
+def submit(site, urls, endpoints, dry=False, log=None):
     """한 사이트의 URL 묶음을 각 엔드포인트에 통보. 성공한 엔드포인트 수를 돌려준다.
 
     IndexNow는 200과 202를 모두 성공으로 본다(202 = 접수됨, 나중에 처리).
+
+    `log` 리스트를 주면 엔드포인트별 결과를 {ep, status, n, body}로 쌓는다.
+    **조용한 실패를 막기 위해서다** — 원더랜드가 2026-08-31~10-12에 루트 글마다
+    422를 받고도 "가동 중"으로 보였다(키 파일이 루트가 아니면 그 디렉터리 하위
+    URL만 수리된다는 규칙을 몰랐다). 상태 코드를 남기지 않으면 6주가 그냥 간다.
     """
     key = site["indexnow_key"]
     host = site["url"].split("//", 1)[-1].strip("/")
@@ -82,12 +88,17 @@ def submit(site, urls, endpoints, dry=False):
         except requests.RequestException as e:   # noqa: BLE001 — 한 엔드포인트 실패가 나머지를 막지 않는다
             print(f"[indexnow] {ep} 요청 실패: {e}")
             continue
-        if r.status_code in (200, 202):
+        good = r.status_code in (200, 202)
+        if good:
             ok += 1
             print(f"[indexnow] {ep} → {r.status_code} ({len(urls)}건)")
         else:
-            # 400=형식, 403=키 불일치, 422=host/키 불일치, 429=너무 잦음
+            # 400=형식, 403=키 불일치, 422=host/키 불일치(키 파일 경로 범위 포함), 429=너무 잦음
             print(f"[indexnow] {ep} → {r.status_code} {r.text[:200]}")
+        if log is not None:
+            log.append({"site": site["key"], "ep": ep, "status": r.status_code,
+                        "n": len(urls), "ok": good,
+                        "body": "" if good else r.text[:160]})
     return ok
 
 
@@ -103,7 +114,7 @@ def run(send_all=False, dry=False):
     state = common.load_json(STATE, {"sent": []})
     done = set(state.get("sent", []))
 
-    sent_now = []
+    sent_now, runlog = [], []
     for site in cfg["sites"]:
         if not site.get("indexnow_key"):
             continue                              # 키가 없는 사이트는 조용히 건너뛴다
@@ -124,14 +135,31 @@ def run(send_all=False, dry=False):
             print(f"[indexnow] {site['name']} 새로 알릴 글 없음")
             continue
 
-        if submit(site, todo, endpoints, dry=dry) and not dry:
+        if submit(site, todo, endpoints, dry=dry, log=runlog) and not dry:
             sent_now += todo
 
-    if sent_now and not dry:
-        merged = state.get("sent", []) + [u for u in sent_now if u not in done]
-        state["sent"] = merged[-KEEP:]
-        state["last_at"] = common.now_kst().isoformat(timespec="seconds")
-        common.save_json(STATE, state)
+    if not dry:
+        # 통보한 게 없어도 **결과는 남긴다** — "안 보냈음"과 "보냈는데 거절당함"은 다르다
+        if sent_now:
+            merged = state.get("sent", []) + [u for u in sent_now if u not in done]
+            state["sent"] = merged[-KEEP:]
+            state["last_at"] = common.now_kst().isoformat(timespec="seconds")
+        if runlog:
+            state["last_run"] = {"at": common.now_kst().isoformat(timespec="seconds"),
+                                 "results": runlog}
+            state["runs"] = (state.get("runs", []) + [state["last_run"]])[-RUNS_KEEP:]
+        if sent_now or runlog:
+            common.save_json(STATE, state)
+        rejected = [x for x in runlog if not x["ok"]]
+        if rejected:
+            lines = [f"  {x['site']} {x['ep'].split('//')[-1][:28]} → {x['status']} {x['body'][:70]}"
+                     for x in rejected[:6]]
+            msg = ("[마크토] IndexNow 거절 — 색인 통보가 먹히지 않고 있습니다.\n"
+                   + "\n".join(lines)
+                   + "\n422는 보통 키 파일 위치 문제입니다: 키가 루트에 없으면 "
+                     "그 디렉터리 하위 URL만 수리됩니다.")
+            print(msg)
+            common.telegram_msg(msg)
     print(f"[indexnow] {len(sent_now)}건 통보")
     return sent_now
 
