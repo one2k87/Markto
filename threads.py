@@ -54,15 +54,33 @@ def _get(path, tok, **params):
     return r
 
 
-def user_id(tok=None):
-    """게시 대상 Threads 사용자 id. 시크릿에 있으면 왕복을 아낀다."""
-    uid = os.getenv("THREADS_USER_ID", "").strip()
-    if uid:
-        return uid
+def me(tok=None):
+    """토큰이 **실제로 누구인지** 묻는다. (id, username)"""
     r = _get("me", tok or token(), fields="id,username")
     if r.status_code != 200:
         raise SystemExit(f"Threads /me 실패 {r.status_code}: {r.text[:300]}")
-    return r.json()["id"]
+    j = r.json()
+    return j.get("id"), j.get("username", "")
+
+
+def user_id(tok=None, expect=None):
+    """게시 대상 Threads 사용자 id.
+
+    expect 가 주어지면 **반드시 확인한다.** 개발자 계정(앱 소유자)과 게시 계정은 서로
+    다른 것이 정상이지만, 토큰을 잘못 받으면 개인 계정에 글이 올라간다 — 되돌릴 수 없는
+    사고라, 한 번의 왕복을 쓰더라도 확인하고 간다. (핀터레스트 스코프 사고의 교훈:
+    사람이 손대기 전에 코드가 먼저 확인한다.)
+    """
+    uid = os.getenv("THREADS_USER_ID", "").strip()
+    if uid and not expect:
+        return uid
+    got_id, got_name = me(tok)
+    if expect and got_name and got_name.lstrip("@").lower() != expect.lstrip("@").lower():
+        raise SystemExit(
+            f"토큰의 주인이 '{got_name}' 입니다 — 설정에 적힌 '{expect}' 가 아닙니다.\n"
+            "이 토큰으로 올리면 **엉뚱한 계정에 글이 올라갑니다**. 게시를 중단합니다.\n"
+            "스레드에서 계정을 바꾼 뒤 토큰을 다시 받으세요.")
+    return uid or got_id
 
 
 def compose(post, site, cfg=None):
@@ -189,7 +207,7 @@ def run(limit=None):
             continue
         post["seo_desc"] = meta["desc"]
 
-        uid = uid or user_id(tok)
+        uid = uid or user_id(tok, conf.get("expect_username"))
         text = compose(post, site, c)
         pid = publish_one(text, tok, uid)
         if not pid:

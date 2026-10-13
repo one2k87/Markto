@@ -826,6 +826,16 @@ class TestThreads(Base):
         self.assertTrue(self.t.rotate(p))
         self.assertEqual(io_open_read(p), "NEWTOKEN")
 
+    def test_토큰_주인이_다르면_게시하지_않는다(self):
+        """개인 계정에 픽담 글이 올라가는 사고는 되돌릴 수 없다 — 코드가 먼저 막는다."""
+        self.t.me = lambda tok=None: ("999", "kyungwonkang0119")
+        with self.assertRaises(SystemExit):
+            self.t.user_id("TOK", expect="pickdam_home")
+
+    def test_토큰_주인이_맞으면_통과한다(self):
+        self.t.me = lambda tok=None: ("123", "pickdam_home")
+        self.assertEqual(self.t.user_id("TOK", expect="pickdam_home"), "123")
+
     def test_만료가_가까우면_경고한다(self):
         sent = []
         self.t.refresh = lambda tok=None: ("NEWTOKEN", 3 * 86400)
