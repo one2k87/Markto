@@ -32,9 +32,13 @@ PORT = 8085
 REDIRECT_URI = f"http://localhost:{PORT}/"
 OAUTH_URL = "https://www.pinterest.com/oauth/"
 API = "https://api.pinterest.com/v5"
-SCOPES = "boards:read,pins:read,pins:write"
+SCOPES = "boards:read,boards:write,pins:read,pins:write"
 AUTH_TIMEOUT = 180       # 동의 화면을 띄워놓고 기다리는 최대 시간(초)
 # pins:read 를 함께 받는다 — 게시 후 핀이 실제로 살아있는지 확인하는 데 쓴다.
+# boards:write 가 필요한 이유(2026-10-13 실측): pins:write 만으로 POST /v5/pins 를 치면
+#   401 {"code":3, ... Missing: ['boards:write']}
+# 로 거절당한다. 핀을 '보드에' 꽂는 행위를 Pinterest 는 보드 쓰기로 본다 — 문서의
+# 스코프 표만 보고 pins:write 만 요청했다가 데모 녹화 1회를 통째로 날렸다.
 # 문서 권장대로 필요한 최소 스코프만 요청한다(user_accounts, secret 계열은 받지 않는다).
 
 DONE_HTML = """<!doctype html><meta charset="utf-8">
@@ -155,10 +159,12 @@ def main():
     print("\n인증 성공.")
     print("  스코프:", tok.get("scope", "?"))
     granted = (tok.get("scope") or "").replace(",", " ").split()
-    if "pins:write" not in granted:
-        sys.exit("pins:write 가 부여되지 않았습니다 — 이 토큰으로는 핀을 만들 수 없습니다.\n"
+    missing = [s for s in ("pins:write", "boards:write") if s not in granted]
+    if missing:
+        sys.exit(f"{', '.join(missing)} 가 부여되지 않았습니다 — 이 토큰으로는 핀을 만들 수 없습니다.\n"
                  "개발자 포털의 [토큰 생성] 단축 버튼으로 받은 토큰이 아닌지,\n"
-                 "동의 화면에서 권한을 모두 허용했는지 확인하고 다시 실행하세요.")
+                 "동의 화면에서 권한을 모두 허용했는지 확인하고 다시 실행하세요.\n"
+                 "(둘 다 필요합니다 — 핀을 보드에 꽂는 데 boards:write 가 걸립니다. 2026-10-13 실측)")
     print("  액세스 토큰 만료:", tok.get("expires_in", "?"), "초")
     if not refresh:
         sys.exit("리프레시 토큰이 오지 않았습니다 — 앱 설정에서 refreshable 을 확인하세요.")
@@ -191,10 +197,12 @@ def main():
     print("=" * 64)
     print("  PINTEREST_APP_ID         =", app_id)
     print("  PINTEREST_APP_SECRET     = (앱 시크릿 — 방금 입력한 값)")
-    print("  PINTEREST_REFRESH_TOKEN  =", refresh)
+    masked = (refresh[:8] + "…" + refresh[-4:]) if len(refresh) > 16 else "(짧음)"
+    print(f"  PINTEREST_REFRESH_TOKEN  = {masked}   ← 전체 값은 {os.path.basename(path)} 안에")
     for it in boards:
         print(f"  PINTEREST_BOARD_ID_?     = {it['id']}   ← '{it['name']}' 보드")
-    print("\n리프레시 토큰은 화면에 노출됐습니다 — 녹화 영상에서 이 부분은 잘라내세요.")
+    print(f"\n리프레시 토큰은 화면에 찍지 않았습니다 — 녹화 그대로 제출하셔도 됩니다.")
+    print(f"전체 값은 터미널에서 `cat {os.path.basename(path)}` 로 보거나 파일을 열어 복사하세요.")
 
 
 def _demo_pin(hdr, boards, board_name):
