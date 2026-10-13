@@ -401,10 +401,13 @@ class TestOauthSetup(Base):
         self.assertEqual(oauth_setup.REDIRECT_URI, "http://localhost:8085/")
 
     def test_최소_스코프만_요청한다(self):
+        """boards:write 가 빠지면 POST /v5/pins 가 401 로 거절당한다(2026-10-13 실측).
+        데모 녹화 1회를 통째로 날린 원인이라 상수로 고정해 둔다."""
         import oauth_setup
         got = set(oauth_setup.SCOPES.split(","))
-        self.assertEqual(got, {"boards:read", "pins:read", "pins:write"})
+        self.assertEqual(got, {"boards:read", "boards:write", "pins:read", "pins:write"})
         self.assertFalse([s for s in got if "secret" in s], "비공개 스코프를 요청하고 있다")
+        self.assertNotIn("user_accounts:read", got, "심사에 불필요한 스코프를 요청하고 있다")
 
 
 class TestIndexNow(Base):
