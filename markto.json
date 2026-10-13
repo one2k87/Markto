@@ -128,8 +128,8 @@
     "_주의": "인용을 보장하지 않는다. 상관관계 근거이고 재평가에 수 주가 걸린다."
   },
   "threads": {
-    "enabled": false,
-    "_enabled_설명": "THREADS_TOKEN 시크릿이 들어오면 true로 바꾼다. 앱 심사가 없어 핀터레스트 승인과 무관하게 돌릴 수 있다.",
+    "enabled": true,
+    "_enabled_설명": "2026-10-13 켬. THREADS_TOKEN 확보 + 연결 점검 워크플로 통과(토큰 주인 = pickdam_home 실측). 앱 심사가 없어 핀터레스트 승인과 무관하게 돈다.",
     "per_run": 2,
     "sites": [
       "wontheland",

@@ -3,6 +3,11 @@ name: 스레드 연결 점검
 # 자동 게시를 켜기 전에 한 번 돌려 'pickdam_home 이 맞다'를 눈으로 확인하는 용도.
 on:
   workflow_dispatch:
+    inputs:
+      post_count:
+        description: "시험 게시 건수 (0 = 확인만, 글 올리지 않음)"
+        required: false
+        default: "0"
 
 jobs:
   check:
@@ -16,3 +21,13 @@ jobs:
         env:
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
         run: python threads.py --whoami
+
+      # 확인이 통과한 뒤에만 돈다. 0이면 아무것도 올리지 않는다.
+      - name: 시험 게시
+        if: ${{ github.event.inputs.post_count != '0' && github.event.inputs.post_count != '' }}
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        run: |
+          python collect.py
+          python threads.py ${{ github.event.inputs.post_count }}
