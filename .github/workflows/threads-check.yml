@@ -1,0 +1,18 @@
+name: 스레드 연결 점검
+# 글을 올리지 않는다. 토큰의 주인이 누구인지만 묻고 끝낸다.
+# 자동 게시를 켜기 전에 한 번 돌려 'pickdam_home 이 맞다'를 눈으로 확인하는 용도.
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - name: 토큰 주인 확인 (게시 없음)
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+        run: python threads.py --whoami

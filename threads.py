@@ -225,9 +225,29 @@ def run(limit=None):
     return n
 
 
+def whoami():
+    """게시하지 않고 토큰의 주인만 확인한다. 첫 연결 점검용.
+
+    핀터레스트 때 '리허설은 돌렸다'면서 실제 게시 경로를 타지 않아 사용자가 녹화를
+    한 번 날렸다. 그 실수를 반복하지 않으려고, 글을 올리기 **전에** 돌려보는 길을 둔다.
+    """
+    c = common.cfg()
+    want = (c.get("threads") or {}).get("expect_username")
+    uid, name = me()
+    print(f"[threads] 토큰 주인: @{name} (id={uid})")
+    if want:
+        ok = name and name.lstrip("@").lower() == want.lstrip("@").lower()
+        print(f"[threads] 설정 기대값: @{want} → {'일치 ✅' if ok else '불일치 ❌'}")
+        if not ok:
+            raise SystemExit("이 토큰으로 올리면 엉뚱한 계정에 글이 올라갑니다.")
+    return uid, name
+
+
 if __name__ == "__main__":
     import sys
-    if "--rotate" in sys.argv:
+    if "--whoami" in sys.argv:
+        whoami()
+    elif "--rotate" in sys.argv:
         i = sys.argv.index("--rotate")
         rotate(sys.argv[i + 1] if len(sys.argv) > i + 1 else None)
     else:
