@@ -185,7 +185,13 @@ def run(limit=None):
 
     state = common.load_json("threads.json", {"posts": []})
     done = {(p["site"], p["post_id"]) for p in state["posts"]}
-    queue = common.load_json("queue.json", {"posts": []})["posts"]
+    # 큐의 모양은 collect.py 가 정한다 — {"built_at":…, "items":[…]}.
+    # 2026-10-13 첫 시험 게시가 여기서 KeyError('posts') 로 죽었다. make_pin.py 와
+    # 같은 키를 쓴다고 가정하지 말고, 실제 파일을 보고 맞춘다.
+    queue = common.load_json("queue.json", {"items": []}).get("items", [])
+    if not queue:
+        print("[threads] 큐가 비었습니다 — 먼저 collect.py 를 실행하세요")
+        return 0
 
     want = limit or conf.get("per_run", 2)
     only = set(conf.get("sites") or [])

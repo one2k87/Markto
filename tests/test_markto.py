@@ -826,6 +826,19 @@ class TestThreads(Base):
         self.assertTrue(self.t.rotate(p))
         self.assertEqual(io_open_read(p), "NEWTOKEN")
 
+    def test_큐는_items_키를_쓴다_posts가_아니다(self):
+        """2026-10-13 첫 시험 게시가 KeyError('posts')로 죽었다. collect.py 가 쓰는
+        키는 'items' 다 — 이 테스트가 그 가정을 고정한다."""
+        import json, os
+        common = self.t.common
+        with open(common.data_path("queue.json"), "w", encoding="utf-8") as f:
+            json.dump({"built_at": "x", "items": []}, f)
+        c = common.cfg()
+        c.setdefault("threads", {})["enabled"] = True
+        self.t.common.cfg = lambda *a, **k: c
+        os.environ["THREADS_TOKEN"] = "T"
+        self.assertEqual(self.t.run(), 0)      # 빈 큐 → 0건, 예외 없이
+
     def test_토큰_주인이_다르면_게시하지_않는다(self):
         """개인 계정에 픽담 글이 올라가는 사고는 되돌릴 수 없다 — 코드가 먼저 막는다."""
         self.t.me = lambda tok=None: ("999", "kyungwonkang0119")
