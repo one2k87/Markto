@@ -779,5 +779,64 @@ class TestAnswerBlock(Base):
         self.assertIn("몇 개월마다 갈아야 하나요?", md)
         self.assertIn("4인 가구 기준", md)
 
+
+class TestThreads(Base):
+    """스레드 게시 — 네트워크 없이 조립 규칙과 토큰 수명 처리만 검증한다."""
+
+    def setUp(self):
+        super().setUp()
+        import threads
+        self.t = threads
+
+    def test_본문은_500자를_넘지_않고_링크가_끝에_온다(self):
+        site = {"key": "pickdam", "url": "https://pickdam.com",
+                "utm": "utm_source=threads&utm_medium=social"}
+        post = {"url": "https://pickdam.com/a/", "seo_desc": "가" * 900, "title": "제목"}
+        out = self.t.compose(post, site)
+        self.assertLessEqual(len(out), self.t.TEXT_MAX)
+        # 링크는 반드시 **맨 끝** — 스레드는 본문 끝 링크에만 미리보기 카드를 붙인다.
+        self.assertTrue(out.rstrip().endswith(
+            "https://pickdam.com/a/?utm_source=threads&utm_medium=social"), out[-80:])
+        self.assertIn("…", out, "잘렸으면 말줄임표가 있어야 한다")
+
+    def test_설명이_없으면_요약_그다음_제목을_쓴다(self):
+        site = {"key": "pickdam", "url": "https://pickdam.com", "utm": "x=1"}
+        out = self.t.compose({"url": "https://pickdam.com/a/", "title": "제목만 있음"}, site)
+        self.assertIn("제목만 있음", out)
+
+    def test_토큰이_없으면_즉시_멈춘다(self):
+        import os
+        old = os.environ.pop("THREADS_TOKEN", None)
+        try:
+            with self.assertRaises(SystemExit):
+                self.t.token()
+        finally:
+            if old is not None:
+                os.environ["THREADS_TOKEN"] = old
+
+    def test_갱신에_실패하면_거짓을_돌려준다(self):
+        self.t.refresh = lambda tok=None: (None, None)
+        self.assertFalse(self.t.rotate())
+
+    def test_갱신값은_파일로_넘긴다_공개저장소라_커밋할_수_없다(self):
+        import os, tempfile
+        self.t.refresh = lambda tok=None: ("NEWTOKEN", 60 * 86400)
+        d = tempfile.mkdtemp()
+        p = os.path.join(d, "tok")
+        self.assertTrue(self.t.rotate(p))
+        self.assertEqual(io_open_read(p), "NEWTOKEN")
+
+    def test_만료가_가까우면_경고한다(self):
+        sent = []
+        self.t.refresh = lambda tok=None: ("NEWTOKEN", 3 * 86400)
+        self.t.common.telegram_msg = lambda m: sent.append(m)
+        self.t.rotate()
+        self.assertTrue(sent and "만료" in sent[0])
+
+
+def io_open_read(p):
+    with open(p, encoding="utf-8") as f:
+        return f.read()
+
 if __name__ == "__main__":
     unittest.main()

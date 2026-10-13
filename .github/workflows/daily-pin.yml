@@ -60,6 +60,31 @@ jobs:
         continue-on-error: true
         run: python indexnow.py
 
+      # 핀터레스트 승인과 무관하게 돈다 — 스레드는 본인 계정 게시에 앱 심사가 없다.
+      - name: 스레드 게시
+        continue-on-error: true
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: python threads.py
+
+      # 장기 토큰은 60일이면 죽고, 갱신하면 **토큰 문자열 자체가 바뀐다**.
+      # 이 저장소는 public이라 파일로 커밋할 수 없어 시크릿에 되돌려 쓴다.
+      # SECRETS_PAT 가 없으면 threads.py 가 만료 14일 전부터 텔레그램으로 경고한다.
+      - name: 스레드 토큰 갱신
+        continue-on-error: true
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+        run: |
+          python threads.py --rotate "$RUNNER_TEMP/threads_token"
+          if [ -s "$RUNNER_TEMP/threads_token" ] && [ -n "${{ secrets.SECRETS_PAT }}" ]; then
+            GH_TOKEN="${{ secrets.SECRETS_PAT }}" \
+              gh secret set THREADS_TOKEN --repo "$GITHUB_REPOSITORY" \
+              < "$RUNNER_TEMP/threads_token"
+            echo "THREADS_TOKEN 갱신값을 시크릿에 되돌려 썼습니다"
+          fi
+          rm -f "$RUNNER_TEMP/threads_token"
+
       - name: 답변 블록 생성 (삽입은 픽토)
         continue-on-error: true
         env:

@@ -5,3 +5,6 @@ out/*.png
 
 # oauth_setup.py 가 남기는 자격증명 — 절대 커밋하지 않는다
 pinterest_token.json
+
+# 스레드 토큰 회전 임시파일
+threads_token
