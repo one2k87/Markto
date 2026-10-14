@@ -792,6 +792,26 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 625,
+   "post_title": "직수 정수기, 월 2만원대 렌탈 vs 50만원대 구매 시 필터 교체 주기 4개월마다 따져야 하는 이유",
+   "url": "https://pickdam.com/direct-water-purifier-guide/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "직수 정수기 선택 가이드",
+   "pin_desc": "직수 정수기 교체 전 꼭 확인해야 할 3가지 핵심 사항을 알아봅니다. 렌탈과 구매의 장단점, 월 3만원대 유지 비용을 절약하는 팁을 담았습니다.",
+   "hashtags": [
+    "직수정수기",
+    "정수기렌탈",
+    "정수기구매",
+    "정수기선택"
+   ],
+   "image": "out/pin_pickdam_625.png",
+   "made_at": "2026-10-14T15:13:32+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
