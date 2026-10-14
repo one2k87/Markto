@@ -91,7 +91,7 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: python answer_block.py
 
-      - name: 기록 커밋 (queue.json · pins.json · indexnow.json)
+      - name: 기록 커밋 (queue.json · pins.json · indexnow.json · threads.json)
         run: |
           git config user.name markto-bot
           git config user.email markto@solvup.local

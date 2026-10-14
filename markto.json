@@ -5,6 +5,11 @@
     {
       "key": "pickdam",
       "enabled": true,
+      "channels": {
+        "pinterest": true,
+        "threads": true
+      },
+      "_channels_설명": "채널별 on/off. enabled 보다 우선한다.",
       "name": "픽담",
       "url": "https://pickdam.com",
       "api": "https://pickdam.com/wp-json/wp/v2",
@@ -41,6 +46,11 @@
     {
       "key": "wontheland",
       "enabled": false,
+      "channels": {
+        "pinterest": false,
+        "threads": true
+      },
+      "_channels_설명": "핀터레스트는 웹사이트 소유권이 확인될 때까지 false — 9/8 사용자 결정이다. 스레드는 소유권 요건이 없어 true. 2026-10-14까지 enabled=false 하나로 묶여 애드센스 심사 대상인 원더랜드가 모든 유입 경로에서 빠져 있었다.",
       "_enabled_설명": "2026-09-08 사용자 결정: 1단계는 픽담 하나로 시작한다. 원더랜드는 핀터레스트 비즈 계정·소유권 확인이 끝난 뒤 enabled=true로 바꾸면 코드 수정 없이 합류한다.",
       "name": "원더랜드",
       "url": "https://wontheland.com",
@@ -135,7 +145,7 @@
       "wontheland",
       "pickdam"
     ],
-    "_sites_설명": "애드센스 심사 대상이 원더랜드이므로 원더랜드를 앞에 둔다(2026-10-13 게이트 측정 정정).",
+    "_sites_설명": "애드센스 심사 대상이 원더랜드이므로 원더랜드를 앞에 둔다(2026-10-13 게이트 측정 정정). 실제 게시 여부는 각 사이트의 channels.threads 가 정한다.",
     "_근거": "본인 계정 게시는 App Review 불필요(공식 문서 실측 2026-10-13). 24시간 250건, 본문 500자.",
     "_주의": "장기 토큰 60일 만료 + 갱신 시 토큰 문자열이 바뀐다. 저장소가 public이라 파일 커밋 불가 → 워크플로가 gh secret set으로 되돌려 쓴다. SECRETS_PAT가 없으면 만료 14일 전 텔레그램 경고.",
     "expect_username": "pickdam_home",

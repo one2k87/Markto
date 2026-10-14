@@ -177,6 +177,12 @@ def run(n=None, dry=False):
             break
         if (post["site"], post["id"]) in done_ids:
             continue
+        # 채널별 차단이 먼저다. 원더랜드는 핀터레스트 소유권이 확인될 때까지
+        # 큐에 들어와도 핀을 만들지 않는다(9/8 사용자 결정). 네트워크 왕복 전에 끊는다.
+        site = common.site_by_key(post["site"], cfg)
+        if not common.site_on(site, "pinterest"):
+            continue
+
         # 수집 이후 글이 내려갔을 수 있다 — 죽은 링크를 가리키는 핀은 만들지 않는다.
         # 같은 왕복에서 Rank Math 제목·설명도 받아 핀 문구의 원천으로 쓴다.
         if not dry:
@@ -184,7 +190,6 @@ def run(n=None, dry=False):
             if not meta["ok"]:
                 continue
             post["seo_title"], post["seo_desc"] = meta["title"], meta["desc"]
-        site = common.site_by_key(post["site"], cfg)
         copy = make_copy(post, site, cfg, dry=dry)
         path = os.path.join(OUT, f"pin_{post['site']}_{post['id']}.png")
         pin_image.render_pin(path, site, copy["image_text"],

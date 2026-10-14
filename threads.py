@@ -89,7 +89,7 @@ def compose(post, site, cfg=None):
     제목을 그대로 쓰지 않는 이유: 스레드 피드는 검색 결과가 아니라 대화다. 'OO 비교'
     같은 제목은 스크롤에 묻힌다. 답변 블록과 같은 원칙 — 숫자나 결론을 앞에 둔다.
     """
-    url = common.with_utm(post["url"], site)
+    url = common.with_utm(post["url"], site, "threads")
     head = (post.get("seo_desc") or post.get("excerpt") or post.get("title") or "").strip()
     head = common.strip_html(head)
     # 링크와 줄바꿈 자리를 빼고 본문을 자른다
@@ -175,6 +175,26 @@ def rotate(write_path=None):
     return True
 
 
+def _roundrobin(items, order):
+    """사이트별로 번갈아 꺼낸다.
+
+    큐(collect.py)는 사이트 묶음 순서로 쌓인다 — 픽담 35편 다음에 원더랜드 48편.
+    그걸 그대로 앞에서부터 쓰면 **앞 사이트가 다 떨어질 때까지 뒷 사이트는 한 번도
+    올라가지 않는다.** 하루 2건이면 픽담만 17일, 그 사이 애드센스 심사 대상인
+    원더랜드 유입은 0이다(2026-10-14). order 는 markto.json threads.sites 순서.
+    """
+    buckets = {}
+    for it in items:
+        buckets.setdefault(it.get("site"), []).append(it)
+    keys = [k for k in order if k in buckets] + [k for k in buckets if k not in order]
+    out = []
+    while any(buckets[k] for k in keys):
+        for k in keys:
+            if buckets[k]:
+                out.append(buckets[k].pop(0))
+    return out
+
+
 def run(limit=None):
     """큐에서 글을 꺼내 스레드에 올린다. 핀 기록(pins.json)과 별도 장부를 쓴다."""
     c = common.cfg()
@@ -194,10 +214,11 @@ def run(limit=None):
         return 0
 
     want = limit or conf.get("per_run", 2)
-    only = set(conf.get("sites") or [])
+    order = conf.get("sites") or []
+    only = set(order)
     tok, uid, n = token(), None, 0
 
-    for post in queue:
+    for post in _roundrobin(queue, order):
         if n >= want:
             break
         key = (post.get("site"), post.get("id"))
@@ -205,6 +226,9 @@ def run(limit=None):
             continue
         site = common.site_by_key(post["site"], c)
         if not site:
+            continue
+        # 채널별 차단. 큐에는 있어도 이 채널이 꺼진 사이트는 올리지 않는다.
+        if not common.site_on(site, "threads"):
             continue
 
         meta = common.page_meta(post["url"])

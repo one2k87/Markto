@@ -77,9 +77,13 @@ class Base(unittest.TestCase):
 
 
 class TestConfig(Base):
-    def test_1단계는_픽담_한_사이트만_활성(self):
-        act = [s["key"] for s in common.sites()]
-        self.assertEqual(act, ["pickdam"])
+    def test_수집_대상은_두_사이트_핀은_픽담만(self):
+        # 2026-10-14 변경: 사이트 enabled 하나로 모든 채널을 묶지 않는다.
+        # 원더랜드는 핀터레스트 소유권 미확인이라 핀은 못 올리지만 스레드는 올릴 수 있다.
+        self.assertEqual([s["key"] for s in common.sites()], ["pickdam", "wontheland"])
+        self.assertEqual([s["key"] for s in common.sites(channel="pinterest")], ["pickdam"])
+        self.assertEqual([s["key"] for s in common.sites(channel="threads")],
+                         ["pickdam", "wontheland"])
 
     def test_핀_비율은_2대3_고정(self):
         p = common.cfg()["pin"]
@@ -112,21 +116,22 @@ class TestCollect(Base):
         common.save_json("pins.json", {"pins": [{
             "site": "pickdam", "post_id": 1,
             "made_at": common.now_kst().isoformat(timespec="seconds")}]})
-        common.wp_posts = lambda site, **kw: list(posts)
+        # 사이트가 둘이 되었으므로 스텁도 사이트를 가려야 한다(2026-10-14).
+        common.wp_posts = lambda site, **kw: list(posts) if site["key"] == "pickdam" else []
         q = collect.build_queue()
         self.assertEqual([i["id"] for i in q], [2])
 
     def test_30일이_지나면_재게시_후보로_풀린다(self):
         old = (common.now_kst() - timedelta(days=40)).isoformat(timespec="seconds")
         common.save_json("pins.json", {"pins": [{"site": "pickdam", "post_id": 1, "made_at": old}]})
-        common.wp_posts = lambda site, **kw: [self.post(1)]
+        common.wp_posts = lambda site, **kw: ([self.post(1)] if site["key"] == "pickdam" else [])
         q = collect.build_queue()
         self.assertEqual([i["id"] for i in q], [1])
 
     def test_오래된_글이_먼저_나온다(self):
         a, b = self.post(1), self.post(2)
         a["date"], b["date"] = "2026-09-05T00:00:00", "2026-08-01T00:00:00"
-        common.wp_posts = lambda site, **kw: [a, b]
+        common.wp_posts = lambda site, **kw: ([a, b] if site["key"] == "pickdam" else [])
         q = collect.build_queue()
         self.assertEqual([i["id"] for i in q], [2, 1])
 
@@ -863,3 +868,80 @@ def io_open_read(p):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestChannels(Base):
+    """채널별 on/off — 원더랜드가 스레드에는 올라가고 핀터레스트에는 안 올라가야 한다.
+
+    이 분리를 못 해서 2026-10-14까지 **애드센스 심사 대상인 원더랜드가 모든 유입
+    경로에서 빠져 있었다.** 되풀이를 막으려고 상수로 못 박는다.
+    """
+
+    def test_channels가_enabled보다_우선한다(self):
+        s = {"key": "x", "enabled": False, "channels": {"pinterest": False, "threads": True}}
+        self.assertFalse(common.site_on(s, "pinterest"))
+        self.assertTrue(common.site_on(s, "threads"))
+
+    def test_channels가_없으면_enabled를_따른다(self):
+        self.assertTrue(common.site_on({"key": "x", "enabled": True}, "threads"))
+        self.assertFalse(common.site_on({"key": "x", "enabled": False}, "threads"))
+
+    def test_채널을_지정하지_않으면_어느_하나라도_켜져_있으면_켜짐(self):
+        # 수집(collect)은 채널을 모른 채 돌기 때문에 이 규칙이 필요하다.
+        s = {"key": "x", "enabled": False, "channels": {"pinterest": False, "threads": True}}
+        self.assertTrue(common.site_on(s))
+        off = {"key": "y", "enabled": False, "channels": {"pinterest": False, "threads": False}}
+        self.assertFalse(common.site_on(off))
+
+    def test_스레드_링크는_utm_source가_threads다(self):
+        # 이걸 안 해서 스레드 글 4건이 utm_source=pinterest 로 나갔다(2026-10-14).
+        s = common.site_by_key("pickdam")
+        self.assertIn("utm_source=threads", common.with_utm("https://pickdam.com/a/", s, "threads"))
+        self.assertNotIn("utm_source=pinterest",
+                         common.with_utm("https://pickdam.com/a/", s, "threads"))
+
+    def test_핀_링크의_utm은_그대로다(self):
+        # 채널 인자를 안 주면 기존 동작이 1비트도 바뀌지 않아야 한다(pins.json 이력 보존).
+        s = common.site_by_key("pickdam")
+        self.assertEqual(common.with_utm("https://pickdam.com/a/", s),
+                         "https://pickdam.com/a/?" + s["utm"])
+
+    def test_스레드_게시는_채널이_꺼진_사이트를_건너뛴다(self):
+        import threads
+        c = {"threads": {"enabled": True, "per_run": 5, "sites": ["pickdam", "wontheland"]},
+             "sites": [{"key": "pickdam", "enabled": True, "url": "https://pickdam.com",
+                        "channels": {"threads": False}},
+                       {"key": "wontheland", "enabled": False, "url": "https://wontheland.com",
+                        "channels": {"threads": False}}]}
+        common.save_json("queue.json", {"items": [
+            {"id": 1, "site": "pickdam", "url": "https://pickdam.com/a/", "title": "ㄱ"},
+            {"id": 2, "site": "wontheland", "url": "https://wontheland.com/b/", "title": "ㄴ"}]})
+        os.environ["THREADS_TOKEN"] = "t"
+        calls = []
+        orig_cfg, orig_meta, orig_pub = common.cfg, common.page_meta, threads.publish_one
+        common.cfg = lambda *a, **k: c
+        common.page_meta = lambda u: {"ok": True, "title": "t", "desc": "d"}
+        threads.publish_one = lambda *a, **k: calls.append(a) or "id"
+        try:
+            n = threads.run()
+        finally:
+            common.cfg, common.page_meta, threads.publish_one = orig_cfg, orig_meta, orig_pub
+        self.assertEqual(n, 0, "채널이 꺼졌는데 게시됐다")
+        self.assertEqual(calls, [])
+
+    def test_사이트를_번갈아_올린다(self):
+        import threads
+        q = [{"site": "pickdam", "id": i} for i in range(1, 4)] + \
+            [{"site": "wontheland", "id": i} for i in range(11, 13)]
+        out = threads._roundrobin(q, ["wontheland", "pickdam"])
+        # 원더랜드가 먼저, 그다음 번갈아. 하루 2건이면 양쪽에 각 1건이 간다.
+        self.assertEqual([(i["site"], i["id"]) for i in out],
+                         [("wontheland", 11), ("pickdam", 1),
+                          ("wontheland", 12), ("pickdam", 2),
+                          ("pickdam", 3)])
+
+    def test_번갈아_꺼내도_글은_하나도_잃지_않는다(self):
+        import threads
+        q = [{"site": "a", "id": 1}, {"site": "b", "id": 2}, {"site": "c", "id": 3}]
+        self.assertEqual(len(threads._roundrobin(q, [])), 3)
+

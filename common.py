@@ -23,10 +23,33 @@ def cfg(path=None):
         return json.load(f)
 
 
-def sites(c=None, only_enabled=True):
-    """대상 사이트 목록. 1단계는 픽담 하나만 enabled=true다."""
+def site_on(site, channel=None):
+    """이 사이트가 해당 채널에서 켜져 있는가. `channels` 블록이 `enabled` 보다 우선한다.
+
+    채널을 쪼개는 이유(2026-10-14 실측): 원더랜드는 **핀터레스트 소유권 미확인**으로
+    핀을 못 올린다(9/8 사용자 결정). 그런데 스레드는 소유권 요건이 아예 없어 지금
+    바로 올릴 수 있다. 사이트 하나에 enabled 플래그 하나뿐이라 이 둘이 묶여 있었고,
+    그 결과 **애드센스 심사 대상인 원더랜드가 모든 유입 경로에서 빠져 있었다.**
+
+    channel=None(수집 단계)은 '어느 한 채널이라도 켜져 있으면 켜짐'으로 본다 —
+    수집은 채널을 모른 채 돌기 때문이다. 채널별 차단은 각 게시 경로에서 한다.
+    """
+    ch = site.get("channels") or {}
+    if channel:
+        if channel in ch:
+            return bool(ch[channel])
+        return bool(site.get("enabled"))
+    if ch:
+        return bool(site.get("enabled")) or any(bool(v) for v in ch.values())
+    return bool(site.get("enabled"))
+
+
+def sites(c=None, only_enabled=True, channel=None):
+    """대상 사이트 목록. channel 을 주면 그 채널 기준으로 걸러낸다."""
     c = c or cfg()
-    return [s for s in c["sites"] if s.get("enabled") or not only_enabled]
+    if not only_enabled:
+        return list(c["sites"])
+    return [s for s in c["sites"] if site_on(s, channel)]
 
 
 def site_by_key(key, c=None):
@@ -195,14 +218,22 @@ def is_live(url, timeout=15):
     return True
 
 
-def with_utm(url, site):
-    """핀 → 사이트 유입을 애널리틱스에서 분리 측정하기 위한 UTM 부착.
-    성공 지표가 '핀 클릭·세션 유입'이므로 UTM 없이는 이 툴의 성과를 증명할 수 없다."""
+def with_utm(url, site, channel=None):
+    """핀·스레드 → 사이트 유입을 애널리틱스에서 분리 측정하기 위한 UTM 부착.
+    성공 지표가 '클릭·세션 유입'이므로 UTM 없이는 이 툴의 성과를 증명할 수 없다.
+
+    channel 을 주면 `utm_source` 를 그 채널로 바꾼다. **이걸 안 해서 사고가 났다**:
+    2026-10-14까지 나간 스레드 글 4건이 site["utm"] 을 그대로 써
+    `utm_source=pinterest` 로 링크를 걸었다 → GA4에서 스레드 유입이 핀터레스트로
+    집계된다. 비구글 유입 300 게이트를 채널별로 쪼갤 수 없게 되는 조용한 오염이다.
+    """
     utm = site.get("utm")
     if not utm or not url:
         return url
     if "utm_source=" in url:
         return url
+    if channel:
+        utm = re.sub(r"utm_source=[^&]*", "utm_source=" + channel, utm)
     return url + ("&" if "?" in url else "?") + utm
 
 
