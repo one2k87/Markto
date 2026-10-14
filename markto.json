@@ -45,13 +45,13 @@
     },
     {
       "key": "wontheland",
-      "enabled": false,
+      "enabled": true,
       "channels": {
-        "pinterest": false,
+        "pinterest": true,
         "threads": true
       },
-      "_channels_설명": "핀터레스트는 웹사이트 소유권이 확인될 때까지 false — 9/8 사용자 결정이다. 스레드는 소유권 요건이 없어 true. 2026-10-14까지 enabled=false 하나로 묶여 애드센스 심사 대상인 원더랜드가 모든 유입 경로에서 빠져 있었다.",
-      "_enabled_설명": "2026-09-08 사용자 결정: 1단계는 픽담 하나로 시작한다. 원더랜드는 핀터레스트 비즈 계정·소유권 확인이 끝난 뒤 enabled=true로 바꾸면 코드 수정 없이 합류한다.",
+      "_channels_설명": "채널별 on/off. enabled 보다 우선한다. 2026-10-14: 핀터레스트 소유권 표시가 완료된 것을 실측 확인해 pinterest 도 켰다 — 9/8 사용자 결정(\"소유권 확인이 끝나면 합류\")의 조건이 충족됐다. 단 standard 액세스 승인 전까지 실제 게시는 안 되고 핀 이미지 생성까지만 돈다.",
+      "_enabled_설명": "2026-10-14 켬. 핀터레스트 소유권 표시 완료(계정에 pickdam.com·wontheland.com 둘 다 등록) + 스레드는 소유권 요건 없음. 채널별 세부는 channels 가 정한다.",
       "name": "원더랜드",
       "url": "https://wontheland.com",
       "api": "https://wontheland.com/wp-json/wp/v2",

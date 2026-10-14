@@ -77,13 +77,12 @@ class Base(unittest.TestCase):
 
 
 class TestConfig(Base):
-    def test_수집_대상은_두_사이트_핀은_픽담만(self):
-        # 2026-10-14 변경: 사이트 enabled 하나로 모든 채널을 묶지 않는다.
-        # 원더랜드는 핀터레스트 소유권 미확인이라 핀은 못 올리지만 스레드는 올릴 수 있다.
-        self.assertEqual([s["key"] for s in common.sites()], ["pickdam", "wontheland"])
-        self.assertEqual([s["key"] for s in common.sites(channel="pinterest")], ["pickdam"])
-        self.assertEqual([s["key"] for s in common.sites(channel="threads")],
-                         ["pickdam", "wontheland"])
+    def test_두_사이트가_모든_채널에_들어가_있다(self):
+        # 2026-10-14: 핀터레스트 소유권 표시 완료를 실측 확인해 원더랜드를 양쪽 다 켰다.
+        # 채널 분리 장치 자체는 TestChannels 가 지킨다 — 설정이 바뀌어도 그쪽은 안 흔들린다.
+        for ch in (None, "pinterest", "threads"):
+            self.assertEqual([s["key"] for s in common.sites(channel=ch)],
+                             ["pickdam", "wontheland"], f"channel={ch}")
 
     def test_핀_비율은_2대3_고정(self):
         p = common.cfg()["pin"]
