@@ -96,12 +96,30 @@
   "https://wontheland.com/smishing-text-message-distinction-for-seniors-2026/",
   "https://pickdam.com/direct-water-purifier-guide/",
   "https://wontheland.com/post-e702c935/",
-  "https://wontheland.com/senior-digital-suspicious-payment-sms-202610/"
+  "https://wontheland.com/senior-digital-suspicious-payment-sms-202610/",
+  "https://pickdam.com/bathroom-mini-heater-tips/",
+  "https://wontheland.com/senior-smartphone-photo-backup-google-naver-2026/"
  ],
- "last_at": "2026-10-15T14:57:24+09:00",
+ "last_at": "2026-10-16T14:56:04+09:00",
  "last_run": {
-  "at": "2026-10-15T14:57:24+09:00",
+  "at": "2026-10-16T14:56:04+09:00",
   "results": [
+   {
+    "site": "pickdam",
+    "ep": "https://searchadvisor.naver.com/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
+   {
+    "site": "pickdam",
+    "ep": "https://api.indexnow.org/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
    {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
@@ -203,6 +221,43 @@
   {
    "at": "2026-10-15T14:57:24+09:00",
    "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-10-16T14:56:04+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
     {
      "site": "wontheland",
      "ep": "https://searchadvisor.naver.com/indexnow",

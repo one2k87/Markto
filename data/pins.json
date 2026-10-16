@@ -852,6 +852,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 663,
+   "post_title": "욕실 온풍기, 20분 사용해도 전기 요금 월 1만 원 넘지 않으려면 소비전력 1000W 미만 제품을 선택해야 하는 이유",
+   "url": "https://pickdam.com/bathroom-mini-heater-tips/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "욕실 미니 온풍기, 전기세 2가지 방법",
+   "pin_desc": "욕실 미니 온풍기 구매 시 전기세 걱정 없이 따뜻하게 쓰는 2가지 방법을 소개합니다. 흔한 실수와 안전 등급을 확인해보세요.",
+   "hashtags": [
+    "욕실온풍기",
+    "전기세절약",
+    "겨울욕실",
+    "가전필수템"
+   ],
+   "image": "out/pin_pickdam_663.png",
+   "made_at": "2026-10-16T14:55:51+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "wontheland",
+   "post_id": 2555,
+   "post_title": "2026년 9월 부모님 휴대폰에 수상한 전화가 오면 절대 먼저 끊지 마세요",
+   "url": "https://wontheland.com/boice-phishing-prevention-senior-2026-september/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "2026년 9월 부모님 휴대폰에 수상한 전화가 오면 절대 먼저 끊지 마세",
+   "pin_desc": "2026년 9월, 부모님 휴대폰으로 걸려오는 수상한 전화 때문에 걱정하는 자녀분들 많으시죠? 자녀가 알려드리는 보이스피싱 구별법과 신고 절차로 가족의 안전을 지키세요. 잘못된 대처로 인한 피해를 막는 실전 가이드입니다.",
+   "hashtags": [
+    "보이스피싱예방",
+    "부모님안심",
+    "전화금융사기",
+    "피싱사기대처"
+   ],
+   "image": "out/pin_wontheland_2555.png",
+   "made_at": "2026-10-16T14:55:56+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
