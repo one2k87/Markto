@@ -98,33 +98,19 @@
   "https://wontheland.com/post-e702c935/",
   "https://wontheland.com/senior-digital-suspicious-payment-sms-202610/",
   "https://pickdam.com/bathroom-mini-heater-tips/",
-  "https://wontheland.com/senior-smartphone-photo-backup-google-naver-2026/"
+  "https://wontheland.com/senior-smartphone-photo-backup-google-naver-2026/",
+  "https://wontheland.com/government24-certificate-free-easy-steps/",
+  "https://wontheland.com/senior-kakaotalk-videocall-troubleshooting/"
  ],
- "last_at": "2026-10-16T14:56:04+09:00",
+ "last_at": "2026-10-17T14:40:56+09:00",
  "last_run": {
-  "at": "2026-10-16T14:56:04+09:00",
+  "at": "2026-10-17T14:40:56+09:00",
   "results": [
    {
-    "site": "pickdam",
-    "ep": "https://searchadvisor.naver.com/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "pickdam",
-    "ep": "https://api.indexnow.org/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
-    "n": 1,
+    "n": 2,
     "ok": true,
     "body": ""
    },
@@ -132,7 +118,7 @@
     "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
-    "n": 1,
+    "n": 2,
     "ok": true,
     "body": ""
    }
@@ -271,6 +257,27 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-10-17T14:40:56+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 2,
      "ok": true,
      "body": ""
     }
