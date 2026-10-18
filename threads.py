@@ -218,12 +218,19 @@ def run(limit=None):
     only = set(order)
     tok, uid, n = token(), None, 0
 
-    for post in _roundrobin(queue, order):
+    # 이미 올린 글과 대상 밖 사이트는 **번갈아 꺼내기 전에** 걸러낸다.
+    # 2026-10-19 실측 사고: 큐의 픽담 앞머리 4편(#21·24·32·51)이 전부 '이미 게시'라
+    # 번갈아 꺼낸 자리 2·4·6·8이 통째로 빈 칸이 됐다. per_run=2 면 실제로 쓸 수 있는
+    # 자리는 7·9 — 둘 다 원더랜드다. 그 결과 **10/15~18 나흘 연속 픽담 0건**이었고,
+    # 매일 원더랜드 done 이 2씩 늘어 빈 칸이 앞으로 밀리며 스스로 풀리지도 않았다.
+    # 걸러낸 **뒤에** 번갈아야 실제로 번갈아진다.
+    cand = [p for p in queue
+            if (p.get("site"), p.get("id")) not in done
+            and (not only or p.get("site") in only)]
+
+    for post in _roundrobin(cand, order):
         if n >= want:
             break
-        key = (post.get("site"), post.get("id"))
-        if key in done or (only and post.get("site") not in only):
-            continue
         site = common.site_by_key(post["site"], c)
         if not site:
             continue

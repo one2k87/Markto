@@ -944,3 +944,42 @@ class TestChannels(Base):
         q = [{"site": "a", "id": 1}, {"site": "b", "id": 2}, {"site": "c", "id": 3}]
         self.assertEqual(len(threads._roundrobin(q, [])), 3)
 
+    def test_이미_올린_글이_앞을_막아도_사이트가_번갈아진다(self):
+        """2026-10-19 회귀 고정 — 나흘 연속 한 사이트만 올라간 사고.
+
+        큐의 픽담 앞머리가 전부 '이미 게시'일 때, 거르기 전에 번갈으면 그 자리들이
+        빈 칸이 되어 per_run 이 작은 동안 픽담이 영영 안 나온다.
+        """
+        import threads
+        c = {"threads": {"enabled": True, "per_run": 2,
+                         "sites": ["wontheland", "pickdam"]},
+             "sites": [{"key": "wontheland", "enabled": True, "url": "https://wontheland.com"},
+                       {"key": "pickdam", "enabled": True, "url": "https://pickdam.com"}]}
+        queue = [{"id": 2000 + i, "site": "wontheland",
+                  "url": f"https://wontheland.com/{i}/", "title": "ㄱ"} for i in range(6)]
+        queue += [{"id": 20 + i, "site": "pickdam",
+                   "url": f"https://pickdam.com/{i}/", "title": "ㄴ"} for i in range(6)]
+        # 픽담 앞 4편 + 원더랜드 앞 3편이 이미 올라가 있다 (10/18 실제 모양)
+        common.save_json("queue.json", {"items": queue})
+        common.save_json("threads.json", {"posts": (
+            [{"site": "pickdam", "post_id": 20 + i, "thread_id": "x", "at": "t"} for i in range(4)]
+            + [{"site": "wontheland", "post_id": 2000 + i, "thread_id": "x", "at": "t"}
+               for i in range(3)])})
+        os.environ["THREADS_TOKEN"] = "t"
+        got = []
+        orig_cfg, orig_meta, orig_pub, orig_uid = (
+            common.cfg, common.page_meta, threads.publish_one, threads.user_id)
+        common.cfg = lambda *a, **k: c
+        common.page_meta = lambda u: {"ok": True, "title": "t", "desc": "d"}
+        threads.user_id = lambda *a, **k: "uid"
+        threads.publish_one = lambda *a, **k: "pid"
+        try:
+            threads.run()
+            got = [(p["site"], p["post_id"]) for p in common.load_json("threads.json", {})["posts"]][7:]
+        finally:
+            (common.cfg, common.page_meta, threads.publish_one,
+             threads.user_id) = orig_cfg, orig_meta, orig_pub, orig_uid
+        self.assertEqual(len(got), 2)
+        self.assertEqual({s for s, _ in got}, {"wontheland", "pickdam"},
+                         f"두 사이트가 한 번씩 나와야 한다 — 실제: {got}")
+
