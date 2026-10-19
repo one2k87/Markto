@@ -150,7 +150,12 @@ def main():
     ap.add_argument("--demo-pin", action="store_true",
                     help="인증 직후 실제 핀 1건을 만든다 (심사 영상용)")
     ap.add_argument("--board", default="", help="핀을 올릴 보드 이름 (기본: markto.json 값)")
+    ap.add_argument("--preflight", action="store_true",
+                    help="녹화 전 점검만 한다 — 인증도 게시도 하지 않는다")
     args = ap.parse_args()
+
+    if args.preflight:
+        sys.exit(0 if _preflight() else 1)
 
     app_id, secret = app_credentials()
     tok = exchange(app_id, secret, get_auth_code(app_id))
@@ -205,18 +210,94 @@ def main():
     print(f"전체 값은 터미널에서 `cat {os.path.basename(path)}` 로 보거나 파일을 열어 복사하세요.")
 
 
+def _preflight():
+    """녹화를 켜기 **전에** 돌리는 점검. 인증도 게시도 하지 않는다.
+
+    이게 왜 있냐면: 2026-10-13에 스코프가 모자라 데모 핀이 401로 죽는 바람에 녹화를
+    통째로 날렸고, 10/19에는 최근 핀이 전부 원더랜드라 데모가 조용히 건너뛰어질
+    상태였다. **사람이 녹화를 켜기 전에 기계가 먼저 확인한다.**
+    """
+    import glob
+    import socket
+    import common
+
+    ok = True
+
+    def line(good, msg):
+        nonlocal ok
+        print(("  ✅ " if good else "  ❌ ") + msg)
+        if not good:
+            ok = False
+
+    print("\n녹화 전 점검\n" + "-" * 48)
+
+    line("boards:write" in SCOPES and "pins:write" in SCOPES,
+         f"요청 스코프: {SCOPES}")
+
+    s = socket.socket()
+    try:
+        s.bind(("localhost", PORT))
+        line(True, f"포트 {PORT} 비어 있음 (리다이렉트 {REDIRECT_URI})")
+    except OSError:
+        line(False, f"포트 {PORT} 가 이미 쓰이는 중 — `lsof -ti tcp:{PORT} | xargs kill`")
+    finally:
+        s.close()
+
+    has_id = bool(os.getenv("PINTEREST_APP_ID"))
+    print(("  ✅ " if has_id else "  ·  ") +
+          ("앱 ID 가 환경변수에 있음" if has_id else "앱 ID·시크릿은 실행 중에 물어봅니다(시크릿은 화면에 안 보임)"))
+
+    cfg = common.cfg()
+    pins = common.load_json("pins.json", {"pins": []})["pins"]
+    found = False
+    for site in common.sites(cfg, channel="pinterest"):
+        for rec in reversed(pins):
+            if not isinstance(rec, dict) or rec.get("dead_link"):
+                continue
+            if rec.get("site") != site["key"]:
+                continue
+            img = os.path.join(common.ROOT, "dashboard", "pins",
+                               f"pin_{rec['site']}_{rec['post_id']}.png")
+            if os.path.exists(img):
+                line(True, f"데모 핀 준비됨 — {site['name']} #{rec['post_id']} "
+                           f"/ 보드 '{site.get('board','')}' / {os.path.basename(img)}")
+                print(f"       제목: {(rec.get('pin_title') or '')[:48]}")
+                print(f"       링크: {rec.get('url','')[:72]}")
+                found = True
+                break
+        if found:
+            break
+    if not found:
+        line(False, "데모에 쓸 핀이 없습니다 — `python make_pin.py 1` 을 먼저 돌리세요")
+
+    print("-" * 48)
+    print("전부 ✅ 이면 녹화를 켜고 `python oauth_setup.py --demo-pin` 을 실행하세요.\n"
+          if ok else "❌ 를 먼저 해결하세요. 지금 녹화하면 또 날립니다.\n")
+    return ok
+
+
 def _demo_pin(hdr, boards, board_name):
     """영상용 핀 1건. 마크토가 만든 최근 이미지를 그대로 쓴다."""
     import glob
     import common                 # markto.json·UTM 등 기존 설정을 그대로 재사용
 
     cfg = common.cfg()
-    site = common.site_by_key("pickdam", cfg)
-    want = board_name or site.get("board", "")
-    bid = next((it["id"] for it in boards if it["name"].strip() == want.strip()), None)
+    # 보드가 **실제로 존재하는** 사이트만 데모 대상이 된다.
+    # 2026-10-19 실측 사고 직전: 10/14에 원더랜드 핀을 켜면서 최근 핀이 전부 원더랜드가
+    # 됐는데, 옛 조건이 "가장 최근 핀이 픽담이어야 한다"였다. 그대로 녹화했다면 심사에
+    # 꼭 필요한 '핀 생성' 장면이 **또** 안 찍혔을 것이다(10/13에 같은 이유로 1회 날림).
+    names = {it["name"].strip(): it["id"] for it in boards}
+    site, want, bid = None, "", None
+    for s in common.sites(cfg, channel="pinterest"):
+        cand = (board_name or s.get("board", "")).strip()
+        if cand in names:
+            site, want, bid = s, cand, names[cand]
+            break
     if not bid:
-        print(f"\n[demo] 보드 '{want}' 를 찾지 못해 핀 생성을 건너뜁니다.")
+        have = ", ".join(names) or "(없음)"
+        print(f"\n[demo] 쓸 수 있는 보드가 없어 핀 생성을 건너뜁니다. 계정의 보드: {have}")
         return
+    print(f"[demo] 대상 사이트: {site['name']} · 보드 '{want}'")
 
     # 이미지와 문구는 **같은 글의 것**이어야 한다. 예전에는 '가장 새 이미지'와
     # '대장의 마지막 줄'을 따로 집어서, 둘이 어긋나면 A의 그림에 B의 제목·링크가
@@ -227,17 +308,16 @@ def _demo_pin(hdr, boards, board_name):
     for rec in reversed(pins):
         if not isinstance(rec, dict) or rec.get("dead_link"):
             continue
+        if rec.get("site") != site["key"]:
+            continue              # 그림과 문구는 같은 글, 그리고 보드와 같은 사이트 것이어야 한다
         cand = os.path.join(common.ROOT, "dashboard", "pins",
                             f"pin_{rec.get('site')}_{rec.get('post_id')}.png")
         if os.path.exists(cand):
             chosen, img = rec, cand
             break
     if not chosen:
-        print("\n[demo] 쓸 수 있는 핀(이미지+문구 한 쌍)이 없습니다 — "
-              "먼저 `python make_pin.py 1` 을 돌리세요.")
-        return
-    if chosen.get("site") != "pickdam":
-        print(f"\n[demo] 최근 핀이 '{chosen.get('site')}' 것이라 픽담 보드와 맞지 않습니다 — 건너뜁니다.")
+        print(f"\n[demo] {site['name']} 의 쓸 수 있는 핀(이미지+문구 한 쌍)이 없습니다 — "
+              f"먼저 `python make_pin.py 1` 을 돌리세요.")
         return
 
     body = {

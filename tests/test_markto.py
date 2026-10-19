@@ -983,3 +983,40 @@ class TestChannels(Base):
         self.assertEqual({s for s, _ in got}, {"wontheland", "pickdam"},
                          f"두 사이트가 한 번씩 나와야 한다 — 실제: {got}")
 
+    def test_데모핀은_보드가_있는_사이트의_최근_핀을_고른다(self):
+        """2026-10-19 회귀 고정 — 녹화를 날릴 뻔한 조건.
+
+        10/14에 원더랜드 핀을 켜면서 최근 핀이 전부 원더랜드가 됐는데, 옛 조건은
+        '가장 최근 핀이 픽담이어야 한다'라서 데모 핀이 조용히 건너뛰어졌다.
+        심사 영상에서 가장 중요한 장면이 안 찍힌다.
+        """
+        import oauth_setup
+        common.save_json("pins.json", {"pins": [
+            {"site": "pickdam", "post_id": 663, "pin_title": "픽담 글",
+             "pin_desc": "d", "url": "https://pickdam.com/a/"},
+            {"site": "wontheland", "post_id": 2582, "pin_title": "원더랜드 글",
+             "pin_desc": "d", "url": "https://wontheland.com/b/"},
+        ]})
+        for site, pid in (("pickdam", 663), ("wontheland", 2582)):
+            d = os.path.join(self.tmp, "dashboard", "pins")
+            os.makedirs(d, exist_ok=True)
+            open(os.path.join(d, f"pin_{site}_{pid}.png"), "wb").write(b"\x89PNG")
+        sent = {}
+
+        def fake_post(url, **kw):
+            sent.update(kw.get("json") or {})
+            return _Resp(201, {"id": "p1"})
+
+        import requests as _rq
+        orig = _rq.post
+        _rq.post = fake_post
+        try:
+            # 계정에는 픽담 보드만 있다 — 원더랜드 보드는 아직 만들지 않았다.
+            oauth_setup._demo_pin({"Authorization": "x"},
+                                  [{"name": "픽담 살까 말까", "id": "B1"}], "")
+        finally:
+            _rq.post = orig
+        self.assertEqual(sent.get("board_id"), "B1")
+        self.assertEqual(sent.get("title"), "픽담 글",
+                         "최근 핀이 원더랜드여도 픽담 보드에는 픽담 핀이 올라가야 한다")
+
