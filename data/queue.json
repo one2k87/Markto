@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-18T15:01:51+09:00",
+ "built_at": "2026-10-19T15:18:48+09:00",
  "items": [
   {
    "id": 21,
@@ -218,14 +218,27 @@
    ]
   },
   {
-   "id": 2588,
-   "site": "wontheland",
-   "title": "2026년 9월 시니어 알뜰폰 부가서비스, 예상치 못한 요금은 이렇게 해지합니다",
-   "url": "https://wontheland.com/senior-alttelphone-value-added-service-cancel/",
-   "excerpt": "2026년 9월 시니어 알뜰폰 요금 청구서에 예상치 못한 부가서비스 요금이 나왔나요? 통신사별 신청 및 해지 방법을 자녀가 옆에서 알려주듯 쉽고 안전하게 정리했습니다. 불필요한 지출을 줄여보세요.",
-   "date": "2026-09-19T08:37:03",
+   "id": 325,
+   "site": "pickdam",
+   "title": "1인 가구 미니세탁기 3kg vs 5kg, 삶음 기능 포기 시 배수 호스 길이를 먼저 재야 하는 경우",
+   "url": "https://pickdam.com/single-household-mini-washer-boil-wash/",
+   "excerpt": "미니세탁기를 고를 때 가장 먼저 마주하는 고민 중 하나는 바로 세탁 방식입니다.",
+   "date": "2026-09-18T08:46:15",
    "categories": [
-    2005
+    19,
+    2
+   ]
+  },
+  {
+   "id": 332,
+   "site": "pickdam",
+   "title": "현관 센서등, 24시간 작동 시 월 500원 전기료 vs 3개월마다 건전지 교체, 우리 집 현관 벽 재질부터 확인해야 하는 조건",
+   "url": "https://pickdam.com/entryway-sensor-light-electricity-cost/",
+   "excerpt": "배터리형 센서등은 전원 연결이 필요 없어 설치가 매우 간편하다는 장점이 있습니다.",
+   "date": "2026-09-19T08:39:21",
+   "categories": [
+    19,
+    2
    ]
   },
   {
@@ -732,6 +745,28 @@
    "date": "2026-10-18T10:32:15",
    "categories": [
     2002
+   ]
+  },
+  {
+   "id": 3134,
+   "site": "wontheland",
+   "title": "시니어 알뜰폰 유심칩, 새 휴대폰에도 혼자서 3단계로 교체할 수 있을까요?",
+   "url": "https://wontheland.com/senior-low-cost-phone-usim-change/",
+   "excerpt": "2026년 10월, 시니어 알뜰폰 유심칩을 새 휴대폰에 혼자 교체하는 3단계 방법을 알려드립니다. 유심 교체 중 흔히 겪는 실패 사례와 복구법, 그리고 자녀가 원격으로 도와주는 팁까지, 어르신도 걱정 없이 따라 할 수 있도록 자세히 설명합니다.",
+   "date": "2026-10-19T08:39:34",
+   "categories": [
+    2005
+   ]
+  },
+  {
+   "id": 3136,
+   "site": "wontheland",
+   "title": "부모님 카카오톡 친구 사칭 돈 요구, 메신저 피싱 구별 3가지 약속으로 막습니다.",
+   "url": "https://wontheland.com/kakao-talk-phishing-prevention-senior/",
+   "excerpt": "2026년 10월, 부모님께 카카오톡 친구를 사칭해 돈을 요구하는 메신저 피싱 사기가 급증하고 있습니다. 구별 3가지 약속으로 소중한 돈과 정보를 지키는 방법을 알려드립니다.",
+   "date": "2026-10-19T13:24:34",
+   "categories": [
+    2006
    ]
   }
  ]

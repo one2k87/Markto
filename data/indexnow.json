@@ -102,12 +102,31 @@
   "https://wontheland.com/government24-certificate-free-easy-steps/",
   "https://wontheland.com/senior-kakaotalk-videocall-troubleshooting/",
   "https://wontheland.com/senior-smartphone-google-account-main-setting/",
-  "https://wontheland.com/lower-senior-phone-bill-2026/"
+  "https://wontheland.com/lower-senior-phone-bill-2026/",
+  "https://pickdam.com/bidet-valve-leak-check/",
+  "https://wontheland.com/kakao-talk-phishing-prevention-senior/",
+  "https://wontheland.com/senior-low-cost-phone-usim-change/"
  ],
- "last_at": "2026-10-18T15:02:16+09:00",
+ "last_at": "2026-10-19T15:19:09+09:00",
  "last_run": {
-  "at": "2026-10-18T15:02:16+09:00",
+  "at": "2026-10-19T15:19:09+09:00",
   "results": [
+   {
+    "site": "pickdam",
+    "ep": "https://searchadvisor.naver.com/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
+   {
+    "site": "pickdam",
+    "ep": "https://api.indexnow.org/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
    {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
@@ -288,6 +307,43 @@
   {
    "at": "2026-10-18T15:02:16+09:00",
    "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-10-19T15:19:09+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
     {
      "site": "wontheland",
      "ep": "https://searchadvisor.naver.com/indexnow",
