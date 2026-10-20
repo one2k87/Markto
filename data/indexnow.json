@@ -105,14 +105,15 @@
   "https://wontheland.com/lower-senior-phone-bill-2026/",
   "https://pickdam.com/bidet-valve-leak-check/",
   "https://wontheland.com/kakao-talk-phishing-prevention-senior/",
-  "https://wontheland.com/senior-low-cost-phone-usim-change/"
+  "https://wontheland.com/senior-low-cost-phone-usim-change/",
+  "https://wontheland.com/galaxy-a25-battery-drain-replacement-comparison/"
  ],
- "last_at": "2026-10-19T15:19:09+09:00",
+ "last_at": "2026-10-20T15:07:11+09:00",
  "last_run": {
-  "at": "2026-10-19T15:19:09+09:00",
+  "at": "2026-10-20T15:07:11+09:00",
   "results": [
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
     "n": 1,
@@ -120,26 +121,10 @@
     "body": ""
    },
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
     "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "wontheland",
-    "ep": "https://searchadvisor.naver.com/indexnow",
-    "status": 200,
-    "n": 2,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "wontheland",
-    "ep": "https://api.indexnow.org/indexnow",
-    "status": 200,
-    "n": 2,
     "ok": true,
     "body": ""
    }
@@ -357,6 +342,27 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 2,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-10-20T15:07:11+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
      "ok": true,
      "body": ""
     }

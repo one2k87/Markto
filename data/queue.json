@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-19T15:18:48+09:00",
+ "built_at": "2026-10-20T15:06:55+09:00",
  "items": [
   {
    "id": 21,
@@ -239,28 +239,6 @@
    "categories": [
     19,
     2
-   ]
-  },
-  {
-   "id": 2594,
-   "site": "wontheland",
-   "title": "2026년 9월, 부모님 휴대폰 수상한 결제 문자 피싱 구별하고 차단하는 5가지 방법입니다",
-   "url": "https://wontheland.com/senior-digital-phone-payment-phishing-block/",
-   "excerpt": "2026년 9월 기준, 부모님 휴대폰으로 오는 의심스러운 결제 문자나 피싱 메시지를 구별하고 안전하게 차단하는 방법을 알려드립니다. 실제 사례와 예방책, 그리고 이미 결제되었을 때 대처법까지 자세히 확인하세요.",
-   "date": "2026-09-20T08:32:26",
-   "categories": [
-    2006
-   ]
-  },
-  {
-   "id": 2596,
-   "site": "wontheland",
-   "title": "시니어 혼자 기차표 예매 앱으로, 자녀 도움 없이 정말 가능할까요?",
-   "url": "https://wontheland.com/senior-train-ticket-app-reservation/",
-   "excerpt": "2026년 9월, 시니어 혼자 기차표 예매 앱을 사용하는 방법을 알려드립니다. 자녀에게 부담 주지 않고 코레일톡 앱으로 KTX, SRT 승차권을 예약하는 단계별 가이드와 주의사항, 할인을 꼼꼼히 확인하세요.",
-   "date": "2026-09-20T12:22:59",
-   "categories": [
-    2007
    ]
   },
   {
@@ -767,6 +745,17 @@
    "date": "2026-10-19T13:24:34",
    "categories": [
     2006
+   ]
+  },
+  {
+   "id": 3151,
+   "site": "wontheland",
+   "title": "갤럭시 A25 배터리 빨리 닳을 때, 정품 교체 시기와 용량 비교로 고민을 줄입니다",
+   "url": "https://wontheland.com/galaxy-a25-battery-drain-replacement-comparison/",
+   "excerpt": "2026년 10월 기준, 갤럭시 A25 배터리가 유독 빨리 닳는다면 정품 배터리 용량(5,000mAh)과 교체 시기를 확인해 보세요. 삼성 서비스센터와 사설 수리점의 비용(6만~8만 원대)과 장단점을 비교하여 안전하고 합리적인 선택을 돕습니다.",
+   "date": "2026-10-20T09:40:58",
+   "categories": [
+    2003
    ]
   }
  ]
