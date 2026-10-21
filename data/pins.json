@@ -1052,6 +1052,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 705,
+   "post_title": "차량용 공기청정기 필터, 3개월 교체 놓치면 실내 미세먼지 2배 폭증하는 이유와 관리 팁 5가지",
+   "url": "https://pickdam.com/car-air-purifier-filter-2026-cost/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "차량용 공기청정기 필터 교체, 2026년 유지비",
+   "pin_desc": "차량용 공기청정기 구매 전 필터 교체 주기와 연간 유지비를 반드시 확인해야 합니다. 헤파, 활성탄 필터별 가격과 내 차에 맞는 선택 기준을 알려드립니다.",
+   "hashtags": [
+    "차량용공기청정기",
+    "차량필터교체",
+    "자동차용품",
+    "유지비절약"
+   ],
+   "image": "out/pin_pickdam_705.png",
+   "made_at": "2026-10-21T15:07:11+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "wontheland",
+   "post_id": 2602,
+   "post_title": "시니어 고속버스 예매 앱으로 표를 끊고 목적지까지 확인하는 순서",
+   "url": "https://wontheland.com/senior-express-bus-app-destination-check-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "시니어 고속버스 예매 앱으로 표를 끊고 목적지까지 확인하는 순서 - 원더",
+   "pin_desc": "2026년 9월 기준, 시니어 혼자 고속버스 예매 앱으로 목적지 버스표를 확인하고 예매하는 방법을 알려드립니다. 자녀 도움 없이도 스마트폰으로 쉽고 안전하게 버스표를 구매하고, 만약의 상황에 대비하는 팁까지 담았습니다.",
+   "hashtags": [
+    "시니어고속버스",
+    "고속버스예매",
+    "스마트폰활용",
+    "어르신정보"
+   ],
+   "image": "out/pin_wontheland_2602.png",
+   "made_at": "2026-10-21T15:07:15+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
