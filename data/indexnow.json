@@ -108,33 +108,19 @@
   "https://wontheland.com/senior-low-cost-phone-usim-change/",
   "https://wontheland.com/galaxy-a25-battery-drain-replacement-comparison/",
   "https://pickdam.com/car-air-purifier-filter-2026-cost/",
-  "https://wontheland.com/galaxy-a15-battery-drain-senior-fix/"
+  "https://wontheland.com/galaxy-a15-battery-drain-senior-fix/",
+  "https://wontheland.com/galaxy-a35-photo-transfer-senior/",
+  "https://wontheland.com/galaxy-s24-ringtone-notification-volume-settings/"
  ],
- "last_at": "2026-10-21T15:07:24+09:00",
+ "last_at": "2026-10-22T15:10:45+09:00",
  "last_run": {
-  "at": "2026-10-21T15:07:24+09:00",
+  "at": "2026-10-22T15:10:45+09:00",
   "results": [
    {
-    "site": "pickdam",
-    "ep": "https://searchadvisor.naver.com/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "pickdam",
-    "ep": "https://api.indexnow.org/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
-    "n": 1,
+    "n": 2,
     "ok": true,
     "body": ""
    },
@@ -142,7 +128,7 @@
     "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
-    "n": 1,
+    "n": 2,
     "ok": true,
     "body": ""
    }
@@ -418,6 +404,27 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-10-22T15:10:45+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 2,
      "ok": true,
      "body": ""
     }
