@@ -1196,6 +1196,38 @@
    "pin_id": null,
    "posted_at": null,
    "fallback_copy": true
+  },
+  {
+   "site": "wontheland",
+   "post_id": 2628,
+   "post_title": "새 스마트 기기 복잡한 설정, 시니어 부모님을 위한 보조 서비스로 쉽게 해결하세요",
+   "url": "https://wontheland.com/senior-digital-assistance-2026-09/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "새 스마트 기기 복잡한 설정, 시니어 부모님을 위한 보조 서비스로 쉽게",
+   "pin_desc": "2026년 9월, 새로 장만한 스마트폰이나 태블릿 설정에 어려움을 겪는 시니어 부모님을 위해 준비했습니다. 복잡한 기기 설정부터 시니어 보조 서비스 활용까지, 자녀가 옆에서 알려주듯 쉽게 설명하고 안전하게 이용하는 팁을 알려드립니다. 비용과 시간 범위도 확인하세요.",
+   "hashtags": [],
+   "image": "out/pin_wontheland_2628.png",
+   "made_at": "2026-10-25T15:15:47+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
+  },
+  {
+   "site": "wontheland",
+   "post_id": 2638,
+   "post_title": "2026년 9월 카페 키오스크 주문, 어르신도 당황하지 않고 3단계로 성공합니다",
+   "url": "https://wontheland.com/senior-digital-kiosk-order-2026/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "2026년 9월 카페 키오스크 주문, 어르신도 당황하지 않고 3단계로",
+   "pin_desc": "2026년 9월 기준, 카페 키오스크 주문이 어렵게 느껴지는 어르신들을 위한 쉽고 안전한 3단계 가이드를 소개합니다. 결제 방법 비교와 실패 시 대처법까지, 당황하지 않고 성공하는 노하우를 확인하세요.",
+   "hashtags": [],
+   "image": "out/pin_wontheland_2638.png",
+   "made_at": "2026-10-25T15:16:23+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
   }
  ]
 }
