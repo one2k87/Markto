@@ -1143,3 +1143,47 @@ class TestProductPost(Base):
             o.set_env(False)
         self.assertEqual(boards[0]["id"], "B1")
 
+    def test_샌드박스_보드_이름이_설정과_달라도_그_보드를_쓴다(self):
+        """2026-10-30 5차 실패 회귀 고정.
+
+        리허설이 '픽담 살까 말까 (API 시연)' 로 보드를 만들어 두자, 녹화 실행에서는
+        목록이 비지 않아 보드 확정 단계가 건너뛰어졌고 _demo_pin 이 설정값
+        '픽담 살까 말까' 를 정확히 찾다가 실패해 **핀 생성을 통째로 건너뛰었다**.
+        내 수정이 만든 회귀였다.
+        """
+        import oauth_setup as o
+        import requests as _rq
+        op = _rq.post
+        _rq.post = lambda *a, **k: self.fail("보드가 있는데 또 만들었다")
+        o.set_env(True)
+        try:
+            boards, name = o._ensure_sandbox_board(
+                {"Authorization": "x"}, "픽담 살까 말까",
+                [{"id": "B9", "name": "픽담 살까 말까 (API 시연)"}])
+        finally:
+            _rq.post = op
+            o.set_env(False)
+        self.assertEqual(name, "픽담 살까 말까 (API 시연)")
+        self.assertEqual(boards[0]["id"], "B9")
+
+    def test_데모핀이_그_이름으로_보드를_찾는다(self):
+        """위에서 확정한 이름이 _demo_pin 까지 그대로 전달되는지."""
+        import oauth_setup as o
+        import requests as _rq
+        common.save_json("pins.json", {"pins": [
+            {"site": "pickdam", "post_id": 1, "pin_title": "ㄱ", "pin_desc": "d",
+             "url": "https://pickdam.com/a/"}]})
+        d = os.path.join(self.tmp, "dashboard", "pins")
+        os.makedirs(d, exist_ok=True)
+        open(os.path.join(d, "pin_pickdam_1.png"), "wb").write(b"\x89PNG")
+        sent = {}
+        op = _rq.post
+        _rq.post = lambda u, **k: (sent.update(k.get("json") or {}), _Resp(201, {"id": "p1"}))[1]
+        try:
+            o._demo_pin({"Authorization": "x"},
+                        [{"id": "B9", "name": "픽담 살까 말까 (API 시연)"}],
+                        "픽담 살까 말까 (API 시연)")
+        finally:
+            _rq.post = op
+        self.assertEqual(sent.get("board_id"), "B9", "이름이 넘어왔는데 핀을 건너뛰었다")
+

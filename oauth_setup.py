@@ -212,8 +212,13 @@ def main():
         print(f"  - {it['name']}  (id={it['id']})")
 
     board_name = args.board
-    if args.sandbox and not boards:
-        boards, board_name = _ensure_sandbox_board(hdr, args.board or common_board_name())
+    if args.sandbox:
+        # 목록이 비었을 때만 부르면 안 된다 — 2026-10-30 5차 실패가 정확히 그것이었다.
+        # 리허설이 '픽담 살까 말까 (API 시연)' 로 보드를 만들어 두자, 다음 실행에서는
+        # 목록이 비지 않아 이 함수가 건너뛰어졌고, _demo_pin 은 설정값
+        # '픽담 살까 말까' 를 정확히 찾다가 못 찾아 핀 생성을 통째로 건너뛰었다.
+        # **샌드박스에서는 항상 여기서 실제 보드를 확정한다.**
+        boards, board_name = _ensure_sandbox_board(hdr, args.board or common_board_name(), boards)
 
     if args.demo_pin:
         _demo_pin(hdr, boards, board_name)
@@ -245,7 +250,7 @@ def main():
     print(f"전체 값은 터미널에서 `cat {os.path.basename(path)}` 로 보거나 파일을 열어 복사하세요.")
 
 
-def _ensure_sandbox_board(hdr, want):
+def _ensure_sandbox_board(hdr, want, boards=None):
     """샌드박스에 쓸 보드를 확보한다. (boards, 쓸 이름) 을 돌려준다.
 
     **2026-10-30 실측의 모순**: 샌드박스에서 `GET /v5/boards` 는 **0개**를 돌려주는데
@@ -258,13 +263,24 @@ def _ensure_sandbox_board(hdr, want):
       ② 그래도 없으면 만든다. 이름이 겹치면 **뒤에 날짜를 붙여 다시 시도**한다.
       ③ 만들어진 보드는 POST 응답으로 받으므로 목록이 계속 비어 있어도 상관없다.
     """
-    r = requests.get(f"{API}/boards", headers=hdr,
-                     params={"page_size": 25, "privacy": "ALL"}, timeout=30)
-    if r.status_code == 200:
-        got = r.json().get("items", [])
-        if got:
-            print(f"[샌드박스] 보드 {len(got)}개를 다시 조회해 찾았습니다.")
-            return got, want
+    got = list(boards or [])
+    if not got:
+        r = requests.get(f"{API}/boards", headers=hdr,
+                         params={"page_size": 25, "privacy": "ALL"}, timeout=30)
+        if r.status_code == 200:
+            got = r.json().get("items", [])
+            if got:
+                print(f"[샌드박스] 보드 {len(got)}개를 다시 조회해 찾았습니다.")
+
+    if got:
+        # 이름이 정확히 같은 것 → 앞부분이 같은 것 → 그래도 없으면 첫 번째.
+        # 어떤 경우에도 **실제로 존재하는 보드 이름**을 돌려준다.
+        names = [b.get("name", "") for b in got]
+        pick = next((n for n in names if n.strip() == want.strip()), None) \
+            or next((n for n in names if n.strip().startswith(want.strip())), None) \
+            or names[0]
+        print(f"[샌드박스] 보드 사용 — '{pick}'")
+        return got, pick
 
     stamp = common_today()
     for name in (want, f"{want} (API 시연)", f"{want} {stamp}"):
