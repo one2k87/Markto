@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# 핀터레스트 OAuth 데모 녹화 도우미 — 이 파일 하나만 실행하면 됩니다.
+#   터미널에서:  bash ~/Desktop/SolvUp_Workspace/Markto/record_demo.sh
+#
+# 왜 있냐면: 지금까지 재녹화를 두 번 날렸다. 한 번은 스코프가 모자라서(2026-10-13),
+# 한 번은 데모 핀이 조용히 건너뛰어질 상태라서(2026-10-19, 찍기 직전에 발견).
+# 사람이 녹화를 켜기 전에 기계가 먼저 전부 확인한다.
+set -u
+cd "$(dirname "$0")" || exit 1
+
+echo "① 최신 코드 받기"
+git pull --rebase --autostash -q 2>/dev/null && echo "   ✅ 완료" || echo "   ⚠️ git pull 생략(네트워크/잠금) — 그대로 진행합니다"
+
+echo
+echo "② 파이썬 준비 확인"
+if ! python3 -c "import requests" 2>/dev/null; then
+  echo "   ❌ requests 모듈이 없습니다. 아래 한 줄을 먼저 실행하세요:"
+  echo
+  echo "        python3 -m pip install --user requests"
+  echo
+  exit 1
+fi
+echo "   ✅ 완료"
+
+echo
+export PINTEREST_APP_ID=1610207
+python3 oauth_setup.py --preflight || {
+  echo "❌ 점검이 통과하지 못했습니다. 지금 녹화하면 또 날립니다 — 위 메시지를 마크토에게 보여주세요."
+  exit 1
+}
+
+cat <<'TXT'
+────────────────────────────────────────────────────────────
+③ 지금 화면 녹화를 켜세요.
+
+     Cmd + Shift + 5  →  「전체 화면 기록」  →  [기록]
+
+   켠 다음 이 창으로 돌아와 Enter 를 누르면 시작합니다.
+
+   ※ 곧 앱 비밀 키를 물어봅니다. 입력해도 화면에 글자가 보이지
+     않는 것이 정상입니다(일부러 그렇게 만들었습니다).
+     값은  developers.pinterest.com/apps/1610207  →  구성  →  앱 비밀 키
+────────────────────────────────────────────────────────────
+TXT
+printf "   녹화를 켰으면 Enter: "
+read -r _
+
+echo
+echo "④ 데모 시작 — 아래 다섯 장면이 순서대로 나옵니다. 각 화면을 2~3초씩 보여주세요."
+echo "   1) 핀터레스트 동의 화면(권한 목록이 보이게)  2) 동의 누르기"
+echo "   3) '인증 성공' + 스코프 4개  4) 보드 목록  5) '[demo] 게시 성공 — pin_id=…'"
+echo
+python3 oauth_setup.py --demo-pin
+rc=$?
+
+echo
+if [ $rc -eq 0 ]; then
+  cat <<'TXT'
+────────────────────────────────────────────────────────────
+✅ 끝났습니다. 마지막으로 위에 찍힌 핀 주소를 브라우저에서 열어
+   실제 핀을 2~3초 보여준 뒤 녹화를 멈추세요.
+   (Cmd + Shift + 5 → 정지, 또는 메뉴 막대의 정지 버튼)
+
+   그다음 영상 파일을 마크토 채팅에 올려주세요. 제가 장면이 다
+   들어갔는지 확인하고 재신청까지 안내하겠습니다.
+────────────────────────────────────────────────────────────
+TXT
+else
+  echo "❌ 중간에 멈췄습니다. 위 메시지를 그대로 마크토에게 보여주세요 — 제가 원인을 봅니다."
+  echo "   (포트 오류면:  lsof -ti tcp:8085 | xargs kill  후 다시 실행)"
+fi
