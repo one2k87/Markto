@@ -31,7 +31,27 @@ import requests
 PORT = 8085
 REDIRECT_URI = f"http://localhost:{PORT}/"
 OAUTH_URL = "https://www.pinterest.com/oauth/"
-API = "https://api.pinterest.com/v5"
+API_PROD = "https://api.pinterest.com/v5"
+API_SANDBOX = "https://api-sandbox.pinterest.com/v5"
+API = API_PROD          # --sandbox 로 바뀐다 (main 에서 set_env)
+
+
+def set_env(sandbox):
+    """API 호스트를 프로덕션/샌드박스로 바꾼다.
+
+    **왜 필요한가(2026-10-30 실측).** Trial 액세스로 프로덕션에 핀을 만들면
+      403 {"code":29, "Apps with Trial access may not create Pins in production
+            https://api.pinterest.com - use API Sandbox https://api-sandbox.pinterest.com instead."}
+    로 거절당한다. 즉 **Trial 상태에서는 샌드박스에서만 핀을 만들 수 있고**,
+    standard 승인용 데모 영상도 샌드박스로 찍는 수밖에 없다.
+    두 호스트 모두 미인증 호출에 401 을 돌려주는 것까지 직접 확인했다.
+
+    주의: **토큰 교환도 같은 호스트로 가야 한다.** 샌드박스 토큰과 프로덕션 토큰은
+    별개이고, 샌드박스 보드 목록도 프로덕션과 따로 논다(비어 있는 게 정상).
+    """
+    global API
+    API = API_SANDBOX if sandbox else API_PROD
+    return API
 SCOPES = "boards:read,boards:write,pins:read,pins:write"
 AUTH_TIMEOUT = 180       # 동의 화면을 띄워놓고 기다리는 최대 시간(초)
 # pins:read 를 함께 받는다 — 게시 후 핀이 실제로 살아있는지 확인하는 데 쓴다.
@@ -152,10 +172,18 @@ def main():
     ap.add_argument("--board", default="", help="핀을 올릴 보드 이름 (기본: markto.json 값)")
     ap.add_argument("--preflight", action="store_true",
                     help="녹화 전 점검만 한다 — 인증도 게시도 하지 않는다")
+    ap.add_argument("--sandbox", action="store_true",
+                    help="샌드박스로 돈다. Trial 액세스에서 핀을 만들 수 있는 유일한 길이다.")
     args = ap.parse_args()
 
     if args.preflight:
         sys.exit(0 if _preflight() else 1)
+
+    set_env(args.sandbox)
+    if args.sandbox:
+        print("\n[샌드박스 모드] 핀은 api-sandbox.pinterest.com 에 만들어집니다.")
+        print("  Trial 액세스는 프로덕션에 핀을 만들 수 없습니다(403 code 29, 2026-10-30 실측).")
+        print("  샌드박스 보드·핀은 프로덕션과 별개이고 만든 사람에게만 보입니다.\n")
 
     app_id, secret = app_credentials()
     tok = exchange(app_id, secret, get_auth_code(app_id))
@@ -183,6 +211,18 @@ def main():
     for it in boards:
         print(f"  - {it['name']}  (id={it['id']})")
 
+    if args.sandbox and not boards:
+        # 샌드박스 보드 목록은 프로덕션과 따로 논다 — 처음엔 비어 있는 게 정상이다.
+        want = args.board or common_board_name()
+        print(f"[샌드박스] 보드가 없어 '{want}' 를 만듭니다.")
+        cb = requests.post(f"{API}/boards", headers={**hdr, "Content-Type": "application/json"},
+                           json={"name": want, "description": "마크토 API 연동 시연용"},
+                           timeout=30)
+        if cb.status_code not in (200, 201):
+            sys.exit(f"샌드박스 보드 생성 실패 {cb.status_code}: {cb.text[:300]}")
+        boards = [cb.json()]
+        print(f"  생성됨 — {boards[0].get('name')} (id={boards[0].get('id')})")
+
     if args.demo_pin:
         _demo_pin(hdr, boards, args.board)
 
@@ -192,7 +232,10 @@ def main():
         "refresh_token_expires_at": tok.get("refresh_token_expires_at"),
         "boards": {it["name"]: it["id"] for it in boards},
     }
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pinterest_token.json")
+    name = "pinterest_token_sandbox.json" if args.sandbox else "pinterest_token.json"
+    # 샌드박스 토큰은 프로덕션에서 쓸 수 없다. 같은 파일에 덮어쓰면 승인 뒤에
+    # 죽은 토큰을 시크릿에 넣게 된다 — 파일을 아예 분리한다.
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), name)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
     os.chmod(path, 0o600)         # 자격증명 파일은 본인만 읽게 (.gitignore 에도 있다)
@@ -208,6 +251,11 @@ def main():
         print(f"  PINTEREST_BOARD_ID_?     = {it['id']}   ← '{it['name']}' 보드")
     print(f"\n리프레시 토큰은 화면에 찍지 않았습니다 — 녹화 그대로 제출하셔도 됩니다.")
     print(f"전체 값은 터미널에서 `cat {os.path.basename(path)}` 로 보거나 파일을 열어 복사하세요.")
+
+
+def common_board_name():
+    import common
+    return (common.site_by_key("pickdam", common.cfg()).get("board") or "마크토 시연").strip()
 
 
 def _preflight():
@@ -233,6 +281,8 @@ def _preflight():
 
     line("boards:write" in SCOPES and "pins:write" in SCOPES,
          f"요청 스코프: {SCOPES}")
+    line(True, "Trial 액세스 → 핀은 샌드박스(api-sandbox.pinterest.com)에 만듭니다. "
+               "프로덕션은 403 code 29 로 막힙니다(2026-10-30 실측).")
 
     s = socket.socket()
     try:

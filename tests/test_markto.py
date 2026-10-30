@@ -1083,3 +1083,17 @@ class TestProductPost(Base):
         finally:
             common.cfg = orig
 
+    def test_샌드박스_모드가_호스트를_바꾼다(self):
+        """2026-10-30 회귀 고정 — 재녹화를 세 번째로 날린 이유.
+
+        Trial 액세스로 프로덕션에 핀을 만들면 403 code 29 로 거절당한다.
+        Trial 상태에서 핀을 만들 수 있는 곳은 샌드박스뿐이다.
+        """
+        import oauth_setup as o
+        try:
+            self.assertEqual(o.set_env(True), "https://api-sandbox.pinterest.com/v5")
+            self.assertEqual(o.API, "https://api-sandbox.pinterest.com/v5")
+            self.assertEqual(o.set_env(False), "https://api.pinterest.com/v5")
+        finally:
+            o.set_env(False)
+
