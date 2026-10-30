@@ -1097,3 +1097,49 @@ class TestProductPost(Base):
         finally:
             o.set_env(False)
 
+    def test_샌드박스_보드_이름이_겹치면_다른_이름으로_만든다(self):
+        """2026-10-30 회귀 고정 — 재녹화 4차를 멈춘 모순.
+
+        샌드박스에서 GET /boards 는 0개인데 같은 이름 POST 는 code 58(이미 있음)을
+        돌려준다. 원인을 몰라도 녹화는 끝까지 가야 한다.
+        """
+        import oauth_setup as o
+        import requests as _rq
+        calls = []
+
+        def fake_get(url, **kw):
+            return _Resp(200, {"items": []})
+
+        def fake_post(url, **kw):
+            name = (kw.get("json") or {}).get("name")
+            calls.append(name)
+            if name == "픽담 살까 말까":
+                return _Resp(400, {"code": 58, "message": "You already have a board"})
+            return _Resp(201, {"id": "B9", "name": name})
+
+        og, op = _rq.get, _rq.post
+        _rq.get, _rq.post = fake_get, fake_post
+        o.set_env(True)
+        try:
+            boards, name = o._ensure_sandbox_board({"Authorization": "x"}, "픽담 살까 말까")
+        finally:
+            _rq.get, _rq.post = og, op
+            o.set_env(False)
+        self.assertEqual(boards[0]["id"], "B9")
+        self.assertEqual(name, "픽담 살까 말까 (API 시연)")
+        self.assertEqual(calls[0], "픽담 살까 말까", "먼저 원래 이름을 시도해야 한다")
+
+    def test_샌드박스_목록에_보드가_있으면_만들지_않는다(self):
+        import oauth_setup as o
+        import requests as _rq
+        og, op = _rq.get, _rq.post
+        _rq.get = lambda *a, **k: _Resp(200, {"items": [{"id": "B1", "name": "기존"}]})
+        _rq.post = lambda *a, **k: self.fail("이미 있는데 보드를 만들었다")
+        o.set_env(True)
+        try:
+            boards, name = o._ensure_sandbox_board({"Authorization": "x"}, "픽담 살까 말까")
+        finally:
+            _rq.get, _rq.post = og, op
+            o.set_env(False)
+        self.assertEqual(boards[0]["id"], "B1")
+

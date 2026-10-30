@@ -211,20 +211,12 @@ def main():
     for it in boards:
         print(f"  - {it['name']}  (id={it['id']})")
 
+    board_name = args.board
     if args.sandbox and not boards:
-        # 샌드박스 보드 목록은 프로덕션과 따로 논다 — 처음엔 비어 있는 게 정상이다.
-        want = args.board or common_board_name()
-        print(f"[샌드박스] 보드가 없어 '{want}' 를 만듭니다.")
-        cb = requests.post(f"{API}/boards", headers={**hdr, "Content-Type": "application/json"},
-                           json={"name": want, "description": "마크토 API 연동 시연용"},
-                           timeout=30)
-        if cb.status_code not in (200, 201):
-            sys.exit(f"샌드박스 보드 생성 실패 {cb.status_code}: {cb.text[:300]}")
-        boards = [cb.json()]
-        print(f"  생성됨 — {boards[0].get('name')} (id={boards[0].get('id')})")
+        boards, board_name = _ensure_sandbox_board(hdr, args.board or common_board_name())
 
     if args.demo_pin:
-        _demo_pin(hdr, boards, args.board)
+        _demo_pin(hdr, boards, board_name)
 
     out = {
         "refresh_token": refresh,
@@ -251,6 +243,52 @@ def main():
         print(f"  PINTEREST_BOARD_ID_?     = {it['id']}   ← '{it['name']}' 보드")
     print(f"\n리프레시 토큰은 화면에 찍지 않았습니다 — 녹화 그대로 제출하셔도 됩니다.")
     print(f"전체 값은 터미널에서 `cat {os.path.basename(path)}` 로 보거나 파일을 열어 복사하세요.")
+
+
+def _ensure_sandbox_board(hdr, want):
+    """샌드박스에 쓸 보드를 확보한다. (boards, 쓸 이름) 을 돌려준다.
+
+    **2026-10-30 실측의 모순**: 샌드박스에서 `GET /v5/boards` 는 **0개**를 돌려주는데
+    같은 이름으로 `POST /v5/boards` 를 치면
+      400 {"code":58,"message":"Try a different name. You already have a board with this name!"}
+    가 온다. 목록에 안 보이는데 이름은 이미 점유돼 있다 — 원인은 모른다(비공개 보드가
+    기본 목록에서 빠지거나, 생성 쪽이 프로덕션 이름과 충돌을 보는 것으로 보인다).
+    **원인을 모르는 채로도 녹화가 끝까지 가야 하므로 양쪽을 다 견디게 만든다.**
+      ① privacy=ALL 로 한 번 더 조회한다(실패해도 무시)
+      ② 그래도 없으면 만든다. 이름이 겹치면 **뒤에 날짜를 붙여 다시 시도**한다.
+      ③ 만들어진 보드는 POST 응답으로 받으므로 목록이 계속 비어 있어도 상관없다.
+    """
+    r = requests.get(f"{API}/boards", headers=hdr,
+                     params={"page_size": 25, "privacy": "ALL"}, timeout=30)
+    if r.status_code == 200:
+        got = r.json().get("items", [])
+        if got:
+            print(f"[샌드박스] 보드 {len(got)}개를 다시 조회해 찾았습니다.")
+            return got, want
+
+    stamp = common_today()
+    for name in (want, f"{want} (API 시연)", f"{want} {stamp}"):
+        cb = requests.post(f"{API}/boards", headers={**hdr, "Content-Type": "application/json"},
+                           json={"name": name, "description": "마크토 API 연동 시연용"},
+                           timeout=30)
+        if cb.status_code in (200, 201):
+            b = cb.json()
+            print(f"[샌드박스] 보드 생성됨 — {b.get('name')} (id={b.get('id')})")
+            return [b], b.get("name") or name
+        try:
+            code = cb.json().get("code")
+        except Exception:                                   # noqa: BLE001
+            code = None
+        if code == 58:
+            print(f"[샌드박스] '{name}' 은 이미 쓰는 이름입니다 — 다른 이름으로 시도합니다.")
+            continue
+        sys.exit(f"샌드박스 보드 생성 실패 {cb.status_code}: {cb.text[:300]}")
+    sys.exit("샌드박스 보드를 확보하지 못했습니다 — 이름 후보가 모두 겹칩니다.")
+
+
+def common_today():
+    import common
+    return common.now_kst().strftime("%Y%m%d-%H%M")
 
 
 def common_board_name():
