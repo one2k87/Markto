@@ -1020,3 +1020,66 @@ class TestChannels(Base):
         self.assertEqual(sent.get("title"), "픽담 글",
                          "최근 핀이 원더랜드여도 픽담 보드에는 픽담 핀이 올라가야 한다")
 
+class TestProductPost(Base):
+    """상품 포스트 — 공개적으로 나가는 글이고 고지 문구가 법적 요건이라 상수로 못 박는다."""
+
+    def setUp(self):
+        super().setUp()
+        import product_post
+        self.pp = product_post
+
+    def test_고지가_첫_줄이고_링크가_맨_끝이다(self):
+        site = common.site_by_key("pickdam")
+        out = self.pp.compose({"key": "문풍지", "name": "문풍지", "price_band": "5천~1만원"},
+                              "https://pickdam.com/a/", site)
+        self.assertTrue(out.startswith(self.pp.DISCLOSURE), out[:60])
+        self.assertTrue(out.rstrip().endswith("utm_campaign=markto"), out[-60:])
+        self.assertIn("utm_source=threads", out)
+
+    def test_고지를_포함해_500자를_넘지_않는다(self):
+        site = common.site_by_key("pickdam")
+        out = self.pp.compose({"key": "x", "name": "제품", "note": "가" * 900},
+                              "https://pickdam.com/a/", site)
+        self.assertLessEqual(len(out), self.pp.TEXT_MAX)
+        self.assertTrue(out.startswith(self.pp.DISCLOSURE))
+
+    def test_글_설명이_있으면_그것을_본문으로_쓴다(self):
+        # 제품명만 쓰면 모든 포스트가 똑같이 시작한다(2026-10-19 인사이트 실측).
+        site = common.site_by_key("pickdam")
+        out = self.pp.compose({"key": "x", "name": "비데 본체"},
+                              "https://pickdam.com/a/", site,
+                              "비데 방문설치비는 2만 5천~3만 3천 원입니다.")
+        self.assertIn("2만 5천", out)
+        self.assertNotIn("따져본 기준입니다", out)
+
+    def test_match_낱말로_픽담_글을_찾는다(self):
+        prod = {"key": "문풍지", "name": "문풍지", "match": ["문틈", "문풍지"]}
+        posts = [{"id": 1, "title": "전기밥솥 고르는 법", "url": "u1"},
+                 {"id": 2, "title": "현관문 문풍지 3mm 기준", "url": "u2"}]
+        self.assertEqual(self.pp.find_post(prod, None, posts)["id"], 2)
+
+    def test_못_찾으면_None이다(self):
+        prod = {"key": "x", "name": "x", "match": ["없는낱말"]}
+        self.assertIsNone(self.pp.find_post(prod, None, [{"id": 1, "title": "ㄱ", "url": "u"}]))
+
+    def test_링크가_빈_제품은_제외된다(self):
+        import requests as _rq
+        orig = _rq.get
+        _rq.get = lambda *a, **k: _Resp(200, {"products": [
+            {"key": "a", "name": "A", "coupang_url": "https://link.coupang.com/a/x"},
+            {"key": "b", "name": "B", "coupang_url": ""},
+        ]})
+        try:
+            got = [p["key"] for p in self.pp.products("http://x")]
+        finally:
+            _rq.get = orig
+        self.assertEqual(got, ["a"])
+
+    def test_꺼져_있으면_올리지_않는다(self):
+        orig = common.cfg
+        common.cfg = lambda *a, **k: {"threads": {"product": {"enabled": False}}}
+        try:
+            self.assertEqual(self.pp.run(), 0)
+        finally:
+            common.cfg = orig
+
