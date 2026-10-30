@@ -3,8 +3,11 @@ __pycache__/
 out/*.png
 .DS_Store
 
-# oauth_setup.py 가 남기는 자격증명 — 절대 커밋하지 않는다
-pinterest_token.json
+# oauth_setup.py 가 남기는 자격증명 — 절대 커밋하지 않는다.
+# 2026-10-30: 샌드박스 모드를 넣으면서 pinterest_token_sandbox.json 이 생겼는데
+# 여기에 없었다. 이 저장소는 **공개**라 `git add -A` 한 번이면 리프레시 토큰이
+# 그대로 올라간다. 파일 이름이 늘어나도 새지 않도록 패턴으로 바꾼다.
+pinterest_token*.json
 
 # 스레드 토큰 회전 임시파일
 threads_token
