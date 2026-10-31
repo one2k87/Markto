@@ -1388,6 +1388,38 @@
    "pin_id": null,
    "posted_at": null,
    "fallback_copy": true
+  },
+  {
+   "site": "pickdam",
+   "post_id": 718,
+   "post_title": "원룸 싱글 전기장판, 일반 열선과 카본 매트 비교",
+   "url": "https://pickdam.com/studio-single-electric-blanket-carbon-mat/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "원룸 싱글 전기장판 소비전력 비교 2가지 기준",
+   "pin_desc": "원룸 싱글 전기장판 선택 시 일반 열선과 카본 매트 소비전력을 비교하면 월 난방비를 최대 4천 원 줄입니다. 2026년 기준 스펙과 요금 차이를 확인하세요.",
+   "hashtags": [],
+   "image": "out/pin_pickdam_718.png",
+   "made_at": "2026-10-31T16:05:15+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
+  },
+  {
+   "site": "wontheland",
+   "post_id": 2682,
+   "post_title": "2026년 10월 스마트폰 화면이 갑자기 너무 어두워졌을 때, 밝기 조절보다 중요한 설정들을 비교합니다",
+   "url": "https://wontheland.com/smart-phone-dark-screen-solution-2026-10/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "2026년 10월 스마트폰 화면이 갑자기 너무 어두워졌을 때, 밝기",
+   "pin_desc": "2026년 10월, 스마트폰 화면이 갑자기 너무 어두워졌을 때 당황하셨나요? 단순히 밝기 조절 문제인지, 고장인지 헷갈리셨다면 이 글을 읽어보세요. 자동 밝기, 절전 모드, 블루라이트 필터 등 놓치기 쉬운 설정들을 비교하고, 시니어 부모님도 쉽게 따라 할 수 있는 해결책과 주의사항을 안내합니다.",
+   "hashtags": [],
+   "image": "out/pin_wontheland_2682.png",
+   "made_at": "2026-10-31T16:05:51+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null,
+   "fallback_copy": true
   }
  ]
 }

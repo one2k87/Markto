@@ -112,12 +112,31 @@
   "https://wontheland.com/galaxy-a35-photo-transfer-senior/",
   "https://wontheland.com/galaxy-s24-ringtone-notification-volume-settings/",
   "https://wontheland.com/galaxy-a35-overheat-settings-2026-10/",
-  "https://wontheland.com/galaxy-s24-wifi-senior-settings/"
+  "https://wontheland.com/galaxy-s24-wifi-senior-settings/",
+  "https://pickdam.com/studio-single-electric-blanket-carbon-mat/",
+  "https://wontheland.com/parents-voice-phishing-remote-app-citizen-conan-guide/",
+  "https://wontheland.com/galaxy-a15-screen-capture-senior-guide/"
  ],
- "last_at": "2026-10-23T15:18:47+09:00",
+ "last_at": "2026-10-31T16:06:01+09:00",
  "last_run": {
-  "at": "2026-10-23T15:18:47+09:00",
+  "at": "2026-10-31T16:06:01+09:00",
   "results": [
+   {
+    "site": "pickdam",
+    "ep": "https://searchadvisor.naver.com/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
+   {
+    "site": "pickdam",
+    "ep": "https://api.indexnow.org/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
    {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
@@ -435,6 +454,43 @@
   {
    "at": "2026-10-23T15:18:47+09:00",
    "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-10-31T16:06:01+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
     {
      "site": "wontheland",
      "ep": "https://searchadvisor.naver.com/indexnow",
