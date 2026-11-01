@@ -115,28 +115,14 @@
   "https://wontheland.com/galaxy-s24-wifi-senior-settings/",
   "https://pickdam.com/studio-single-electric-blanket-carbon-mat/",
   "https://wontheland.com/parents-voice-phishing-remote-app-citizen-conan-guide/",
-  "https://wontheland.com/galaxy-a15-screen-capture-senior-guide/"
+  "https://wontheland.com/galaxy-a15-screen-capture-senior-guide/",
+  "https://wontheland.com/galaxy-s24-wifi-disconnect-network-reset/",
+  "https://wontheland.com/galaxy-a35-software-update-auto-off-guide/"
  ],
- "last_at": "2026-10-31T16:06:01+09:00",
+ "last_at": "2026-11-01T16:39:06+09:00",
  "last_run": {
-  "at": "2026-10-31T16:06:01+09:00",
+  "at": "2026-11-01T16:39:06+09:00",
   "results": [
-   {
-    "site": "pickdam",
-    "ep": "https://searchadvisor.naver.com/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "pickdam",
-    "ep": "https://api.indexnow.org/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
    {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
@@ -491,6 +477,27 @@
      "ok": true,
      "body": ""
     },
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-01T16:39:06+09:00",
+   "results": [
     {
      "site": "wontheland",
      "ep": "https://searchadvisor.naver.com/indexnow",
