@@ -1187,3 +1187,75 @@ class TestProductPost(Base):
             _rq.post = op
         self.assertEqual(sent.get("board_id"), "B9", "이름이 넘어왔는데 핀을 건너뛰었다")
 
+
+class TestPermalink(Base):
+    """게시 주소 — 숫자 id 만 적어 두면 사람이 글을 찾지 못한다(2026-11-01)."""
+
+    def test_주소를_물어서_장부에_같이_적는다(self):
+        import threads
+        import requests as _rq
+        og = _rq.get
+        _rq.get = lambda u, **k: _Resp(200, {"permalink": "https://www.threads.net/@p/post/AB1"})
+        try:
+            self.assertEqual(threads.permalink("1234", "tok"),
+                             "https://www.threads.net/@p/post/AB1")
+        finally:
+            _rq.get = og
+
+    def test_주소_조회가_실패해도_None만_돌려준다(self):
+        """게시는 이미 끝났다. 주소 때문에 흐름이 죽으면 안 된다."""
+        import threads
+        import requests as _rq
+        og = _rq.get
+        _rq.get = lambda u, **k: _Resp(400, {"error": "no"})
+        try:
+            self.assertIsNone(threads.permalink("1234", "tok"))
+        finally:
+            _rq.get = og
+
+
+class TestProductDuplicateLink(Base):
+    """같은 글을 한 회차에 두 번 보내지 않는다.
+
+    2026-11-01 실측: 「비데 본체」와 「비데 설치 부자재」가 같은 match 낱말로 같은 글
+    (#697)을 집어, 같은 주소 2건이 연달아 나갔다.
+    """
+
+    def _stub(self, pp, threads, sent):
+        threads.token = lambda: "tok"
+        threads.user_id = lambda t=None, e=None: "u1"
+        threads.permalink = lambda pid, tok=None: None
+        threads.publish_one = lambda text, t=None, u=None: (
+            sent.append(text), f"T{len(sent)}")[1]
+        pp.products = lambda url=None: [
+            {"key": "비데", "name": "비데 본체", "coupang_url": "c",
+             "match": ["비데"]},
+            {"key": "비데공구", "name": "비데 부자재", "coupang_url": "c",
+             "match": ["비데"]},
+            {"key": "문풍지", "name": "문풍지", "coupang_url": "c",
+             "match": ["문풍지"]},
+        ]
+        common.wp_posts = lambda site, per_page=50, pages=1: [
+            {"id": 697, "title": "비데 분기밸브 누수 점검",
+             "url": "https://pickdam.com/bidet/"},
+            {"id": 90, "title": "현관문 문풍지 기준",
+             "url": "https://pickdam.com/door/"},
+        ]
+
+    def test_같은_글이면_다음_제품으로_넘어간다(self):
+        import product_post as pp
+        import threads
+        og = (pp.products, threads.token, threads.user_id,
+              threads.publish_one, threads.permalink)
+        sent = []
+        try:
+            self._stub(pp, threads, sent)
+            n = pp.run(limit=2)
+        finally:
+            (pp.products, threads.token, threads.user_id,
+             threads.publish_one, threads.permalink) = og
+        links = [p["link"] for p in common.load_json(pp.STATE, {"posts": []})["posts"]]
+        self.assertEqual(n, 2, "2건을 채우지 못했다")
+        self.assertEqual(len(set(links)), 2, f"같은 주소가 두 번 나갔다: {links}")
+        self.assertIn("https://pickdam.com/door/", "".join(links),
+                      "중복을 건너뛴 자리를 다음 제품으로 채우지 않았다")

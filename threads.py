@@ -126,6 +126,27 @@ def publish_one(text, tok=None, uid=None):
     return p.json().get("id")
 
 
+def permalink(pid, tok=None):
+    """게시된 글의 웹 주소. **숫자 id 로는 아무도 글을 열 수 없다.**
+
+    2026-11-01에 드러난 구멍: 파트너스 「스크린샷」 증빙은 *실제 글 화면*을 요구하는데
+    장부에 `thread_id` 숫자만 있어서, 사람이 스레드 앱을 직접 뒤져 글을 찾아야 했다.
+    발행 직후 한 번 물어서 같이 적어 둔다. 조회가 실패해도 게시는 이미 끝났으므로
+    None 을 돌려주고 흐름을 막지 않는다 — 주소는 있으면 좋은 것이지 게시 조건이 아니다.
+    """
+    tok = tok or token()
+    try:
+        r = requests.get(f"{API}/{pid}",
+                         params={"fields": "permalink", "access_token": tok}, timeout=30)
+    except requests.RequestException as e:
+        print(f"[threads] 주소 조회 예외: {e}")
+        return None
+    if r.status_code != 200:
+        print(f"[threads] 주소 조회 실패 {r.status_code}: {r.text[:200]}")
+        return None
+    return (r.json() or {}).get("permalink")
+
+
 # ── 토큰 수명 관리 ────────────────────────────────────────────────────────────
 
 def refresh(tok=None):
@@ -250,11 +271,15 @@ def run(limit=None):
         if not pid:
             continue
 
-        state["posts"].append({
+        rec = {
             "site": post["site"], "post_id": post["id"], "thread_id": pid,
             "at": common.now_kst().isoformat(timespec="seconds"),
-        })
-        print(f"[threads] {post['site']}#{post['id']} → {pid}")
+        }
+        link = permalink(pid, tok)
+        if link:
+            rec["permalink"] = link
+        state["posts"].append(rec)
+        print(f"[threads] {post['site']}#{post['id']} → {link or pid}")
         n += 1
 
     common.save_json("threads.json", state)

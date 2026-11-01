@@ -108,11 +108,22 @@ def run(limit=None):
     import threads
     tok = threads.token()
 
+    # 같은 글을 한 회차에 두 번 보내지 않는다.
+    # 2026-11-01 실측 사고: 「비데 본체」와 「비데 설치 부자재」가 둘 다 match 낱말로
+    # 같은 글(#697 /bidet-valve-leak-check/)을 집어, per_run=2 가 **같은 주소 2건**으로
+    # 나갔다. 사람이 보기엔 같은 글 재탕이고, 추천 피드에도 중복으로 들어간다.
+    # 제품은 남아 있으니 다음 제품으로 넘어가면 그만이다 — /kok/ 로 떨어뜨리지 않는다.
+    # (글이 있는 제품을 모아보기로 보내면 더 나쁜 링크가 된다.)
+    sent_links = set()
+
     for prod in items:
         if n >= want:
             break
         hit = find_post(prod, site, posts)
         link = hit["url"] if hit else fallback
+        if link in sent_links:
+            print(f"[product] {prod['key']} 는 이번 회차에 이미 보낸 글과 같은 주소입니다 — 다음 제품으로.")
+            continue
         meta = common.page_meta(link)
         if not meta["ok"]:
             print(f"[product] {link} 가 살아있지 않습니다 — 건너뜁니다.")
@@ -122,12 +133,18 @@ def run(limit=None):
         pid = threads.publish_one(text, tok, uid)
         if not pid:
             continue
-        state["posts"].append({
+        rec = {
             "key": prod["key"], "name": prod["name"], "thread_id": pid,
             "link": link, "matched_post": (hit or {}).get("id"),
             "at": common.now_kst().isoformat(timespec="seconds"),
-        })
-        print(f"[product] {prod['key']} → {pid}  ({'글' if hit else '/kok/'})")
+        }
+        # 파트너스 증빙 스크린샷을 사람이 찍어야 한다 — 글 주소가 장부에 있어야 찾는다.
+        perma = threads.permalink(pid, tok)
+        if perma:
+            rec["permalink"] = perma
+        state["posts"].append(rec)
+        sent_links.add(link)
+        print(f"[product] {prod['key']} → {perma or pid}  ({'글' if hit else '/kok/'})")
         n += 1
 
     common.save_json(STATE, state)
