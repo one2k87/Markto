@@ -117,17 +117,37 @@
   "https://wontheland.com/parents-voice-phishing-remote-app-citizen-conan-guide/",
   "https://wontheland.com/galaxy-a15-screen-capture-senior-guide/",
   "https://wontheland.com/galaxy-s24-wifi-disconnect-network-reset/",
-  "https://wontheland.com/galaxy-a35-software-update-auto-off-guide/"
+  "https://wontheland.com/galaxy-a35-software-update-auto-off-guide/",
+  "https://pickdam.com/one-room-single-electric-blanket-emf-washable/",
+  "https://wontheland.com/galaxy-s24-usb-notification-error-fix/",
+  "https://wontheland.com/galaxy-s24-call-error-fix/",
+  "https://wontheland.com/galaxy-s24-phone-call-error-network-reset/"
  ],
- "last_at": "2026-11-01T16:39:06+09:00",
+ "last_at": "2026-11-02T16:45:37+09:00",
  "last_run": {
-  "at": "2026-11-01T16:39:06+09:00",
+  "at": "2026-11-02T16:45:37+09:00",
   "results": [
+   {
+    "site": "pickdam",
+    "ep": "https://searchadvisor.naver.com/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
+   {
+    "site": "pickdam",
+    "ep": "https://api.indexnow.org/indexnow",
+    "status": 200,
+    "n": 1,
+    "ok": true,
+    "body": ""
+   },
    {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
-    "n": 2,
+    "n": 3,
     "ok": true,
     "body": ""
    },
@@ -135,34 +155,13 @@
     "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
-    "n": 2,
+    "n": 3,
     "ok": true,
     "body": ""
    }
   ]
  },
  "runs": [
-  {
-   "at": "2026-10-12T16:27:28+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 20,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 20,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-10-13T16:48:28+09:00",
    "results": [
@@ -511,6 +510,43 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 2,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-02T16:45:37+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 3,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 3,
      "ok": true,
      "body": ""
     }
