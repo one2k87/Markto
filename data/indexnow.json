@@ -121,14 +121,15 @@
   "https://pickdam.com/one-room-single-electric-blanket-emf-washable/",
   "https://wontheland.com/galaxy-s24-usb-notification-error-fix/",
   "https://wontheland.com/galaxy-s24-call-error-fix/",
-  "https://wontheland.com/galaxy-s24-phone-call-error-network-reset/"
+  "https://wontheland.com/galaxy-s24-phone-call-error-network-reset/",
+  "https://wontheland.com/galaxy-folder-phone-kakaotalk-install/"
  ],
- "last_at": "2026-11-02T16:45:37+09:00",
+ "last_at": "2026-11-03T16:59:31+09:00",
  "last_run": {
-  "at": "2026-11-02T16:45:37+09:00",
+  "at": "2026-11-03T16:59:31+09:00",
   "results": [
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
     "n": 1,
@@ -136,53 +137,16 @@
     "body": ""
    },
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
     "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "wontheland",
-    "ep": "https://searchadvisor.naver.com/indexnow",
-    "status": 200,
-    "n": 3,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "wontheland",
-    "ep": "https://api.indexnow.org/indexnow",
-    "status": 200,
-    "n": 3,
     "ok": true,
     "body": ""
    }
   ]
  },
  "runs": [
-  {
-   "at": "2026-10-13T16:48:28+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 8,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 8,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-10-14T15:13:45+09:00",
    "results": [
@@ -547,6 +511,27 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 3,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-03T16:59:31+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
      "ok": true,
      "body": ""
     }
