@@ -122,11 +122,12 @@
   "https://wontheland.com/galaxy-s24-usb-notification-error-fix/",
   "https://wontheland.com/galaxy-s24-call-error-fix/",
   "https://wontheland.com/galaxy-s24-phone-call-error-network-reset/",
-  "https://wontheland.com/galaxy-folder-phone-kakaotalk-install/"
+  "https://wontheland.com/galaxy-folder-phone-kakaotalk-install/",
+  "https://wontheland.com/galaxy-quantum-lock-reset-guide/"
  ],
- "last_at": "2026-11-03T16:59:31+09:00",
+ "last_at": "2026-11-04T16:34:21+09:00",
  "last_run": {
-  "at": "2026-11-03T16:59:31+09:00",
+  "at": "2026-11-04T16:34:21+09:00",
   "results": [
    {
     "site": "wontheland",
@@ -147,43 +148,6 @@
   ]
  },
  "runs": [
-  {
-   "at": "2026-10-14T15:13:45+09:00",
-   "results": [
-    {
-     "site": "pickdam",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "pickdam",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-10-15T14:57:24+09:00",
    "results": [
@@ -518,6 +482,27 @@
   },
   {
    "at": "2026-11-03T16:59:31+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-04T16:34:21+09:00",
    "results": [
     {
      "site": "wontheland",
