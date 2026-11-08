@@ -128,17 +128,18 @@
   "https://wontheland.com/iphone-15-data-error-senior-guide/",
   "https://wontheland.com/iphone-13-kakao-alarm-fix-3-ways/",
   "https://wontheland.com/gov24-resident-registration-copy-senior/",
-  "https://wontheland.com/iphone-13-wifi-fix/"
+  "https://wontheland.com/iphone-13-wifi-fix/",
+  "https://wontheland.com/galaxy-a15-screenshot-guide-senior/"
  ],
- "last_at": "2026-11-06T16:59:46+09:00",
+ "last_at": "2026-11-08T16:29:14+09:00",
  "last_run": {
-  "at": "2026-11-06T16:59:46+09:00",
+  "at": "2026-11-08T16:29:14+09:00",
   "results": [
    {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
-    "n": 2,
+    "n": 1,
     "ok": true,
     "body": ""
    },
@@ -146,34 +147,13 @@
     "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
-    "n": 2,
+    "n": 1,
     "ok": true,
     "body": ""
    }
   ]
  },
  "runs": [
-  {
-   "at": "2026-10-17T14:40:56+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-10-18T15:02:16+09:00",
    "results": [
@@ -506,6 +486,27 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 2,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-08T16:29:14+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
      "ok": true,
      "body": ""
     }
