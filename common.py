@@ -238,43 +238,73 @@ def with_utm(url, site, channel=None):
 
 
 # ── LLM (Gemini REST) ───────────────────────────────────────────────────
+LLM_DEFAULT = "gemini-3.5-flash-lite"   # 2026-11-09 키 분배: 짧은 JSON이라 Lite(무료 키 우선)
+LLM_FALLBACK = "gemini-3.1-flash-lite"
+
+
+def _live_model(model):
+    """종료된 1.x·2.x 모델명이 시크릿에 남아 있어도 현행 Lite로 치환한다."""
+    m = (model or "").strip()
+    return LLM_DEFAULT if (not m or m.startswith(("gemini-1", "gemini-2"))) else m
+
+
+def _llm_keys(model):
+    """모델 이름에 lite가 있으면 무료→유료, 아니면 유료→무료."""
+    free = os.getenv("LLM_API_KEY", "").strip()
+    paid = os.getenv("LLM_API_KEY_PAID", "").strip()
+    out = []
+    for k in ([free, paid] if "lite" in model.lower() else [paid, free]):
+        if k and k not in out:
+            out.append(k)
+    return out
+
+
 def llm(prompt, max_tokens=2000, temperature=0.7, retries=3, json_mode=False):
-    """Gemini generateContent 단순 REST 호출.
+    """Gemini generateContent 단순 REST 호출. 모델마다 키를 순서대로 시도한다.
 
     **thinking 함정(캐스토 실측)**: Gemini 2.5 Flash는 사고 토큰이 maxOutputTokens에
     포함되어 긴 JSON이 중간에서 잘린다. thinkingBudget=0으로 사고를 끄고,
     finishReason=MAX_TOKENS면 한도를 올려 재시도한다(잘린 JSON을 조용히 넘기지 않는다).
     """
-    key = os.getenv("LLM_API_KEY", "")
-    model = os.getenv("LLM_MODEL") or "gemini-2.5-flash"   # 시크릿 미등록 시 env가 빈 문자열 → or 필수
-    if not key:
+    first = _live_model(os.getenv("LLM_MODEL"))
+    if not _llm_keys(first):
         raise SystemExit("LLM_API_KEY 시크릿이 없습니다")
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    models = [first] + ([LLM_FALLBACK] if first != LLM_FALLBACK else [])
     gen = {"maxOutputTokens": max_tokens, "temperature": temperature,
            "thinkingConfig": {"thinkingBudget": 0}}
     if json_mode:
         gen["responseMimeType"] = "application/json"
     body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": gen}
     r = None
-    for i in range(retries):
-        r = requests.post(url, json=body, timeout=120,
-                          headers={"x-goog-api-key": key, "Content-Type": "application/json"})
-        if r.status_code == 400 and "thinking" in r.text.lower():
-            print("[llm] thinkingConfig 미지원 모델 — 옵션 제거 후 재시도")
-            gen.pop("thinkingConfig", None)
-            continue
-        if r.status_code == 200:
-            try:
-                cand = r.json()["candidates"][0]
-                text = cand["content"]["parts"][0]["text"]
-                if cand.get("finishReason") == "MAX_TOKENS":
-                    print(f"[llm] 출력이 한도({gen['maxOutputTokens']})에서 잘림 — 한도를 올려 재시도")
-                    gen["maxOutputTokens"] = min(gen["maxOutputTokens"] * 2, 16000)
+    paid = os.getenv("LLM_API_KEY_PAID", "").strip()
+    for model in models:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+        for ki, key in enumerate(_llm_keys(model)):
+            who = "유료" if key == paid else "무료"
+            for i in range(retries):
+                r = requests.post(url, json=body, timeout=120,
+                                  headers={"x-goog-api-key": key, "Content-Type": "application/json"})
+                if r.status_code == 400 and "thinkingConfig" in gen:
+                    print("[llm] 400 — thinkingConfig 제거 후 재시도")
+                    gen.pop("thinkingConfig", None)
                     continue
-                return text
-            except (KeyError, IndexError, TypeError):
-                pass
-        time.sleep(5 * (i + 1))
+                if r.status_code == 200:
+                    try:
+                        cand = r.json()["candidates"][0]
+                        text = cand["content"]["parts"][0]["text"]
+                        if cand.get("finishReason") == "MAX_TOKENS":
+                            print(f"[llm] 출력이 한도({gen['maxOutputTokens']})에서 잘림 — 한도를 올려 재시도")
+                            gen["maxOutputTokens"] = min(gen["maxOutputTokens"] * 2, 16000)
+                            continue
+                        if ki > 0:
+                            print(f"[llm] {who} 키로 성공")
+                        return text
+                    except (KeyError, IndexError, TypeError):
+                        pass
+                if r.status_code in (401, 403, 404, 429):
+                    print(f"[llm] {model} {who} 키 {r.status_code} — 다음 키/모델로 전환")
+                    break
+                time.sleep(5 * (i + 1))
     raise RuntimeError(f"LLM 호출 실패: {getattr(r, 'status_code', '?')} {getattr(r, 'text', '')[:200]}")
 
 

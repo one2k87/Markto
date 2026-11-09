@@ -28,6 +28,7 @@ jobs:
         env:
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_API_KEY_PAID: ${{ secrets.LLM_API_KEY_PAID }}
         run: |
           python collect.py
           python threads.py ${{ github.event.inputs.post_count }}

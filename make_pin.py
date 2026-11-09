@@ -102,7 +102,7 @@ def fallback_copy(post, site, tag_n=4):
 
 
 def make_copy(post, site, cfg, dry=False):
-    if dry or not os.getenv("LLM_API_KEY"):
+    if dry or not (os.getenv("LLM_API_KEY") or os.getenv("LLM_API_KEY_PAID")):
         return fallback_copy(post, site, cfg["pin"]["hashtags_max"])
     # 원천 우선순위: Rank Math 설명 > 요약(excerpt). 요약은 본문 첫 문단이라
     # 잘린 조각·고지문이 섞여 들어왔다(9/14 "평대 정수기" 실측). 픽토가 전 글에

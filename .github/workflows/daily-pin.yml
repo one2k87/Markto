@@ -43,6 +43,7 @@ jobs:
       - name: 핀 제작 + 전송
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_API_KEY_PAID: ${{ secrets.LLM_API_KEY_PAID }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -97,6 +98,7 @@ jobs:
         continue-on-error: true
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_API_KEY_PAID: ${{ secrets.LLM_API_KEY_PAID }}
         run: python answer_block.py
 
       - name: 기록 커밋 (queue.json · pins.json · indexnow.json · threads.json · product_posts.json)
