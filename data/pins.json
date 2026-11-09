@@ -1740,6 +1740,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 730,
+   "post_title": "4mm 일반형이냐 8mm 3중 구조냐, 유리창 결로 막는 단열 에어캡 선택 기준",
+   "url": "https://pickdam.com/window-insulation-bubble-wrap-4mm-8mm/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "단열 뽁뽁이 4mm vs 8mm 차이와 결로 방지",
+   "pin_desc": "단열 뽁뽁이는 4mm와 8mm의 열관류율 저감 효과가 최대 2배 차이 납니다. 창문 환경에 맞춘 규격 선택법과 결로 곰팡이를 방지하는 단계별 자가 시공 절차를 확인해보세요.",
+   "hashtags": [
+    "단열뽁뽁이",
+    "결로방지",
+    "창문단열",
+    "겨울철난방비"
+   ],
+   "image": "out/pin_pickdam_730.png",
+   "made_at": "2026-11-09T17:06:32+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "wontheland",
+   "post_id": 3039,
+   "post_title": "영상통화가 자꾸 끊길 때, 끊김 없이 연결하는 설정",
+   "url": "https://wontheland.com/senior-smartphone-video-call-seamless-free/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "영상통화가 자꾸 끊길 때, 끊김 없이 연결하는 설정 - 원더랜드 블로그",
+   "pin_desc": "2026년 10월 기준, 시니어 스마트폰 영상 통화가 자꾸 끊기거나 데이터 요금이 걱정될 때, 무료로 끊김 없이 통화하는 확실한 방법을 안내합니다. 와이파이 설정부터 앱 활용 팁까지, 손주와 편안하게 소통할 수 있는 비결을 확인하세요.",
+   "hashtags": [
+    "스마트폰활용",
+    "영상통화끊김",
+    "시니어스마트폰",
+    "와이파이설정"
+   ],
+   "image": "out/pin_wontheland_3039.png",
+   "made_at": "2026-11-09T17:06:36+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }

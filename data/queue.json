@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-08T16:28:58+09:00",
+ "built_at": "2026-11-09T17:06:28+09:00",
  "items": [
   {
    "id": 21,
@@ -409,17 +409,6 @@
    ]
   },
   {
-   "id": 3039,
-   "site": "wontheland",
-   "title": "영상통화가 자꾸 끊길 때, 끊김 없이 연결하는 설정",
-   "url": "https://wontheland.com/senior-smartphone-video-call-seamless-free/",
-   "excerpt": "2026년 10월 기준, 시니어 스마트폰 영상 통화가 자꾸 끊기거나 데이터 요금이 걱정될 때, 무료로 끊김 없이 통화하는 확실한 방법을 안내합니다. 와이파이 설정부터 앱 활용 팁까지, 손주와 편안하게 소통할 수 있는 비결을 확인하세요.",
-   "date": "2026-10-12T09:47:34",
-   "categories": [
-    2002
-   ]
-  },
-  {
    "id": 3041,
    "site": "wontheland",
    "title": "은행 창구에서 모바일 신분증을 직원이 헷갈려할 때 대처법",
@@ -756,6 +745,28 @@
    "url": "https://wontheland.com/galaxy-a15-screenshot-guide-senior/",
    "excerpt": "부모님 효도폰 갤럭시 A15 화면 캡쳐 방법과 손날 캡처가 안 될 때 점검할 핵심 절차입니다. 측면 버튼 조작 요령과 보조메뉴 설정으로 손쉽게 캡처를 끝내보세요.",
    "date": "2026-11-08T11:39:28",
+   "categories": [
+    2002
+   ]
+  },
+  {
+   "id": 3490,
+   "site": "wontheland",
+   "title": "0원으로 해결하는 부모님 스마트폰 갤럭시 A15 꺼진 화면 시계 켜는 방법",
+   "url": "https://wontheland.com/galaxy-a15-screen-off-clock-setting/",
+   "excerpt": "부모님 스마트폰 갤럭시 A15 꺼진 화면 시계 켜는 방법 Always On Display 설정 절차를 찾으시나요? AOD 미탑재 팩트와 두 번 터치 대체 설정을 정리합니다.",
+   "date": "2026-11-08T16:30:28",
+   "categories": [
+    2002
+   ]
+  },
+  {
+   "id": 3501,
+   "site": "wontheland",
+   "title": "갤럭시 A25 화면 캡쳐 손날 터치 안 될 때 버튼으로 쉽게 하는 법",
+   "url": "https://wontheland.com/galaxy-a25-screenshot-button-method/",
+   "excerpt": "손날 터치가 안 먹힐 때 갤럭시 A25 화면 캡쳐를 물리 버튼 조합으로 확실하게 해결하는 3단계 순서입니다.",
+   "date": "2026-11-09T11:43:56",
    "categories": [
     2002
    ]

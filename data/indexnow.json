@@ -129,14 +129,17 @@
   "https://wontheland.com/iphone-13-kakao-alarm-fix-3-ways/",
   "https://wontheland.com/gov24-resident-registration-copy-senior/",
   "https://wontheland.com/iphone-13-wifi-fix/",
-  "https://wontheland.com/galaxy-a15-screenshot-guide-senior/"
+  "https://wontheland.com/galaxy-a15-screenshot-guide-senior/",
+  "https://pickdam.com/window-insulation-bubble-wrap-4mm-8mm/",
+  "https://wontheland.com/galaxy-a25-screenshot-button-method/",
+  "https://wontheland.com/galaxy-a15-screen-off-clock-setting/"
  ],
- "last_at": "2026-11-08T16:29:14+09:00",
+ "last_at": "2026-11-09T17:06:45+09:00",
  "last_run": {
-  "at": "2026-11-08T16:29:14+09:00",
+  "at": "2026-11-09T17:06:45+09:00",
   "results": [
    {
-    "site": "wontheland",
+    "site": "pickdam",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
     "n": 1,
@@ -144,37 +147,32 @@
     "body": ""
    },
    {
-    "site": "wontheland",
+    "site": "pickdam",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
     "n": 1,
+    "ok": true,
+    "body": ""
+   },
+   {
+    "site": "wontheland",
+    "ep": "https://searchadvisor.naver.com/indexnow",
+    "status": 200,
+    "n": 2,
+    "ok": true,
+    "body": ""
+   },
+   {
+    "site": "wontheland",
+    "ep": "https://api.indexnow.org/indexnow",
+    "status": 200,
+    "n": 2,
     "ok": true,
     "body": ""
    }
   ]
  },
  "runs": [
-  {
-   "at": "2026-10-18T15:02:16+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-10-19T15:19:09+09:00",
    "results": [
@@ -507,6 +505,43 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-09T17:06:45+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 2,
      "ok": true,
      "body": ""
     }
