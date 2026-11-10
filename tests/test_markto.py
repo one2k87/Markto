@@ -1259,3 +1259,47 @@ class TestProductDuplicateLink(Base):
         self.assertEqual(len(set(links)), 2, f"같은 주소가 두 번 나갔다: {links}")
         self.assertIn("https://pickdam.com/door/", "".join(links),
                       "중복을 건너뛴 자리를 다음 제품으로 채우지 않았다")
+
+
+class TestSiteShare(Base):
+    """사이트별 최소 몫 — 큐 순서가 아니라 몫으로 가른다 (2026-11-10 F 승인).
+
+    근거(실측): 11/3~11/9 핀 14건이 전부 원더랜드였다. 원더랜드가 하루 2편 발행하며
+    큐 앞단을 차지해 픽담이 밀렸고, 픽담은 쿠팡 수수료 경로라 핀이 멈추면 B경로 유입도
+    같이 멈춘다. 이 테스트가 그 회귀를 고정한다.
+    """
+
+    def _queue(self, pickdam_ids=(), wontheland_ids=()):
+        # 원더랜드를 **앞에** 둔다 — 실제 사고 상황의 재현이다.
+        items = [self.post(i, site="wontheland") for i in wontheland_ids]
+        items += [self.post(i, site="pickdam") for i in pickdam_ids]
+        common.save_json("queue.json", {"items": items})
+
+    def test_큐_앞단이_전부_원더랜드여도_픽담이_한_건_들어간다(self):
+        self._queue(pickdam_ids=(901, 902), wontheland_ids=(801, 802, 803, 804))
+        made = make_pin.run(2, dry=False)
+        sites = [m["site"] for m in made]
+        self.assertEqual(len(made), 2)
+        self.assertIn("pickdam", sites)
+        self.assertIn("wontheland", sites)
+
+    def test_픽담_큐가_비면_원더랜드로_채운다(self):
+        # 몫을 지키려고 핀을 굶기지는 않는다.
+        self._queue(pickdam_ids=(), wontheland_ids=(801, 802, 803))
+        made = make_pin.run(2, dry=False)
+        self.assertEqual(len(made), 2)
+        self.assertEqual({m["site"] for m in made}, {"wontheland"})
+
+    def test_이미_핀이_있는_픽담_글은_몫을_소비하지_않는다(self):
+        # 「앞쪽 N개를 픽담으로 정렬」 방식이 틀리는 지점이다 — 첫 픽담 글이 걸러지면
+        # 몫이 조용히 원더랜드로 넘어간다. 1단 통과는 큐를 끝까지 내려가야 한다.
+        self._queue(pickdam_ids=(901, 902), wontheland_ids=(801, 802, 803))
+        common.save_json("pins.json", {"pins": [
+            {"site": "pickdam", "post_id": 901, "made_at": "2026-01-01T00:00:00"}]})
+        made = make_pin.run(2, dry=False)
+        self.assertIn("pickdam", [m["site"] for m in made])
+        self.assertIn(902, [m["post_id"] for m in made])
+
+    def test_몫이_per_run을_넘기지_않는다(self):
+        self._queue(pickdam_ids=(901, 902, 903), wontheland_ids=(801, 802))
+        self.assertEqual(len(make_pin.run(1, dry=False)), 1)

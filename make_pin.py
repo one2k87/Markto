@@ -172,54 +172,78 @@ def run(n=None, dry=False):
 
     done_ids = {(p.get("site"), p.get("post_id")) for p in pins["pins"]}
     made = []
-    for post in items:
+
+    # ── 사이트별 최소 몫 (2026-11-10 F 승인) ────────────────────────────────
+    # 11/3~11/9 핀 14건이 **전부 원더랜드**였다(픽담 마지막 핀 11/2 #724). 원더랜드가
+    # 하루 2편 발행하며 큐 앞단을 차지해 픽담이 밀렸고, 픽담은 쿠팡 수수료 경로라
+    # 핀이 멈추면 B경로 유입도 같이 멈춘다. 큐 순서가 아니라 **몫**으로 가른다.
+    #
+    # 2단 통과로 구현한다. 「큐 앞쪽 N개를 그 사이트 글로 정렬」하는 방식은 그 N개가
+    # 중간에 걸러지면(이미 핀이 있음·글이 내려감·채널 꺼짐) 몫이 조용히 다른 사이트로
+    # 넘어간다. 1단은 그 사이트만 보며 큐를 끝까지 내려가므로 걸러짐에 영향받지 않고,
+    # 쓸 글이 정말 없으면 2단이 남은 몫을 채운다 — **핀을 굶기지는 않는다.**
+    picked = set()
+    passes = [(k, int(v)) for k, v in (cfg["quota"].get("min_per_site") or {}).items()
+              if int(v) > 0]
+    passes.append((None, want))        # 2단: 남은 몫을 큐 순서대로
+
+    for only_site, target in passes:
+        got = 0
+        for post in items:
+            if len(made) >= want or got >= target:
+                break
+            if only_site and post["site"] != only_site:
+                continue
+            key = (post["site"], post["id"])
+            if key in done_ids or key in picked:
+                continue
+            # 채널별 차단이 먼저다. 원더랜드는 핀터레스트 소유권이 확인될 때까지
+            # 큐에 들어와도 핀을 만들지 않는다(9/8 사용자 결정). 네트워크 왕복 전에 끊는다.
+            site = common.site_by_key(post["site"], cfg)
+            if not common.site_on(site, "pinterest"):
+                continue
+
+            # 수집 이후 글이 내려갔을 수 있다 — 죽은 링크를 가리키는 핀은 만들지 않는다.
+            # 같은 왕복에서 Rank Math 제목·설명도 받아 핀 문구의 원천으로 쓴다.
+            if not dry:
+                meta = common.page_meta(post["url"])
+                if not meta["ok"]:
+                    continue
+                post["seo_title"], post["seo_desc"] = meta["title"], meta["desc"]
+            copy = make_copy(post, site, cfg, dry=dry)
+            path = os.path.join(OUT, f"pin_{post['site']}_{post['id']}.png")
+            pin_image.render_pin(path, site, copy["image_text"],
+                                 subtitle=copy["title"] if copy["title"] != copy["image_text"] else "",
+                                 kicker=copy.get("kicker", ""), cfg_pin=cfg["pin"])
+            print(f"[make] {post['site']}#{post['id']} → {os.path.basename(path)} · {copy['title']}")
+            if not dry:
+                publish_to_gallery(path)      # 대시보드에서 보고 폰으로 저장하기 위한 사본
+
+            sent = False
+            if not dry and cfg["publish"]["mode"] == "telegram":
+                sent = common.telegram_photo(path, caption(post, copy, site, cfg))
+            elif not dry and cfg["publish"]["mode"] == "pinterest":
+                import publish
+                sent = publish.publish_pin(path, copy, post, site, cfg)
+
+            rec = {
+                "site": post["site"], "post_id": post["id"], "post_title": post["title"],
+                "url": common.with_utm(post["url"], site),
+                "pin_title": copy["title"], "pin_desc": copy["description"],
+                "hashtags": copy.get("hashtags", []), "image": os.path.relpath(path, common.ROOT),
+                "made_at": common.now_kst().isoformat(timespec="seconds"),
+                "sent": bool(sent), "mode": cfg["publish"]["mode"],
+                "pin_id": None, "posted_at": None,
+            }
+            if copy.get("_fallback"):
+                rec["fallback_copy"] = True
+            if not dry:
+                pins["pins"].append(rec)
+            made.append(rec)
+            picked.add(key)
+            got += 1
         if len(made) >= want:
             break
-        if (post["site"], post["id"]) in done_ids:
-            continue
-        # 채널별 차단이 먼저다. 원더랜드는 핀터레스트 소유권이 확인될 때까지
-        # 큐에 들어와도 핀을 만들지 않는다(9/8 사용자 결정). 네트워크 왕복 전에 끊는다.
-        site = common.site_by_key(post["site"], cfg)
-        if not common.site_on(site, "pinterest"):
-            continue
-
-        # 수집 이후 글이 내려갔을 수 있다 — 죽은 링크를 가리키는 핀은 만들지 않는다.
-        # 같은 왕복에서 Rank Math 제목·설명도 받아 핀 문구의 원천으로 쓴다.
-        if not dry:
-            meta = common.page_meta(post["url"])
-            if not meta["ok"]:
-                continue
-            post["seo_title"], post["seo_desc"] = meta["title"], meta["desc"]
-        copy = make_copy(post, site, cfg, dry=dry)
-        path = os.path.join(OUT, f"pin_{post['site']}_{post['id']}.png")
-        pin_image.render_pin(path, site, copy["image_text"],
-                             subtitle=copy["title"] if copy["title"] != copy["image_text"] else "",
-                             kicker=copy.get("kicker", ""), cfg_pin=cfg["pin"])
-        print(f"[make] {post['site']}#{post['id']} → {os.path.basename(path)} · {copy['title']}")
-        if not dry:
-            publish_to_gallery(path)      # 대시보드에서 보고 폰으로 저장하기 위한 사본
-
-        sent = False
-        if not dry and cfg["publish"]["mode"] == "telegram":
-            sent = common.telegram_photo(path, caption(post, copy, site, cfg))
-        elif not dry and cfg["publish"]["mode"] == "pinterest":
-            import publish
-            sent = publish.publish_pin(path, copy, post, site, cfg)
-
-        rec = {
-            "site": post["site"], "post_id": post["id"], "post_title": post["title"],
-            "url": common.with_utm(post["url"], site),
-            "pin_title": copy["title"], "pin_desc": copy["description"],
-            "hashtags": copy.get("hashtags", []), "image": os.path.relpath(path, common.ROOT),
-            "made_at": common.now_kst().isoformat(timespec="seconds"),
-            "sent": bool(sent), "mode": cfg["publish"]["mode"],
-            "pin_id": None, "posted_at": None,
-        }
-        if copy.get("_fallback"):
-            rec["fallback_copy"] = True
-        if not dry:
-            pins["pins"].append(rec)
-        made.append(rec)
 
     if not dry:
         common.save_json("pins.json", pins)
