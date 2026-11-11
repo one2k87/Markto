@@ -1820,6 +1820,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 738,
+   "post_title": "1인 가구 미니 세탁기 3kg, 통돌이와 드럼 선택 후회 막는 3가지 기준",
+   "url": "https://pickdam.com/mini-washing-machine-3kg-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "1인 가구 미니 세탁기 3kg 선택 기준",
+   "pin_desc": "1인 가구 미니 세탁기 3kg 구입 시 통돌이와 드럼의 탈수 소음과 배수구 구조를 비교해 후회 없는 선택 기준 3가지를 정리했습니다.",
+   "hashtags": [
+    "미니세탁기",
+    "1인가구",
+    "자취생가전",
+    "세탁기추천"
+   ],
+   "image": "out/pin_pickdam_738.png",
+   "made_at": "2026-11-11T16:48:34+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "wontheland",
+   "post_id": 3097,
+   "post_title": "내가 안 한 결제 승인 문자가 왔을 때, 3단계 대처와 신고 절차",
+   "url": "https://wontheland.com/senior-digital-suspicious-payment-sms-202610/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "내가 안 한 결제 승인 문자가 왔을 때, 3단계 대처와 신고 절차 - 원",
+   "pin_desc": "2026년 10월 기준, 모르는 수상한 결제 승인 문자를 받으셨나요? 내가 구매 안 했는데 돈이 나갔을 때 당황하지 마세요. 빠르게 신고하고 피해를 복구하는 3단계 절차와 준비물을 상세히 알려드립니다.",
+   "hashtags": [
+    "카드결제취소",
+    "부정승인신고",
+    "카드피해대처",
+    "생활금융"
+   ],
+   "image": "out/pin_wontheland_3097.png",
+   "made_at": "2026-11-11T16:48:39+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
