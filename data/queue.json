@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-11T16:48:29+09:00",
+ "built_at": "2026-11-12T17:25:50+09:00",
  "items": [
   {
    "id": 21,
@@ -409,28 +409,6 @@
    ]
   },
   {
-   "id": 3107,
-   "site": "wontheland",
-   "title": "구글 포토 vs 네이버 MYBOX, 스마트폰 사진 백업 어디가 나을까",
-   "url": "https://wontheland.com/senior-smartphone-photo-backup-google-naver-2026/",
-   "excerpt": "2026년 10월 기준, 시니어 스마트폰 사진 백업을 위해 구글 포토와 네이버 MYBOX 중 어떤 서비스를 고를지 고민이 많으시죠? 사용료, 무료 용량, 데이터 안전성까지 실제 차이점을 비교해보고 나에게 맞는 서비스 결정 방법을 알려드립니다.",
-   "date": "2026-10-16T13:06:34",
-   "categories": [
-    2002
-   ]
-  },
-  {
-   "id": 3116,
-   "site": "wontheland",
-   "title": "카톡 영상통화가 안 될 때, 재시도보다 먼저 확인할 것",
-   "url": "https://wontheland.com/senior-kakaotalk-videocall-troubleshooting/",
-   "excerpt": "멀리 계신 부모님과 손주 얼굴 보며 카카오톡 영상통화가 자꾸 끊기거나 연결이 안 돼 답답하셨나요? 2026년 10월 기준, 시니어 스마트폰에서 영상통화 연결 실패 시 무턱대고 다시 걸기 전에 꼭 확인해야 할 3가지와, 흔히 겪는 두 가지 실패 상황별 복구 방법을 알려드립니다. 데이터 요금 걱정 없이 가족과 소통하는 방법을 찾아보세요.",
-   "date": "2026-10-17T08:56:23",
-   "categories": [
-    2002
-   ]
-  },
-  {
    "id": 3118,
    "site": "wontheland",
    "title": "정부24 등본·초본 무료로 발급받는 쉬운 절차",
@@ -758,6 +736,28 @@
    "date": "2026-11-11T15:22:26",
    "categories": [
     2006
+   ]
+  },
+  {
+   "id": 3526,
+   "site": "wontheland",
+   "title": "모바일 주민등록증 발급 방법, 5분 만에 끝내는 실물 확인 3단계",
+   "url": "https://wontheland.com/mobile-id-card-issuance-senior-guide/",
+   "excerpt": "모바일 주민등록증 발급 절차와 정부24 준비물 시니어 혼자 신청하는 법을 정리했습니다. 구형 신분증 소지자의 방문 필요 여부와 IC 칩 확인법, 실패 없는 신청 순서를 확인해 보세요.",
+   "date": "2026-11-12T11:32:20",
+   "categories": [
+    2004
+   ]
+  },
+  {
+   "id": 3528,
+   "site": "wontheland",
+   "title": "갤럭시 통화 소리 작음, 측면 버튼 백날 눌러도 안 커질 때 해결법",
+   "url": "https://wontheland.com/galaxy-s24-call-volume-boost-guide/",
+   "excerpt": "갤럭시 S24 통화 음량이 작아 답답하신가요? 기기 고장이 아닙니다. 서비스센터 방문 전 3분 만에 끝내는 갤럭시 s24 소리 작음 문제 해결하는 통화 음량 증폭 설정 확인 방법을 단계별로 정리했습니다.",
+   "date": "2026-11-12T14:54:30",
+   "categories": [
+    2002
    ]
   }
  ]

@@ -135,28 +135,14 @@
   "https://wontheland.com/galaxy-a15-screen-off-clock-setting/",
   "https://pickdam.com/mini-washing-machine-3kg-comparison/",
   "https://wontheland.com/remote-control-app-scam-response/",
-  "https://wontheland.com/galaxy-s24-lockscreen-clock-size-setting/"
+  "https://wontheland.com/galaxy-s24-lockscreen-clock-size-setting/",
+  "https://wontheland.com/galaxy-s24-call-volume-boost-guide/",
+  "https://wontheland.com/mobile-id-card-issuance-senior-guide/"
  ],
- "last_at": "2026-11-11T16:48:47+09:00",
+ "last_at": "2026-11-12T17:26:05+09:00",
  "last_run": {
-  "at": "2026-11-11T16:48:47+09:00",
+  "at": "2026-11-12T17:26:05+09:00",
   "results": [
-   {
-    "site": "pickdam",
-    "ep": "https://searchadvisor.naver.com/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "pickdam",
-    "ep": "https://api.indexnow.org/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
    {
     "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
@@ -176,27 +162,6 @@
   ]
  },
  "runs": [
-  {
-   "at": "2026-10-20T15:07:11+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-10-21T15:07:24+09:00",
    "results": [
@@ -532,6 +497,27 @@
      "ok": true,
      "body": ""
     },
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 2,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-12T17:26:05+09:00",
+   "results": [
     {
      "site": "wontheland",
      "ep": "https://searchadvisor.naver.com/indexnow",
