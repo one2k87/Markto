@@ -101,7 +101,17 @@ def run(limit=None):
             return 0
 
     posts = common.wp_posts(site, per_page=50, pages=2) or []
-    fallback = site["url"].rstrip("/") + conf.get("fallback_path", "/kok/")
+
+    # 2026-11-13 F 지시(로드맵 v4): **링크는 픽담 개별 글 URL만.** 모아보기(/kok/)로
+    # 떨어뜨리지 않는다. 근거 세 가지 —
+    #  ① 실측: 11/11 가습기·11/12 김치통이 /kok/ 로 나갔다(누적 3건). 모아보기에는
+    #     그 제품을 사도 되는지 판단할 근거가 없어서, 눌러도 얻는 게 없다.
+    #  ② 메타는 같은 랜딩으로 반복해 들어가는 링크를 스팸 신호로 본다.
+    #  ③ 쿠팡 최종승인(=API 발급)이 누적 판매금액 15만 원이라, 상품 링크·고지문이
+    #     이미 들어 있는 픽담 **글**로 보내는 쪽이 수수료 경로에 직접 붙는다.
+    # 글이 없는 제품은 건너뛰고 다음 제품으로 간다. 건너뛴 제품은 글 요청 목록으로 남겨
+    # 픽토가 글을 쓰게 한다 — 링크를 억지로 만드는 대신 글을 만드는 쪽이 옳은 해결이다.
+    need_post = []
 
     want = limit if limit is not None else conf.get("per_run", 2)
     tok, uid, n = None, None, 0
@@ -120,7 +130,12 @@ def run(limit=None):
         if n >= want:
             break
         hit = find_post(prod, site, posts)
-        link = hit["url"] if hit else fallback
+        if not hit:
+            print(f"[product] {prod['key']} — 픽담에 글이 없습니다. 건너뜁니다"
+                  f"(모아보기로 보내지 않는다 · 2026-11-13 F 지시).")
+            need_post.append({"key": prod["key"], "name": prod["name"]})
+            continue
+        link = hit["url"]
         if link in sent_links:
             print(f"[product] {prod['key']} 는 이번 회차에 이미 보낸 글과 같은 주소입니다 — 다음 제품으로.")
             continue
@@ -144,9 +159,16 @@ def run(limit=None):
             rec["permalink"] = perma
         state["posts"].append(rec)
         sent_links.add(link)
-        print(f"[product] {prod['key']} → {perma or pid}  ({'글' if hit else '/kok/'})")
+        print(f"[product] {prod['key']} → {perma or pid}  (글 #{hit['id']})")
         n += 1
 
+    # 글이 없어 건너뛴 제품을 남긴다. 이게 픽토에게 줄 「다음에 쓸 글」 목록이고,
+    # 동시에 "오늘 왜 2편이 안 나갔는지"의 답이다(상한 미달을 조용히 넘기지 않는다).
+    if need_post:
+        state["need_post"] = {"at": common.now_kst().isoformat(timespec="seconds"),
+                              "items": need_post}
+        print(f"[product] 글이 없어 건너뛴 제품 {len(need_post)}건: "
+              f"{', '.join(x['key'] for x in need_post)} — 픽토에 글 요청 대상")
     common.save_json(STATE, state)
     print(f"[product] {n}건 게시")
     return n

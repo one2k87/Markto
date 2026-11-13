@@ -1303,3 +1303,70 @@ class TestSiteShare(Base):
     def test_몫이_per_run을_넘기지_않는다(self):
         self._queue(pickdam_ids=(901, 902, 903), wontheland_ids=(801, 802))
         self.assertEqual(len(make_pin.run(1, dry=False)), 1)
+
+
+class TestProductLinkOnlyPosts(Base):
+    """상품 포스트 링크는 **픽담 개별 글 URL만** (2026-11-13 F 지시 · 로드맵 v4).
+
+    실측 배경: 11/11 가습기·11/12 김치통이 `/kok/` 모아보기로 나갔다(누적 3건).
+    모아보기에는 그 제품을 사도 되는지 판단할 근거가 없어 눌러도 얻는 게 없고,
+    같은 랜딩으로 반복 들어가는 링크는 메타가 스팸 신호로 본다. 쿠팡 최종승인이
+    누적 판매금액 15만 원이라 픽담 글로 보내는 쪽이 수수료 경로에 직접 붙는다.
+    """
+
+    def setUp(self):
+        super().setUp()
+        import product_post
+        import threads
+        self.pp, self.th = product_post, threads
+        self.published = []
+        self._orig = (product_post.products, common.wp_posts,
+                      threads.token, threads.user_id,
+                      threads.publish_one, threads.permalink)
+        threads.token = lambda: "T"
+        threads.user_id = lambda tok: "U"
+        threads.permalink = lambda pid, tok=None: f"https://threads.com/p/{pid}"
+
+        def fake_publish(text, tok, uid):
+            self.published.append(text)
+            return f"id{len(self.published)}"
+        threads.publish_one = fake_publish
+
+    def tearDown(self):
+        (self.pp.products, common.wp_posts, self.th.token, self.th.user_id,
+         self.th.publish_one, self.th.permalink) = self._orig
+        super().tearDown()
+
+    def _prod(self, key, match):
+        return {"key": key, "name": key, "match": match,
+                "coupang_url": "https://link.coupang.com/a/x"}
+
+    def test_글이_없는_제품은_모아보기로_보내지_않고_건너뛴다(self):
+        self.pp.products = lambda url=None: [self._prod("가습기", ["가습기"])]
+        common.wp_posts = lambda site, **kw: [
+            {"id": 1, "title": "전기장판 고르는 기준", "url": "https://pickdam.com/blanket/"}]
+        n = self.pp.run(2)
+        self.assertEqual(n, 0, "글이 없으면 한 건도 올리지 않는다")
+        self.assertEqual(self.published, [], "모아보기 링크로라도 올려서는 안 된다")
+
+    def test_나간_링크에는_kok이_없다(self):
+        self.pp.products = lambda url=None: [self._prod("가습기", ["가습기"]),
+                                             self._prod("전기장판", ["전기장판"])]
+        common.wp_posts = lambda site, **kw: [
+            {"id": 7, "title": "원룸 전기장판 전자파·물세탁",
+             "url": "https://pickdam.com/blanket/"}]
+        self.pp.run(2)
+        self.assertEqual(len(self.published), 1, "글이 있는 제품만 나간다")
+        for text in self.published:
+            self.assertNotIn("/kok/", text)
+            self.assertIn("pickdam.com/blanket/", text)
+
+    def test_건너뛴_제품이_글_요청_목록에_남는다(self):
+        # 상한 미달을 조용히 넘기지 않는다 — 픽토에 줄 「다음에 쓸 글」 목록이 된다.
+        self.pp.products = lambda url=None: [self._prod("가습기", ["가습기"]),
+                                             self._prod("김치통", ["김치통"])]
+        common.wp_posts = lambda site, **kw: []
+        self.pp.run(2)
+        st = common.load_json(self.pp.STATE, {})
+        keys = [x["key"] for x in (st.get("need_post") or {}).get("items", [])]
+        self.assertEqual(sorted(keys), ["가습기", "김치통"])
