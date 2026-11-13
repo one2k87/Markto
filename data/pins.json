@@ -1900,6 +1900,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 746,
+   "post_title": "대기전력 차단 멀티탭 4구 개별 스위치, 대기전력 11% 줄이는 올바른 사용법과 고장 원인",
+   "url": "https://pickdam.com/standby-power-cutoff-multi-tap-4-way/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "대기전력 멀티탭 4구, 전기세 줄이는 사용법 3가지",
+   "pin_desc": "대기전력 차단 멀티탭 4구 개별 스위치를 쓰는데도 전기요금이 줄지 않는다면, 대기전력 11% 줄이는 올바른 사용법과 고장 원인을 확인해보세요.",
+   "hashtags": [
+    "대기전력멀티탭",
+    "전기세절약",
+    "생활꿀팁",
+    "전기요금"
+   ],
+   "image": "out/pin_pickdam_746.png",
+   "made_at": "2026-11-13T17:08:11+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "wontheland",
+   "post_id": 3118,
+   "post_title": "정부24 등본·초본 무료로 발급받는 쉬운 절차",
+   "url": "https://wontheland.com/government24-certificate-free-easy-steps/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "정부24 등본·초본 무료로 발급받는 쉬운 절차 - 원더랜드 블로그",
+   "pin_desc": "2026년 10월 기준, 주민센터 방문 없이 정부24에서 초본과 등본을 집에서 무료로 발급받는 쉬운 절차를 알아봅니다. 복잡한 서류 준비 없이 스마트폰으로 가족의 서류까지 발급받는 방법을 확인하고, 자주 헷갈리는 부분을 명확히 정리해 드립니다. 시니어 부모님도 쉽게 따라 할 수 있도록 자세한 설명을 담았습니다.",
+   "hashtags": [
+    "정부24",
+    "주민등록등본",
+    "등본발급",
+    "생활꿀팁"
+   ],
+   "image": "out/pin_wontheland_3118.png",
+   "made_at": "2026-11-13T17:08:16+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
