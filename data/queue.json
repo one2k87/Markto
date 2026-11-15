@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-14T16:39:31+09:00",
+ "built_at": "2026-11-15T16:55:46+09:00",
  "items": [
   {
    "id": 21,
@@ -421,6 +421,18 @@
    ]
   },
   {
+   "id": 663,
+   "site": "pickdam",
+   "title": "욕실 온풍기, 20분 사용해도 전기 요금 월 1만 원 넘지 않으려면 소비전력 1000W 미만 제품을 선택해야 하는 이유",
+   "url": "https://pickdam.com/bathroom-mini-heater-tips/",
+   "excerpt": "욕실 미니 온풍기 구매 시 전기세 걱정 없이 따뜻하게 쓰는 2가지 방법을 소개합니다. 흔한 실수와 안전 등급을 확인해보세요.",
+   "date": "2026-10-16T08:56:05",
+   "categories": [
+    19,
+    2
+   ]
+  },
+  {
    "id": 2541,
    "site": "wontheland",
    "title": "스미싱 문자, 진짜와 가짜 이렇게 구별합니다",
@@ -443,23 +455,12 @@
    ]
   },
   {
-   "id": 3134,
+   "id": 2555,
    "site": "wontheland",
-   "title": "알뜰폰 유심 교체, 새 휴대폰에 혼자서 3단계로 끝냅니다",
-   "url": "https://wontheland.com/senior-low-cost-phone-usim-change/",
-   "excerpt": "2026년 10월, 시니어 알뜰폰 유심칩을 새 휴대폰에 혼자 교체하는 3단계 방법을 알려드립니다. 유심 교체 중 흔히 겪는 실패 사례와 복구법, 그리고 자녀가 원격으로 도와주는 팁까지, 어르신도 걱정 없이 따라 할 수 있도록 자세히 설명합니다.",
-   "date": "2026-10-19T08:39:34",
-   "categories": [
-    2005
-   ]
-  },
-  {
-   "id": 3136,
-   "site": "wontheland",
-   "title": "카톡으로 지인이 돈을 요구할 때, 메신저피싱 구별하는 3가지",
-   "url": "https://wontheland.com/kakao-talk-phishing-prevention-senior/",
-   "excerpt": "2026년 10월, 부모님께 카카오톡 친구를 사칭해 돈을 요구하는 메신저 피싱 사기가 급증하고 있습니다. 구별 3가지 약속으로 소중한 돈과 정보를 지키는 방법을 알려드립니다.",
-   "date": "2026-10-19T13:24:34",
+   "title": "기관 사칭 보이스피싱 전화를 받았을 때 대처법",
+   "url": "https://wontheland.com/boice-phishing-prevention-senior-2026-september/",
+   "excerpt": "2026년 9월, 부모님 휴대폰으로 걸려오는 수상한 전화 때문에 걱정하는 자녀분들 많으시죠? 자녀가 알려드리는 보이스피싱 구별법과 신고 절차로 가족의 안전을 지키세요. 잘못된 대처로 인한 피해를 막는 실전 가이드입니다.",
+   "date": "2026-09-16T08:42:04",
    "categories": [
     2006
    ]
@@ -781,6 +782,28 @@
    "date": "2026-11-13T15:35:51",
    "categories": [
     2004
+   ]
+  },
+  {
+   "id": 3640,
+   "site": "wontheland",
+   "title": "아이폰13 전화 수신 오류, 무작정 초기화하면 사진 다 날아갑니다",
+   "url": "https://wontheland.com/iphone13-call-reception-error-senior-guide/",
+   "excerpt": "부모님 아이폰 13 전화 수신 안됨 문제 해결하는 방법과 통신 설정 확인 절차를 정리했습니다. 기기 고장으로 오해해 서비스센터를 방문하기 전, 3가지 통신 설정을 점검해 3분 만에 수신 먹통을 해결하는 방법을 안내합니다.",
+   "date": "2026-11-15T10:20:14",
+   "categories": [
+    2002
+   ]
+  },
+  {
+   "id": 3642,
+   "site": "wontheland",
+   "title": "아이폰 통화중 끊김 해결 3가지 말문 대본으로 5분 만에 끝내기",
+   "url": "https://wontheland.com/iphone-call-drop-remote-fix-senior/",
+   "excerpt": "어르신 아이폰 15 전화 끊김 현상 자녀가 원격으로 해결해 드리는 점검 방법을 정리했습니다. 센터 방문 전 5분 만에 전화 설명 대본으로 오류를 바로잡으세요.",
+   "date": "2026-11-15T13:47:22",
+   "categories": [
+    2003
    ]
   }
  ]
