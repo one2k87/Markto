@@ -2020,6 +2020,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 800,
+   "post_title": "직수 정수기 자가관리 무설치 모델, 유지비 총액 비교해보면 렌탈보다 낫습니다",
+   "url": "https://pickdam.com/direct-water-purifier-cost-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "직수 정수기 무설치 모델 유지비 비교",
+   "pin_desc": "직수 정수기 자가관리 무설치 모델, 필터 교체 주기 4개월마다 따져야 하는 유지비 총액 비교. 2026년 기준 실측 비용과 렌탈과의 차이를 확인하세요.",
+   "hashtags": [
+    "무설치정수기",
+    "직수정수기",
+    "정수기유지비",
+    "정수기추천"
+   ],
+   "image": "out/pin_pickdam_800.png",
+   "made_at": "2026-11-16T17:03:48+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "wontheland",
+   "post_id": 3151,
+   "post_title": "갤럭시 A25 배터리가 빨리 닳을 때, 정품 교체 시기와 용량 비교",
+   "url": "https://wontheland.com/galaxy-a25-battery-drain-replacement-comparison/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "갤럭시 A25 배터리가 빨리 닳을 때, 정품 교체 시기와 용량 비교 - ",
+   "pin_desc": "2026년 10월 기준, 갤럭시 A25 배터리가 유독 빨리 닳는다면 정품 배터리 용량(5,000mAh)과 교체 시기를 확인해 보세요. 삼성 서비스센터와 사설 수리점의 비용(6만~8만 원대)과 장단점을 비교하여 안전하고 합리적인 선택을 돕습니다.",
+   "hashtags": [
+    "갤럭시A25",
+    "배터리교체",
+    "스마트폰수리",
+    "삼성서비스센터"
+   ],
+   "image": "out/pin_wontheland_3151.png",
+   "made_at": "2026-11-16T17:03:52+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }

@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-15T16:55:46+09:00",
+ "built_at": "2026-11-16T17:03:42+09:00",
  "items": [
   {
    "id": 21,
@@ -466,14 +466,25 @@
    ]
   },
   {
-   "id": 3151,
+   "id": 2557,
    "site": "wontheland",
-   "title": "갤럭시 A25 배터리가 빨리 닳을 때, 정품 교체 시기와 용량 비교",
-   "url": "https://wontheland.com/galaxy-a25-battery-drain-replacement-comparison/",
-   "excerpt": "2026년 10월 기준, 갤럭시 A25 배터리가 유독 빨리 닳는다면 정품 배터리 용량(5,000mAh)과 교체 시기를 확인해 보세요. 삼성 서비스센터와 사설 수리점의 비용(6만~8만 원대)과 장단점을 비교하여 안전하고 합리적인 선택을 돕습니다.",
-   "date": "2026-10-20T09:40:58",
+   "title": "스미싱 링크를 눌렀을 때, 바로 할 대처와 예방 절차",
+   "url": "https://wontheland.com/senior-phone-suspicious-link-prevention-2026-09/",
+   "excerpt": "2026년 9월, 부모님 휴대폰에 수상한 링크를 눌렀을 때 어떻게 해야 할지 막막하셨나요? 당황하지 않고 빠르게 대처하는 방법과 앞으로 이런 일을 예방하는 절차를 자녀의 마음으로 쉽게 알려드립니다.",
+   "date": "2026-09-16T10:50:46",
    "categories": [
-    2003
+    2006
+   ]
+  },
+  {
+   "id": 2574,
+   "site": "wontheland",
+   "title": "정부24 모바일 신분증, 급할 때 당황하지 않게 이것부터 확인하세요",
+   "url": "https://wontheland.com/government24-mobile-id-senior-digital-guide/",
+   "excerpt": "2026년 9월 기준 정부24 모바일 신분증 발급 조건과 사용 절차를 자세히 알아보고, 은행 업무 등 급하게 필요할 때 겪을 수 있는 흔한 실패 사례와 해결 방법을 안내합니다.",
+   "date": "2026-09-17T16:52:03",
+   "categories": [
+    2004
    ]
   },
   {
@@ -804,6 +815,17 @@
    "date": "2026-11-15T13:47:22",
    "categories": [
     2003
+   ]
+  },
+  {
+   "id": 3651,
+   "site": "wontheland",
+   "title": "아이폰 비밀번호 분실 초기화, 무작정 누르면 손주 사진 5천 장 날아갑니다",
+   "url": "https://wontheland.com/iphone-13-passcode-reset-without-data-loss/",
+   "excerpt": "아이폰 13 잠금 해제 비밀번호 잊었을 때 초기화 없이 해결하는 확인 절차를 정리했습니다. 72시간 이전 암호 재설정 조건과 사진 유실 방지법을 확인하세요.",
+   "date": "2026-11-16T10:25:12",
+   "categories": [
+    2002
    ]
   }
  ]
