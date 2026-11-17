@@ -144,11 +144,12 @@
   "https://wontheland.com/iphone-call-drop-remote-fix-senior/",
   "https://wontheland.com/iphone13-call-reception-error-senior-guide/",
   "https://pickdam.com/direct-water-purifier-cost-comparison/",
-  "https://wontheland.com/iphone-13-passcode-reset-without-data-loss/"
+  "https://wontheland.com/iphone-13-passcode-reset-without-data-loss/",
+  "https://pickdam.com/weekly-trend-20261117/"
  ],
- "last_at": "2026-11-16T17:04:02+09:00",
+ "last_at": "2026-11-17T18:18:42+09:00",
  "last_run": {
-  "at": "2026-11-16T17:04:02+09:00",
+  "at": "2026-11-17T18:18:42+09:00",
   "results": [
    {
     "site": "pickdam",
@@ -165,63 +166,10 @@
     "n": 1,
     "ok": true,
     "body": ""
-   },
-   {
-    "site": "wontheland",
-    "ep": "https://searchadvisor.naver.com/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
-   },
-   {
-    "site": "wontheland",
-    "ep": "https://api.indexnow.org/indexnow",
-    "status": 200,
-    "n": 1,
-    "ok": true,
-    "body": ""
    }
   ]
  },
  "runs": [
-  {
-   "at": "2026-10-31T16:06:01+09:00",
-   "results": [
-    {
-     "site": "pickdam",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "pickdam",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-11-01T16:39:06+09:00",
    "results": [
@@ -567,6 +515,27 @@
     },
     {
      "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-17T18:18:42+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 1,

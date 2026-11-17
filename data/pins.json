@@ -2060,6 +2060,46 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 806,
+   "post_title": "이번 주 유행템 5가지 (11월 17일 집계)",
+   "url": "https://pickdam.com/weekly-trend-20261117/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "이번 주 유행템 5가지 — 11/17 집계",
+   "pin_desc": "유튜브 노출과 네이버 검색 수요를 겹쳐 고른 이번 주 유행템 5가지. 검색이 식고 있는 품목은 그 사실도 함께 적었습니다.",
+   "hashtags": [
+    "유행템",
+    "트렌드템",
+    "소비기록",
+    "쇼핑꿀팁"
+   ],
+   "image": "out/pin_pickdam_806.png",
+   "made_at": "2026-11-17T18:18:29+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
+  },
+  {
+   "site": "wontheland",
+   "post_id": 3161,
+   "post_title": "갤럭시 A15 배터리가 빨리 닳을 때, 설정부터 손대면 안 되는 이유",
+   "url": "https://wontheland.com/galaxy-a15-battery-drain-senior-fix/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "갤럭시 A15 배터리가 빨리 닳을 때, 설정부터 손대면 안 되는 이유 -",
+   "pin_desc": "2026년 10월, 갤럭시 A15 배터리가 갑자기 빨리 닳아 걱정된다면 시니어 혼자서도 쉽게 확인할 수 있는 3단계 설정 방법을 알아보세요. 잘못된 설정으로 인한 배터리 소모를 줄이고, 불필요한 수리 비용을 아낄 수 있는 실용적인 팁과 흔히 겪는 실패 시나리오 대처법을 담았습니다.",
+   "hashtags": [
+    "갤럭시A15",
+    "배터리",
+    "스마트폰",
+    "생활정보"
+   ],
+   "image": "out/pin_wontheland_3161.png",
+   "made_at": "2026-11-17T18:18:33+09:00",
+   "sent": true,
+   "mode": "telegram",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
