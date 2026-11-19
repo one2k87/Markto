@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-18T17:37:46+09:00",
+ "built_at": "2026-11-19T17:52:49+09:00",
  "items": [
   {
    "id": 21,
@@ -445,61 +445,6 @@
    ]
   },
   {
-   "id": 2541,
-   "site": "wontheland",
-   "title": "스미싱 문자, 진짜와 가짜 이렇게 구별합니다",
-   "url": "https://wontheland.com/smishing-text-message-distinction-for-seniors-2026/",
-   "excerpt": "2026년 9월 기준, 엄마 아빠 휴대폰으로 오는 스미싱 문자와 일반 스팸 문자를 구별하는 5가지 핵심 증거를 알려드립니다. 의심스러운 링크와 앱 설치 요구를 피하고, 돈과 개인정보를 안전하게 지키는 구체적인 스미싱 문자 구별법을 확인하세요.",
-   "date": "2026-09-13T20:19:40",
-   "categories": [
-    2002
-   ]
-  },
-  {
-   "id": 2543,
-   "site": "wontheland",
-   "title": "알뜰폰 요금제, 통신사 시니어 요금제와 비교하면 뭐가 나을까",
-   "url": "https://wontheland.com/senior-affordable-phone-plan-comparison-2026-09/",
-   "excerpt": "2026년 9월 기준, 부모님 통신비를 절반으로 줄여줄 시니어 알뜰폰 요금제 비교 가이드입니다. 복잡한 선택 과정과 흔한 가입 실패 시나리오, 그리고 쉬운 복구법까지 상세히 알려드립니다.",
-   "date": "2026-09-14T08:30:17",
-   "categories": [
-    2002
-   ]
-  },
-  {
-   "id": 2555,
-   "site": "wontheland",
-   "title": "기관 사칭 보이스피싱 전화를 받았을 때 대처법",
-   "url": "https://wontheland.com/boice-phishing-prevention-senior-2026-september/",
-   "excerpt": "2026년 9월, 부모님 휴대폰으로 걸려오는 수상한 전화 때문에 걱정하는 자녀분들 많으시죠? 자녀가 알려드리는 보이스피싱 구별법과 신고 절차로 가족의 안전을 지키세요. 잘못된 대처로 인한 피해를 막는 실전 가이드입니다.",
-   "date": "2026-09-16T08:42:04",
-   "categories": [
-    2006
-   ]
-  },
-  {
-   "id": 2557,
-   "site": "wontheland",
-   "title": "스미싱 링크를 눌렀을 때, 바로 할 대처와 예방 절차",
-   "url": "https://wontheland.com/senior-phone-suspicious-link-prevention-2026-09/",
-   "excerpt": "2026년 9월, 부모님 휴대폰에 수상한 링크를 눌렀을 때 어떻게 해야 할지 막막하셨나요? 당황하지 않고 빠르게 대처하는 방법과 앞으로 이런 일을 예방하는 절차를 자녀의 마음으로 쉽게 알려드립니다.",
-   "date": "2026-09-16T10:50:46",
-   "categories": [
-    2006
-   ]
-  },
-  {
-   "id": 2574,
-   "site": "wontheland",
-   "title": "정부24 모바일 신분증, 급할 때 당황하지 않게 이것부터 확인하세요",
-   "url": "https://wontheland.com/government24-mobile-id-senior-digital-guide/",
-   "excerpt": "2026년 9월 기준 정부24 모바일 신분증 발급 조건과 사용 절차를 자세히 알아보고, 은행 업무 등 급하게 필요할 때 겪을 수 있는 흔한 실패 사례와 해결 방법을 안내합니다.",
-   "date": "2026-09-17T16:52:03",
-   "categories": [
-    2004
-   ]
-  },
-  {
    "id": 2580,
    "site": "wontheland",
    "title": "PASS 앱 설치, 혼자서도 끝까지 하는 방법",
@@ -511,58 +456,14 @@
    ]
   },
   {
-   "id": 2582,
+   "id": 2596,
    "site": "wontheland",
-   "title": "알뜰폰 번호이동, 준비물 3가지로 유심 개통까지 끝냅니다",
-   "url": "https://wontheland.com/senior-digital-mvno-portability-guide/",
-   "excerpt": "2026년 9월 기준, 알뜰폰 번호이동을 망설이는 시니어분들을 위해 필요한 준비물과 절차를 쉽고 자세하게 알려드립니다. 유심 개통 과정의 흔한 실수와 사기 예방 팁까지, 자녀가 옆에서 알려주는 것처럼 확인해보세요.",
-   "date": "2026-09-18T11:35:53",
+   "title": "기차표 예매 앱, 도움 없이 혼자 예매하는 방법",
+   "url": "https://wontheland.com/senior-train-ticket-app-reservation/",
+   "excerpt": "2026년 9월, 시니어 혼자 기차표 예매 앱을 사용하는 방법을 알려드립니다. 자녀에게 부담 주지 않고 코레일톡 앱으로 KTX, SRT 승차권을 예약하는 단계별 가이드와 주의사항, 할인을 꼼꼼히 확인하세요.",
+   "date": "2026-09-20T12:22:59",
    "categories": [
-    2005
-   ]
-  },
-  {
-   "id": 2588,
-   "site": "wontheland",
-   "title": "모르게 나가는 알뜰폰 부가서비스 요금, 이렇게 해지합니다",
-   "url": "https://wontheland.com/senior-alttelphone-value-added-service-cancel/",
-   "excerpt": "2026년 9월 시니어 알뜰폰 요금 청구서에 예상치 못한 부가서비스 요금이 나왔나요? 통신사별 신청 및 해지 방법을 자녀가 옆에서 알려주듯 쉽고 안전하게 정리했습니다. 불필요한 지출을 줄여보세요.",
-   "date": "2026-09-19T08:37:03",
-   "categories": [
-    2005
-   ]
-  },
-  {
-   "id": 3174,
-   "site": "wontheland",
-   "title": "갤럭시 사진을 컴퓨터로 옮길 때, 유선·무선 차이와 쉬운 3단계",
-   "url": "https://wontheland.com/galaxy-a35-photo-transfer-senior/",
-   "excerpt": "2026년 10월 기준, 부모님 휴대폰 갤럭시 A35의 사진을 컴퓨터로 옮기는 유선 및 무선 방식의 장단점과 쉬운 3단계 절차를 상세히 안내합니다. 소중한 추억을 안전하게 보관하고 휴대폰 용량을 확보하는 방법을 알아보세요.",
-   "date": "2026-10-22T13:10:39",
-   "categories": [
-    2002
-   ]
-  },
-  {
-   "id": 3185,
-   "site": "wontheland",
-   "title": "갤럭시 S24 와이파이 연결 안 될 때, 폰 설정 3가지로 해결합니다",
-   "url": "https://wontheland.com/galaxy-s24-wifi-senior-settings/",
-   "excerpt": "2026년 10월 기준, 새로 사드린 부모님 갤럭시 S24 와이파이 연결 문제로 답답하신가요? 와이파이 연결이 안 될 때 확인해야 할 3가지 설정과 자녀가 전화로 도와드리는 방법을 자세히 알려드립니다. 불필요한 비용 없이 안전하게 해결하세요.",
-   "date": "2026-10-23T09:12:15",
-   "categories": [
-    2005
-   ]
-  },
-  {
-   "id": 3187,
-   "site": "wontheland",
-   "title": "갤럭시 A35 업데이트 후 발열이 심할 때, 이 설정부터 점검하세요",
-   "url": "https://wontheland.com/galaxy-a35-overheat-settings-2026-10/",
-   "excerpt": "2026년 10월 갤럭시 A35 업데이트 후 발열 문제로 고민이라면, 스마트폰 설정 점검으로 해결할 수 있습니다. 배터리 절전, 화면 주사율 조절 등 시니어 맞춤 해결법과 자녀가 도울 수 있는 방법을 확인하세요.",
-   "date": "2026-10-23T12:53:10",
-   "categories": [
-    2002
+    2007
    ]
   },
   {
@@ -574,17 +475,6 @@
    "date": "2026-10-30T16:42:34",
    "categories": [
     2002
-   ]
-  },
-  {
-   "id": 3215,
-   "site": "wontheland",
-   "title": "원격제어 앱이 의심될 때, 폰 끄기 전 시티즌코난으로 검사하세요",
-   "url": "https://wontheland.com/parents-voice-phishing-remote-app-citizen-conan-guide/",
-   "excerpt": "부모님 보이스피싱 원격제어 앱 의심될 때 시티즌코난 검사 및 삭제 확인 절차와 금융 피해를 막는 실전 대처법입니다. 악성 앱 삭제 후에도 남는 찌꺼기 확인과 계좌 일괄지급정지 순서를 2026년 10월 최신 기준으로 정리했습니다.",
-   "date": "2026-10-30T20:11:30",
-   "categories": [
-    2006
    ]
   },
   {
@@ -621,17 +511,6 @@
    ]
   },
   {
-   "id": 3266,
-   "site": "wontheland",
-   "title": "갤럭시 S24 전화가 안 될 때, 서비스센터 가기 전 확인할 3가지",
-   "url": "https://wontheland.com/galaxy-s24-call-error-fix/",
-   "excerpt": "자녀와 통화하려는데 화면은 켜지지만 전화벨이 울리지 않을 때, 서비스센터 방문 전 집에서 1분 만에 해결할 수 있는 설정 방법을 안내합니다.",
-   "date": "2026-11-02T11:35:48",
-   "categories": [
-    2002
-   ]
-  },
-  {
    "id": 3246,
    "site": "wontheland",
    "title": "갤럭시 S24 USB 알림 계속 뜰 때 충전 오류 해결하는 확인 방법",
@@ -656,7 +535,7 @@
   {
    "id": 3442,
    "site": "wontheland",
-   "title": "3만 원 아끼는 갤럭시 퀀텀 화면잠김 초기화방법, 시니어가 집에서 해결하는 3단계",
+   "title": "갤럭시 퀀텀 화면잠김 초기화 방법, 데이터 백업 여부부터 확인",
    "url": "https://wontheland.com/galaxy-quantum-lock-reset-guide/",
    "excerpt": "갤럭시 퀀텀 화면잠김 초기화방법을 찾아 헤매고 계신가요? 서비스센터 방문 없이 집에서 데이터 손실을 최소화하며 잠금을 해제하는 구체적인 3단계 절차와 흔히 겪는 실패 복구법을 2026년 기준 공식 안내에 맞춰 정리했습니다.",
    "date": "2026-11-04T12:02:19",
@@ -667,7 +546,7 @@
   {
    "id": 3444,
    "site": "wontheland",
-   "title": "아이폰 13 카톡 알림 안옴 현상 해결하는 3가지 방법 (자녀가 알려드리는)",
+   "title": "아이폰 13 카톡 알림 안옴, 알림 설정 3곳 확인하기",
    "url": "https://wontheland.com/iphone-13-kakao-alarm-fix-3-ways/",
    "excerpt": "아이폰 13 카톡 알림 안옴 현상으로 중요한 연락을 놓치고 계신가요? 자녀가 알려주는 가장 쉬운 설정 확인 순서를 2026년 11월 기준으로 정리했습니다. 복잡한 센터 방문 없이 집에서 바로 해결하세요.",
    "date": "2026-11-04T16:53:57",
@@ -689,7 +568,7 @@
   {
    "id": 3458,
    "site": "wontheland",
-   "title": "자녀가 멀리 있어도 혼자서 아이폰 13 벨소리 바꾸는 법, 3단계 매뉴얼",
+   "title": "아이폰 13 벨소리 바꾸는 법, 설정에서 3단계로 끝내기",
    "url": "https://wontheland.com/iphone-13-ringtone-change-guide/",
    "excerpt": "아이폰 13 기본 벨소리가 너무 작거나 익숙하지 않아 전화벨을 놓치고 계신가요? 자녀의 도움 없이 혼자서 3단계로 직관적으로 설정하는 방법을 2026년 기준 실측 범위와 함께 확인해 보세요.",
    "date": "2026-11-05T14:50:03",
@@ -700,7 +579,7 @@
   {
    "id": 3470,
    "site": "wontheland",
-   "title": "아이폰 13 와이파이 연결 안됨, 자녀가 알려주는 해결하는 3가지 방법으로 끝냅니다",
+   "title": "아이폰 13 와이파이 연결 안됨, 순서대로 확인할 해결 방법 3가지",
    "url": "https://wontheland.com/iphone-13-wifi-fix/",
    "excerpt": "거실에서 아이폰 13 와이파이 연결 안됨 증상으로 당황하셨나요? 자녀가 알려주는 3가지 방법으로 쉽고 확실하게 해결하는 순서입니다. 2026년 기준 통신사 및 기기 설정 점검법.",
    "date": "2026-11-06T12:28:06",
@@ -711,7 +590,7 @@
   {
    "id": 3472,
    "site": "wontheland",
-   "title": "3분 만에 끝내는 정부24 주민등록등본 발급 방법, 시니어가 혼자서 떼는 법",
+   "title": "정부24 주민등록등본 발급 방법, 무료 발급과 PDF 저장까지",
    "url": "https://wontheland.com/gov24-resident-registration-copy-senior/",
    "excerpt": "자녀에게 부탁하지 않고 정부24 앱으로 주민등록등본을 혼자서 발급받는 실전 3단계 절차와 간편인증 오류 대처법을 2026년 최신 기준으로 정리했습니다.",
    "date": "2026-11-06T16:22:43",
@@ -720,20 +599,9 @@
    ]
   },
   {
-   "id": 3488,
-   "site": "wontheland",
-   "title": "부모님 효도폰 갤럭시 a15 화면 캡쳐 방법과 손날 캡처 안 될 때 확인 절차",
-   "url": "https://wontheland.com/galaxy-a15-screenshot-guide-senior/",
-   "excerpt": "부모님 효도폰 갤럭시 A15 화면 캡쳐 방법과 손날 캡처가 안 될 때 점검할 핵심 절차입니다. 측면 버튼 조작 요령과 보조메뉴 설정으로 손쉽게 캡처를 끝내보세요.",
-   "date": "2026-11-08T11:39:28",
-   "categories": [
-    2002
-   ]
-  },
-  {
    "id": 3490,
    "site": "wontheland",
-   "title": "0원으로 해결하는 부모님 스마트폰 갤럭시 A15 꺼진 화면 시계 켜는 방법",
+   "title": "갤럭시 A15 꺼진 화면 시계 켜는 법, Always On Display 설정 순서",
    "url": "https://wontheland.com/galaxy-a15-screen-off-clock-setting/",
    "excerpt": "부모님 스마트폰 갤럭시 A15 꺼진 화면 시계 켜는 방법 Always On Display 설정 절차를 찾으시나요? AOD 미탑재 팩트와 두 번 터치 대체 설정을 정리합니다.",
    "date": "2026-11-08T16:30:28",
@@ -742,36 +610,14 @@
    ]
   },
   {
-   "id": 3501,
-   "site": "wontheland",
-   "title": "갤럭시 A25 화면 캡쳐 손날 터치 안 될 때 버튼으로 쉽게 하는 법",
-   "url": "https://wontheland.com/galaxy-a25-screenshot-button-method/",
-   "excerpt": "손날 터치가 안 먹힐 때 갤럭시 A25 화면 캡쳐를 물리 버튼 조합으로 확실하게 해결하는 3단계 순서입니다.",
-   "date": "2026-11-09T11:43:56",
-   "categories": [
-    2002
-   ]
-  },
-  {
    "id": 3514,
    "site": "wontheland",
-   "title": "갤럭시 s24 잠금화면 글자크기, 돋보기 없이 키울 수 있을까요?",
+   "title": "갤럭시 S24 잠금화면 시계 크기 키우는 법, 작아질 때 되돌리는 설정",
    "url": "https://wontheland.com/galaxy-s24-lockscreen-clock-size-setting/",
    "excerpt": "갤럭시 s24 잠금 화면 설정 시계와 위젯 글자 크기 키우는 방법 3단계를 One UI 6.1 기준으로 정리했습니다. 자녀에게 묻지 않고 혼자서 3분 만에 글씨를 키우는 순서와 주의사항을 확인하세요.",
    "date": "2026-11-11T10:30:19",
    "categories": [
     2002
-   ]
-  },
-  {
-   "id": 3516,
-   "site": "wontheland",
-   "title": "원격제어 앱 사기 대처, 당장 전원부터 꺼야 할까요?",
-   "url": "https://wontheland.com/remote-control-app-scam-response/",
-   "excerpt": "부모님이 의심스러운 전화를 받고 앱을 깔았을 때 골든타임을 지키는 법입니다. 부모님 폰 원격제어 앱 사기 예방과 수상한 설치 요구 대처 확인 절차를 2026년 기준으로 정리했습니다. 통장 동결과 비행기 탑승 모드 전환 순서를 확인하세요.",
-   "date": "2026-11-11T15:22:26",
-   "categories": [
-    2006
    ]
   },
   {
@@ -788,7 +634,7 @@
   {
    "id": 3528,
    "site": "wontheland",
-   "title": "갤럭시 통화 소리 작음, 측면 버튼 백날 눌러도 안 커질 때 해결법",
+   "title": "갤럭시 통화 소리 작음, 측면 버튼으로 안 커질 때 확인할 설정 3가지",
    "url": "https://wontheland.com/galaxy-s24-call-volume-boost-guide/",
    "excerpt": "갤럭시 S24 통화 음량이 작아 답답하신가요? 기기 고장이 아닙니다. 서비스센터 방문 전 3분 만에 끝내는 갤럭시 s24 소리 작음 문제 해결하는 통화 음량 증폭 설정 확인 방법을 단계별로 정리했습니다.",
    "date": "2026-11-12T14:54:30",
@@ -799,7 +645,7 @@
   {
    "id": 3539,
    "site": "wontheland",
-   "title": "갤럭시 s24 화면 캡쳐, 길게 누르면 전원 꺼지는 이유와 해결책",
+   "title": "갤럭시 S24 화면 캡쳐 방법, 버튼·손날·스크롤 캡처 3가지",
    "url": "https://wontheland.com/galaxy-s24-screen-capture-button-guide/",
    "excerpt": "갤럭시 s24 화면 캡쳐 방법 손날 캡처 안 될 때 버튼으로 해결하는 3단계 절차를 정리했습니다. 1초 미만으로 버튼을 딸깍 누르는 핵심 타이밍과 상황별 캡처 분기표를 확인하세요.",
    "date": "2026-11-13T11:09:40",
