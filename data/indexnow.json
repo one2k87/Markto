@@ -146,11 +146,12 @@
   "https://pickdam.com/direct-water-purifier-cost-comparison/",
   "https://wontheland.com/iphone-13-passcode-reset-without-data-loss/",
   "https://pickdam.com/weekly-trend-20261117/",
-  "https://pickdam.com/rice-dispenser-capacity-comparison/"
+  "https://pickdam.com/rice-dispenser-capacity-comparison/",
+  "https://pickdam.com/lp-retro-magnet-kitchen-interior/"
  ],
- "last_at": "2026-11-18T17:38:03+09:00",
+ "last_at": "2026-11-20T17:40:08+09:00",
  "last_run": {
-  "at": "2026-11-18T17:38:03+09:00",
+  "at": "2026-11-20T17:40:08+09:00",
   "results": [
    {
     "site": "pickdam",
@@ -171,43 +172,6 @@
   ]
  },
  "runs": [
-  {
-   "at": "2026-11-02T16:45:37+09:00",
-   "results": [
-    {
-     "site": "pickdam",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "pickdam",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 3,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 3,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-11-03T16:59:31+09:00",
    "results": [
@@ -526,6 +490,27 @@
   },
   {
    "at": "2026-11-18T17:38:03+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-20T17:40:08+09:00",
    "results": [
     {
      "site": "pickdam",
