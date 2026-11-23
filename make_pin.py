@@ -224,7 +224,17 @@ def run(n=None, dry=False):
                 sent = common.telegram_photo(path, caption(post, copy, site, cfg))
             elif not dry and cfg["publish"]["mode"] == "pinterest":
                 import publish
-                sent = publish.publish_pin(path, copy, post, site, cfg)
+                try:
+                    sent = publish.publish_pin(path, copy, post, site, cfg)
+                except RuntimeError as e:        # noqa: BLE001 — 보드 없음·조회 실패
+                    # 2026-11-23 실측 대비: 핀터레스트 계정에 그 사이트의 보드가 없으면
+                    # find_board_id 가 RuntimeError 를 던진다. 그걸 그대로 두면 **그날 핀이
+                    # 통째로 멈춘다** — 한 사이트의 보드 문제로 다른 사이트까지 막을 이유가 없다.
+                    # 텔레그램으로 알리고 이 글만 건너뛴다(이미지·장부는 남기지 않는다).
+                    print(f"[pinterest] {post['site']} 게시 불가 — {e}")
+                    common.telegram_msg(
+                        f"[마크토] 핀터레스트 보드 문제로 {site['name']} 핀을 건너뜁니다\n{e}")
+                    continue
 
             rec = {
                 "site": post["site"], "post_id": post["id"], "post_title": post["title"],

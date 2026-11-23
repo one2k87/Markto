@@ -241,8 +241,34 @@ class TestAccessTier(Base):
         with self.assertRaises(SystemExit):
             publish.require_standard_access(cfg)
 
-    def test_기본_설정은_아직_trial이다(self):
-        self.assertEqual(common.cfg()["publish"]["access_tier"], "trial")
+    def test_설정이_standard로_전환돼_있다(self):
+        """2026-11-23 핀터레스트가 Standard 액세스를 승인했다(콘솔 실측:
+        앱 1610207 「Standard 액세스 활성화됨」). 이전 테스트는 「아직 trial이다」를
+        고정하고 있었는데, 승인이 났으므로 **반대 방향으로 고정한다** —
+        누가 trial 로 되돌리면 게시가 조용히 멈추므로 그걸 테스트가 잡는다."""
+        self.assertEqual(common.cfg()["publish"]["access_tier"], "standard")
+
+    def test_보드를_못_찾아도_그_사이트만_건너뛴다(self):
+        """2026-11-23: 핀터레스트 계정에 「원더랜드 생활정보」 보드가 없었다(실측).
+        find_board_id 가 RuntimeError 를 던지는데, 그대로 두면 **그날 핀이 통째로 멈춘다**.
+        한 사이트의 보드 문제로 다른 사이트까지 막지 않는다."""
+        import publish
+        cfg = common.cfg()
+        cfg["publish"]["mode"] = "pinterest"
+        orig_cfg, orig_pub = common.cfg, publish.publish_pin
+        common.cfg = lambda *a, **k: cfg
+        publish.publish_pin = lambda *a, **k: (_ for _ in ()).throw(
+            RuntimeError("보드 '원더랜드 생활정보' 를 찾지 못했습니다"))
+        msgs = []
+        orig_tg = common.telegram_msg
+        common.telegram_msg = lambda m: msgs.append(m)
+        common.save_json("queue.json", {"items": [self.post(1), self.post(2)]})
+        try:
+            made = make_pin.run(2, dry=False)
+        finally:
+            common.cfg, publish.publish_pin, common.telegram_msg = orig_cfg, orig_pub, orig_tg
+        self.assertEqual(made, [], "게시가 막히면 장부에 남기지 않는다")
+        self.assertTrue(msgs and "보드" in msgs[0], "텔레그램으로 알려야 한다")
 
 
 class TestTelegramEnv(Base):
