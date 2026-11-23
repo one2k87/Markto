@@ -94,19 +94,42 @@ def _headers(json_body=False):
 
 
 def find_board_id(site, cfg):
-    """사이트별 보드 id. 환경변수 우선, 없으면 이름으로 조회."""
+    """사이트별 보드 id. 환경변수 우선 → 이름으로 조회 → **없으면 만든다**.
+
+    2026-11-23 실측: Standard 승인 직후 계정에 보드가 「픽담 살까 말까」와
+    「픽담 살까 말까 (API 시연)」 둘뿐이었고, markto.json 이 원더랜드에 쓰는
+    「원더랜드 생활정보」가 **없었다**. 최근 14일 핀 28건 중 21건이 원더랜드라
+    그대로 켰으면 첫날 아침에 전부 실패했다.
+
+    사람에게 "보드를 먼저 만들어 주세요"라고 떠넘기는 대신 여기서 만든다 —
+    Standard 권한에 `boards:write` 가 포함돼 있고(콘솔 실측), 보드는 사이트당 하나뿐이라
+    폭주할 여지가 없다. 이름이 정확히 같은 보드가 있으면 절대 새로 만들지 않는다.
+    """
     env = os.getenv(f"PINTEREST_BOARD_ID_{site['key'].upper()}", "").strip()
     if env:
         return env
     base = cfg["publish"]["pinterest_api"]
+    want = (site.get("board") or "").strip()
+    if not want:
+        raise RuntimeError(f"{site['key']} 에 board 이름이 없습니다 — markto.json 을 확인하세요")
+
     r = requests.get(f"{base}/boards", headers=_headers(), params={"page_size": 100}, timeout=30)
     if r.status_code != 200:
         raise RuntimeError(f"보드 조회 실패 {r.status_code}: {r.text[:200]}")
-    want = (site.get("board") or "").strip()
     for b in r.json().get("items", []):
         if b.get("name", "").strip() == want:
             return b["id"]
-    raise RuntimeError(f"보드 '{want}' 를 찾지 못했습니다 — 핀터레스트에서 먼저 만들어 주세요")
+
+    # 없으면 만든다. 설명은 사이트 태그라인을 쓴다(핀터레스트 검색에도 걸리는 자리).
+    body = {"name": want, "description": (site.get("tagline") or "")[:500], "privacy": "PUBLIC"}
+    c = requests.post(f"{base}/boards", headers=_headers(json_body=True), json=body, timeout=30)
+    if c.status_code in (200, 201):
+        bid = c.json().get("id")
+        print(f"[pinterest] 보드 '{want}' 를 새로 만들었습니다 (id={bid})")
+        common.telegram_msg(f"[마크토] 핀터레스트 보드 '{want}' 를 새로 만들었습니다")
+        return bid
+    raise RuntimeError(
+        f"보드 '{want}' 가 없어 만들려 했으나 실패했습니다 {c.status_code}: {c.text[:200]}")
 
 
 def require_standard_access(cfg):

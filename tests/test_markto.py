@@ -3,6 +3,7 @@
 
 실행: python -m unittest discover -s tests -v
 """
+import json
 import os
 import shutil
 import sys
@@ -44,12 +45,27 @@ class Base(unittest.TestCase):
         self.tmp = tempfile.mkdtemp()
         os.makedirs(os.path.join(self.tmp, "data"))
         shutil.copy(os.path.join(self.real_root, "markto.json"), self.tmp)
+        # 🔴 2026-11-23: publish.mode 를 pinterest 로 켜자 **테스트가 실제 핀터레스트 API를
+        # 때리기 시작했다**(TestQuota·TestGallery·TestSiteShare 10건 ERROR). 러너에는 토큰이
+        # 있으므로 그대로 뒀으면 **테스트가 진짜 핀을 만들 수도** 있었다.
+        # 테스트용 사본은 항상 telegram 으로 내린다 — 게시 경로를 보는 테스트는 그 안에서
+        # 직접 mode 를 바꿔 쓴다(TestAccessTier.test_보드를_못_찾아도_…).
+        _cfg_path = os.path.join(self.tmp, "markto.json")
+        with open(_cfg_path, encoding="utf-8") as _f:
+            _c = json.load(_f)
+        _c["publish"]["mode"] = "telegram"
+        with open(_cfg_path, "w", encoding="utf-8") as _f:
+            json.dump(_c, _f, ensure_ascii=False, indent=2)
         common.ROOT = self.tmp
         make_pin.OUT = os.path.join(self.tmp, "out")
         # 테스트가 실제 LLM·텔레그램을 부르지 않도록 시크릿을 잠시 걷어낸다
         # (러너에는 시크릿이 있으므로 이 격리가 없으면 CI에서 진짜 API를 때린다)
         self.env = {k: os.environ.pop(k, None)
-                    for k in ("LLM_API_KEY", "TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID")}
+                    for k in ("LLM_API_KEY", "TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID",
+                              # 핀터레스트 자격증명도 걷어낸다 — 위 주석 참고.
+                              "PINTEREST_APP_ID", "PINTEREST_APP_SECRET",
+                              "PINTEREST_REFRESH_TOKEN", "PINTEREST_BOARD_ID_PICKDAM",
+                              "PINTEREST_BOARD_ID_WONTHELAND")}
         # 생사 확인은 기본으로 "살아있음"을 돌려준다. 실제로 네트워크를 때리면
         # 테스트가 느려지고(막힌 환경에서 타임아웃마다 15초) 외부 상태에 의존하게 된다.
         # 가드 자체는 TestLiveGuard가 requests를 직접 대역으로 바꿔 검증한다.
@@ -1396,3 +1412,65 @@ class TestProductLinkOnlyPosts(Base):
         st = common.load_json(self.pp.STATE, {})
         keys = [x["key"] for x in (st.get("need_post") or {}).get("items", [])]
         self.assertEqual(sorted(keys), ["가습기", "김치통"])
+
+
+class TestBoardAutoCreate(Base):
+    """보드가 없으면 만든다 (2026-11-23).
+
+    Standard 승인 직후 계정에 「원더랜드 생활정보」 보드가 없었다(실측). 최근 14일 핀 28건 중
+    21건이 원더랜드라, 사람에게 떠넘겼으면 첫날 아침이 통째로 날아갔다.
+    """
+
+    def setUp(self):
+        super().setUp()
+        import publish
+        # 토큰을 받으러 가지 않도록 헤더만 대역으로. 이 테스트가 보는 것은 보드 선택 로직이다.
+        self._pub = publish
+        self._orig_headers = publish._headers
+        publish._headers = lambda json_body=False: {"Authorization": "Bearer test"}
+
+    def tearDown(self):
+        self._pub._headers = self._orig_headers
+        super().tearDown()
+
+    def _site(self):
+        return {"key": "wontheland", "board": "원더랜드 생활정보", "tagline": "오늘 필요한 생활정보"}
+
+    def test_이름이_같은_보드가_있으면_만들지_않는다(self):
+        import publish, requests as _rq
+        og, op = _rq.get, _rq.post
+        _rq.get = lambda *a, **k: _Resp(200, {"items": [{"id": "B1", "name": "원더랜드 생활정보"}]})
+        _rq.post = lambda *a, **k: self.fail("이미 있는데 보드를 만들었다")
+        try:
+            self.assertEqual(publish.find_board_id(self._site(), common.cfg()), "B1")
+        finally:
+            _rq.get, _rq.post = og, op
+
+    def test_없으면_만들고_그_id를_쓴다(self):
+        import publish, requests as _rq
+        sent = {}
+        og, op = _rq.get, _rq.post
+        _rq.get = lambda *a, **k: _Resp(200, {"items": [{"id": "B9", "name": "픽담 살까 말까"}]})
+
+        def fake_post(url, **kw):
+            sent.update(kw.get("json") or {})
+            return _Resp(201, {"id": "NEW1"})
+        _rq.post = fake_post
+        try:
+            self.assertEqual(publish.find_board_id(self._site(), common.cfg()), "NEW1")
+        finally:
+            _rq.get, _rq.post = og, op
+        self.assertEqual(sent.get("name"), "원더랜드 생활정보")
+        self.assertEqual(sent.get("privacy"), "PUBLIC")
+
+    def test_만들기도_실패하면_RuntimeError로_알린다(self):
+        # make_pin 이 이걸 받아 그 사이트만 건너뛴다(TestAccessTier 참고).
+        import publish, requests as _rq
+        og, op = _rq.get, _rq.post
+        _rq.get = lambda *a, **k: _Resp(200, {"items": []})
+        _rq.post = lambda *a, **k: _Resp(403, {"message": "forbidden"})
+        try:
+            with self.assertRaises(RuntimeError):
+                publish.find_board_id(self._site(), common.cfg())
+        finally:
+            _rq.get, _rq.post = og, op
