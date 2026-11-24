@@ -2320,6 +2320,46 @@
    "mode": "pinterest",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 874,
+   "post_title": "자동 섞이는 컵 톱3 비교 — 가격·배송·차이점",
+   "url": "https://pickdam.com/trend-auto-mix-cup-top3/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "자동 섞이는 컵 톱3 비교 (11/22 가격)",
+   "pin_desc": "자동 섞이는 컵 상위 세 제품을 가격·배송·쓰임으로 갈라 비교했습니다. 가격은 실제 화면에서 읽은 값입니다.",
+   "hashtags": [
+    "자동섞이는컵",
+    "텀블러추천",
+    "주방꿀템",
+    "내돈내산"
+   ],
+   "image": "out/pin_pickdam_874.png",
+   "made_at": "2026-11-24T20:05:52+09:00",
+   "sent": true,
+   "mode": "pinterest",
+   "pin_id": "1127096244309292516",
+   "posted_at": "2026-11-24T20:05:52+09:00"
+  },
+  {
+   "site": "pickdam",
+   "post_id": 875,
+   "post_title": "도마 가위 톱3 비교 — 가격·배송·차이점",
+   "url": "https://pickdam.com/trend-cutting-board-scissors-top3/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "도마 가위 톱3 비교 (11/22 가격)",
+   "pin_desc": "도마 가위 상위 세 제품을 가격·배송·쓰임으로 갈라 비교했습니다. 가격은 실제 화면에서 읽은 값입니다.",
+   "hashtags": [
+    "도마가위",
+    "주방가위추천",
+    "살림템",
+    "주방용품비교"
+   ],
+   "image": "out/pin_pickdam_875.png",
+   "made_at": "2026-11-24T20:05:55+09:00",
+   "sent": true,
+   "mode": "pinterest",
+   "pin_id": "1127096244309292519",
+   "posted_at": "2026-11-24T20:05:55+09:00"
   }
  ]
 }

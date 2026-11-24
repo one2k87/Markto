@@ -160,52 +160,32 @@
   "https://pickdam.com/trend-folding-measuring-spoon-top3/",
   "https://pickdam.com/trend-cutting-board-scissors-top3/",
   "https://pickdam.com/trend-auto-mix-cup-top3/",
-  "https://pickdam.com/trend-auto-dispenser-top3/"
+  "https://pickdam.com/trend-auto-dispenser-top3/",
+  "https://wontheland.com/galaxy-quantum4-update-freeze-fix/"
  ],
- "last_at": "2026-11-24T10:20:29+09:00",
+ "last_at": "2026-11-24T20:06:02+09:00",
  "last_run": {
-  "at": "2026-11-24T10:20:29+09:00",
+  "at": "2026-11-24T20:06:02+09:00",
   "results": [
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
-    "n": 13,
+    "n": 1,
     "ok": true,
     "body": ""
    },
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
-    "n": 13,
+    "n": 1,
     "ok": true,
     "body": ""
    }
   ]
  },
  "runs": [
-  {
-   "at": "2026-11-04T16:34:21+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-11-05T16:58:15+09:00",
    "results": [
@@ -538,6 +518,27 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 13,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-24T20:06:02+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
      "ok": true,
      "body": ""
     }
