@@ -220,21 +220,34 @@ def run(n=None, dry=False):
                 publish_to_gallery(path)      # 대시보드에서 보고 폰으로 저장하기 위한 사본
 
             sent = False
+            mode_used = cfg["publish"]["mode"]
             if not dry and cfg["publish"]["mode"] == "telegram":
                 sent = common.telegram_photo(path, caption(post, copy, site, cfg))
             elif not dry and cfg["publish"]["mode"] == "pinterest":
                 import publish
                 try:
                     sent = publish.publish_pin(path, copy, post, site, cfg)
-                except RuntimeError as e:        # noqa: BLE001 — 보드 없음·조회 실패
-                    # 2026-11-23 실측 대비: 핀터레스트 계정에 그 사이트의 보드가 없으면
-                    # find_board_id 가 RuntimeError 를 던진다. 그걸 그대로 두면 **그날 핀이
-                    # 통째로 멈춘다** — 한 사이트의 보드 문제로 다른 사이트까지 막을 이유가 없다.
-                    # 텔레그램으로 알리고 이 글만 건너뛴다(이미지·장부는 남기지 않는다).
-                    print(f"[pinterest] {post['site']} 게시 불가 — {e}")
-                    common.telegram_msg(
-                        f"[마크토] 핀터레스트 보드 문제로 {site['name']} 핀을 건너뜁니다\n{e}")
-                    continue
+                except BaseException as e:       # noqa: BLE001 — 아래 주석 참고
+                    # 2026-11-23 run #79 실측(첫 자동 게시 시도): 시크릿이 없으면
+                    # publish.access_token() 이 **SystemExit** 을 던진다. RuntimeError 만
+                    # 잡던 방어선을 그대로 뚫고 나가 프로세스가 종료됐고, 뒤 단계
+                    # (색인 통보·스레드 게시·상품 포스트·기록 커밋)가 전부 건너뛰어졌다.
+                    # 핀터레스트 한 곳의 문제로 유통 전체가 하루 멈춘 것이다.
+                    # 그래서 여기서는 **어떤 실패든** 붙잡아 텔레그램 폴백(=11/22 이전의
+                    # 정상 동작)으로 내려가고, 절대 밖으로 올려보내지 않는다.
+                    # SystemExit·KeyboardInterrupt 까지 잡으려고 BaseException 을 쓴다.
+                    if isinstance(e, KeyboardInterrupt):
+                        raise
+                    print(f"[pinterest] {post['site']} 자동 게시 불가 — {e}")
+                    mode_used = "telegram_fallback"
+                    try:
+                        common.telegram_msg(
+                            f"[마크토] 핀터레스트 자동 게시가 안 돼 텔레그램으로 보냅니다"
+                            f" ({site['name']})\n{e}")
+                        sent = common.telegram_photo(path, caption(post, copy, site, cfg))
+                    except Exception as e2:      # noqa: BLE001 — 폴백까지 실패해도 그날을 멈추지 않는다
+                        print(f"[fallback] 텔레그램 전송도 실패 — {e2}")
+                        sent = False
 
             rec = {
                 "site": post["site"], "post_id": post["id"], "post_title": post["title"],
@@ -242,7 +255,7 @@ def run(n=None, dry=False):
                 "pin_title": copy["title"], "pin_desc": copy["description"],
                 "hashtags": copy.get("hashtags", []), "image": os.path.relpath(path, common.ROOT),
                 "made_at": common.now_kst().isoformat(timespec="seconds"),
-                "sent": bool(sent), "mode": cfg["publish"]["mode"],
+                "sent": bool(sent), "mode": mode_used,
                 "pin_id": None, "posted_at": None,
             }
             if copy.get("_fallback"):

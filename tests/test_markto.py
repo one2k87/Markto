@@ -264,27 +264,53 @@ class TestAccessTier(Base):
         누가 trial 로 되돌리면 게시가 조용히 멈추므로 그걸 테스트가 잡는다."""
         self.assertEqual(common.cfg()["publish"]["access_tier"], "standard")
 
-    def test_보드를_못_찾아도_그_사이트만_건너뛴다(self):
-        """2026-11-23: 핀터레스트 계정에 「원더랜드 생활정보」 보드가 없었다(실측).
-        find_board_id 가 RuntimeError 를 던지는데, 그대로 두면 **그날 핀이 통째로 멈춘다**.
-        한 사이트의 보드 문제로 다른 사이트까지 막지 않는다."""
+    def _게시_실패_폴백(self, exc):
+        """핀터레스트 게시가 exc 로 실패할 때 make_pin.run 이 무엇을 하는지 돌려준다."""
         import publish
         cfg = common.cfg()
         cfg["publish"]["mode"] = "pinterest"
         orig_cfg, orig_pub = common.cfg, publish.publish_pin
         common.cfg = lambda *a, **k: cfg
-        publish.publish_pin = lambda *a, **k: (_ for _ in ()).throw(
-            RuntimeError("보드 '원더랜드 생활정보' 를 찾지 못했습니다"))
-        msgs = []
-        orig_tg = common.telegram_msg
+
+        def boom(*a, **k):
+            raise exc
+        publish.publish_pin = boom
+        msgs, photos = [], []
+        orig_msg, orig_photo = common.telegram_msg, common.telegram_photo
         common.telegram_msg = lambda m: msgs.append(m)
+        common.telegram_photo = lambda path, cap: (photos.append(path), True)[1]
         common.save_json("queue.json", {"items": [self.post(1), self.post(2)]})
         try:
             made = make_pin.run(2, dry=False)
         finally:
-            common.cfg, publish.publish_pin, common.telegram_msg = orig_cfg, orig_pub, orig_tg
-        self.assertEqual(made, [], "게시가 막히면 장부에 남기지 않는다")
+            common.cfg, publish.publish_pin = orig_cfg, orig_pub
+            common.telegram_msg, common.telegram_photo = orig_msg, orig_photo
+        return made, msgs, photos
+
+    def test_보드를_못_찾으면_텔레그램으로_내려간다(self):
+        """2026-11-23: 핀터레스트 계정에 「원더랜드 생활정보」 보드가 없었다(실측).
+        find_board_id 가 RuntimeError 를 던지는데, 그대로 두면 그날 핀이 통째로 멈춘다.
+        게시 실패는 **텔레그램 폴백**(11/22 이전의 정상 동작)으로 흡수한다."""
+        made, msgs, photos = self._게시_실패_폴백(
+            RuntimeError("보드 '원더랜드 생활정보' 를 찾지 못했습니다"))
+        self.assertEqual(len(made), 2, "폴백으로라도 핀은 나가야 한다")
+        self.assertTrue(all(r["mode"] == "telegram_fallback" for r in made),
+                        "장부에 폴백이었음을 남긴다")
+        self.assertEqual(len(photos), 2, "텔레그램으로 이미지를 보내야 한다")
         self.assertTrue(msgs and "보드" in msgs[0], "텔레그램으로 알려야 한다")
+
+    def test_시크릿이_없어도_프로세스가_죽지_않는다(self):
+        """2026-11-23 run #79 실측 — 첫 자동 게시 시도가 이렇게 깨졌다.
+        publish.access_token() 은 시크릿이 없으면 **SystemExit** 을 던진다.
+        RuntimeError 만 잡던 방어선을 뚫고 나가 프로세스가 종료됐고, 뒤 단계
+        (색인 통보·스레드 게시·상품 포스트·기록 커밋)가 전부 건너뛰어졌다.
+        → 핀터레스트 한 곳의 문제가 유통 전체를 멈추는 일은 다시 없어야 한다."""
+        made, msgs, photos = self._게시_실패_폴백(
+            SystemExit("PINTEREST_REFRESH_TOKEN 시크릿이 없습니다."))
+        self.assertEqual(len(made), 2, "SystemExit 이 밖으로 새어 나가면 안 된다")
+        self.assertTrue(all(r["mode"] == "telegram_fallback" for r in made))
+        self.assertEqual(len(photos), 2)
+        self.assertTrue(any("핀터레스트" in m for m in msgs), "텔레그램으로 알려야 한다")
 
 
 class TestTelegramEnv(Base):
