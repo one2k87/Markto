@@ -147,17 +147,30 @@
   "https://wontheland.com/iphone-13-passcode-reset-without-data-loss/",
   "https://pickdam.com/weekly-trend-20261117/",
   "https://pickdam.com/rice-dispenser-capacity-comparison/",
-  "https://pickdam.com/lp-retro-magnet-kitchen-interior/"
+  "https://pickdam.com/lp-retro-magnet-kitchen-interior/",
+  "https://pickdam.com/washer-rental-vs-installment-comparison/",
+  "https://pickdam.com/weekly-trend-20261123/",
+  "https://pickdam.com/trend-carbon-mat/",
+  "https://pickdam.com/trend-folding-measuring-spoon/",
+  "https://pickdam.com/trend-cutting-board-scissors/",
+  "https://pickdam.com/trend-auto-mix-cup/",
+  "https://pickdam.com/trend-auto-dispenser/",
+  "https://pickdam.com/mini-dishwasher-3pin-comparison/",
+  "https://pickdam.com/trend-carbon-mat-top3/",
+  "https://pickdam.com/trend-folding-measuring-spoon-top3/",
+  "https://pickdam.com/trend-cutting-board-scissors-top3/",
+  "https://pickdam.com/trend-auto-mix-cup-top3/",
+  "https://pickdam.com/trend-auto-dispenser-top3/"
  ],
- "last_at": "2026-11-20T17:40:08+09:00",
+ "last_at": "2026-11-24T10:20:29+09:00",
  "last_run": {
-  "at": "2026-11-20T17:40:08+09:00",
+  "at": "2026-11-24T10:20:29+09:00",
   "results": [
    {
     "site": "pickdam",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
-    "n": 1,
+    "n": 13,
     "ok": true,
     "body": ""
    },
@@ -165,34 +178,13 @@
     "site": "pickdam",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
-    "n": 1,
+    "n": 13,
     "ok": true,
     "body": ""
    }
   ]
  },
  "runs": [
-  {
-   "at": "2026-11-03T16:59:31+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-11-04T16:34:21+09:00",
    "results": [
@@ -525,6 +517,27 @@
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-24T10:20:29+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 13,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 13,
      "ok": true,
      "body": ""
     }

@@ -179,14 +179,40 @@
    "matched_post": 724,
    "at": "2026-11-22T17:11:10+09:00",
    "permalink": "https://www.threads.com/@pickdam_home/post/DgCWDWNkS6T"
+  },
+  {
+   "key": "미니온풍기",
+   "name": "미니 온풍기",
+   "thread_id": "17891153559485581",
+   "link": "https://pickdam.com/bathroom-mini-heater-tips/",
+   "matched_post": 663,
+   "at": "2026-11-24T10:22:41+09:00",
+   "permalink": "https://www.threads.com/@pickdam_home/post/DgGw4-nEXE5"
+  },
+  {
+   "key": "미니LP자석",
+   "name": "미니 LP 자석 (레트로 냉장고 자석)",
+   "thread_id": "17953890498057922",
+   "link": "https://pickdam.com/lp-retro-magnet-kitchen-interior/",
+   "matched_post": 832,
+   "at": "2026-11-24T10:23:24+09:00",
+   "permalink": "https://www.threads.com/@pickdam_home/post/DgGw-msEWOz"
   }
  ],
  "need_post": {
-  "at": "2026-11-22T17:11:11+09:00",
+  "at": "2026-11-24T10:23:25+09:00",
   "items": [
    {
     "key": "음식물처리기필터",
     "name": "음식물처리기 탈취 필터"
+   },
+   {
+    "key": "가습기",
+    "name": "가습기"
+   },
+   {
+    "key": "김치통",
+    "name": "김치통"
    }
   ]
  }

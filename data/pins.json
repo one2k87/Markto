@@ -2300,6 +2300,26 @@
    "mode": "telegram",
    "pin_id": null,
    "posted_at": null
+  },
+  {
+   "site": "pickdam",
+   "post_id": 873,
+   "post_title": "자동 디스펜서 톱3 비교 — 가격·배송·차이점",
+   "url": "https://pickdam.com/trend-auto-dispenser-top3/?utm_source=pinterest&utm_medium=social&utm_campaign=markto",
+   "pin_title": "자동 디스펜서 톱3 비교 (11/22 가격)",
+   "pin_desc": "자동 디스펜서 상위 세 제품을 가격·배송·쓰임으로 갈라 비교했습니다. 가격은 실제 화면에서 읽은 값입니다.",
+   "hashtags": [
+    "자동디스펜서",
+    "주방템추천",
+    "욕실용품",
+    "살림템"
+   ],
+   "image": "out/pin_pickdam_873.png",
+   "made_at": "2026-11-24T10:20:21+09:00",
+   "sent": true,
+   "mode": "pinterest",
+   "pin_id": null,
+   "posted_at": null
   }
  ]
 }
