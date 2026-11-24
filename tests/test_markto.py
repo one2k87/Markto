@@ -287,6 +287,26 @@ class TestAccessTier(Base):
             common.telegram_msg, common.telegram_photo = orig_msg, orig_photo
         return made, msgs, photos
 
+    def test_게시_성공하면_핀id를_장부에_남긴다(self):
+        """publish_pin 은 성공 시 핀 id 문자열을 돌려준다(11/24 run #80 실측:
+        pin_id=1127096244309269138). 예전 코드는 bool 로만 쓰고 버려서 나중에
+        노출을 되짚을 손잡이가 없었다 — 30일 재게시 효과 비교에 필요하다."""
+        import publish
+        cfg = common.cfg()
+        cfg["publish"]["mode"] = "pinterest"
+        orig_cfg, orig_pub = common.cfg, publish.publish_pin
+        common.cfg = lambda *a, **k: cfg
+        publish.publish_pin = lambda *a, **k: "1127096244309269138"
+        common.save_json("queue.json", {"items": [self.post(1)]})
+        try:
+            made = make_pin.run(1, dry=False)
+        finally:
+            common.cfg, publish.publish_pin = orig_cfg, orig_pub
+        self.assertEqual(len(made), 1)
+        self.assertEqual(made[0]["pin_id"], "1127096244309269138")
+        self.assertEqual(made[0]["mode"], "pinterest")
+        self.assertTrue(made[0]["posted_at"], "게시 시각도 남긴다")
+
     def test_보드를_못_찾으면_텔레그램으로_내려간다(self):
         """2026-11-23: 핀터레스트 계정에 「원더랜드 생활정보」 보드가 없었다(실측).
         find_board_id 가 RuntimeError 를 던지는데, 그대로 두면 그날 핀이 통째로 멈춘다.

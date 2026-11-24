@@ -256,7 +256,12 @@ def run(n=None, dry=False):
                 "hashtags": copy.get("hashtags", []), "image": os.path.relpath(path, common.ROOT),
                 "made_at": common.now_kst().isoformat(timespec="seconds"),
                 "sent": bool(sent), "mode": mode_used,
-                "pin_id": None, "posted_at": None,
+                # publish_pin 은 성공하면 **핀 id 문자열**을 돌려준다. 예전엔 그걸 bool 로만
+                # 쓰고 버렸는데, 그러면 나중에 「이 핀이 얼마나 노출됐나」를 되짚을 손잡이가
+                # 없다 — 30일 재게시 효과를 2주 뒤 비교하려면 id 가 필요하다(11/24 run #80).
+                "pin_id": sent if isinstance(sent, str) and sent else None,
+                "posted_at": (common.now_kst().isoformat(timespec="seconds")
+                              if isinstance(sent, str) and sent else None),
             }
             if copy.get("_fallback"):
                 rec["fallback_copy"] = True
