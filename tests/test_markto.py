@@ -287,6 +287,27 @@ class TestAccessTier(Base):
             common.telegram_msg, common.telegram_photo = orig_msg, orig_photo
         return made, msgs, photos
 
+    def test_큐가_한쪽에_쏠려도_두_사이트가_하루씩_나간다(self):
+        """두 번 똑같이 당한 실패다. 11/3~11/9 에는 원더랜드가 큐를 다 차지해 픽담 핀이
+        멈췄고(→ min_per_site pickdam:1), 11/24 에는 거울상으로 픽담 10건이 큐 앞단을
+        채워 저녁 실행 2장이 모두 픽담이 되고 원더랜드가 3일째 0건이었다.
+        per_run=2 는 **사이트당 1장씩**으로 고정돼야 한다."""
+        cfg = common.cfg()
+        cfg["publish"]["mode"] = "telegram"
+        orig_cfg = common.cfg
+        common.cfg = lambda *a, **k: cfg
+        # 큐 앞단을 픽담이 통째로 차지한 11/24 상황 그대로
+        items = [self.post(i, site="pickdam") for i in range(1, 9)]
+        items += [self.post(100 + i, site="wontheland") for i in range(1, 4)]
+        common.save_json("queue.json", {"items": items})
+        try:
+            made = make_pin.run(2, dry=False)
+        finally:
+            common.cfg = orig_cfg
+        sites = sorted(r["site"] for r in made)
+        self.assertEqual(sites, ["pickdam", "wontheland"],
+                         f"사이트당 1장씩이어야 한다 — 실제 {sites}")
+
     def test_게시_성공하면_핀id를_장부에_남긴다(self):
         """publish_pin 은 성공 시 핀 id 문자열을 돌려준다(11/24 run #80 실측:
         pin_id=1127096244309269138). 예전 코드는 bool 로만 쓰고 버려서 나중에
