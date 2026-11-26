@@ -162,14 +162,15 @@
   "https://pickdam.com/trend-auto-mix-cup-top3/",
   "https://pickdam.com/trend-auto-dispenser-top3/",
   "https://wontheland.com/galaxy-quantum4-update-freeze-fix/",
-  "https://pickdam.com/manual-bidet-vs-installed-bidet-cost/"
+  "https://pickdam.com/manual-bidet-vs-installed-bidet-cost/",
+  "https://wontheland.com/iphone13-sound-control-fix/"
  ],
- "last_at": "2026-11-25T18:56:32+09:00",
+ "last_at": "2026-11-26T18:39:49+09:00",
  "last_run": {
-  "at": "2026-11-25T18:56:32+09:00",
+  "at": "2026-11-26T18:39:49+09:00",
   "results": [
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
     "n": 1,
@@ -177,7 +178,7 @@
     "body": ""
    },
    {
-    "site": "pickdam",
+    "site": "wontheland",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
     "n": 1,
@@ -187,27 +188,6 @@
   ]
  },
  "runs": [
-  {
-   "at": "2026-11-06T16:59:46+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 2,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-11-08T16:29:14+09:00",
    "results": [
@@ -537,6 +517,27 @@
     },
     {
      "site": "pickdam",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-26T18:39:49+09:00",
+   "results": [
+    {
+     "site": "wontheland",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "wontheland",
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 1,
