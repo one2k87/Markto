@@ -251,10 +251,19 @@
    "matched_post": 924,
    "at": "2026-11-26T18:42:41+09:00",
    "permalink": "https://www.threads.com/@pickdam_home/post/DgMztX_EapA"
+  },
+  {
+   "key": "싱크대경첩",
+   "name": "싱크대 경첩 35mm 유압 댐퍼 (8개)",
+   "thread_id": "17937498930148021",
+   "link": "https://pickdam.com/sink-door-hinge-replace-cost/",
+   "matched_post": 455,
+   "at": "2026-11-27T18:46:54+09:00",
+   "permalink": "https://www.threads.com/@pickdam_home/post/DgPY_FuoAvX"
   }
  ],
  "need_post": {
-  "at": "2026-11-26T18:42:41+09:00",
+  "at": "2026-11-27T18:46:54+09:00",
   "items": [
    {
     "key": "음식물처리기필터",
@@ -267,6 +276,30 @@
    {
     "key": "김치통",
     "name": "김치통"
+   },
+   {
+    "key": "전동오일스프레이",
+    "name": "전동 오일 스프레이 (주방용 자동 분무)"
+   },
+   {
+    "key": "미니김치냉장고",
+    "name": "미니 김치냉장고 (39L 뚜껑형)"
+   },
+   {
+    "key": "분리수거함",
+    "name": "재활용 분리수거함 (3단)"
+   },
+   {
+    "key": "접히는도마",
+    "name": "접히는 도마 (실리콘 접이식)"
+   },
+   {
+    "key": "멀티쿠커",
+    "name": "만능 멀티쿠커 (전골·전기냄비)"
+   },
+   {
+    "key": "드럼세탁기",
+    "name": "드럼세탁기 19kg (방문설치)"
    }
   ]
  }

@@ -163,14 +163,15 @@
   "https://pickdam.com/trend-auto-dispenser-top3/",
   "https://wontheland.com/galaxy-quantum4-update-freeze-fix/",
   "https://pickdam.com/manual-bidet-vs-installed-bidet-cost/",
-  "https://wontheland.com/iphone13-sound-control-fix/"
+  "https://wontheland.com/iphone13-sound-control-fix/",
+  "https://pickdam.com/vacuum-replacement-criteria/"
  ],
- "last_at": "2026-11-26T18:39:49+09:00",
+ "last_at": "2026-11-27T18:44:39+09:00",
  "last_run": {
-  "at": "2026-11-26T18:39:49+09:00",
+  "at": "2026-11-27T18:44:39+09:00",
   "results": [
    {
-    "site": "wontheland",
+    "site": "pickdam",
     "ep": "https://searchadvisor.naver.com/indexnow",
     "status": 200,
     "n": 1,
@@ -178,7 +179,7 @@
     "body": ""
    },
    {
-    "site": "wontheland",
+    "site": "pickdam",
     "ep": "https://api.indexnow.org/indexnow",
     "status": 200,
     "n": 1,
@@ -188,27 +189,6 @@
   ]
  },
  "runs": [
-  {
-   "at": "2026-11-08T16:29:14+09:00",
-   "results": [
-    {
-     "site": "wontheland",
-     "ep": "https://searchadvisor.naver.com/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    },
-    {
-     "site": "wontheland",
-     "ep": "https://api.indexnow.org/indexnow",
-     "status": 200,
-     "n": 1,
-     "ok": true,
-     "body": ""
-    }
-   ]
-  },
   {
    "at": "2026-11-09T17:06:45+09:00",
    "results": [
@@ -538,6 +518,27 @@
     },
     {
      "site": "wontheland",
+     "ep": "https://api.indexnow.org/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    }
+   ]
+  },
+  {
+   "at": "2026-11-27T18:44:39+09:00",
+   "results": [
+    {
+     "site": "pickdam",
+     "ep": "https://searchadvisor.naver.com/indexnow",
+     "status": 200,
+     "n": 1,
+     "ok": true,
+     "body": ""
+    },
+    {
+     "site": "pickdam",
      "ep": "https://api.indexnow.org/indexnow",
      "status": 200,
      "n": 1,
